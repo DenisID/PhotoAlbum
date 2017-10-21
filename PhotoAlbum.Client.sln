@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client", "PhotoA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.Model", "PhotoAlbum.Client.Model\PhotoAlbum.Client.Model.csproj", "{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.Dto", "PhotoAlbum.Client.Dto\PhotoAlbum.Client.Dto.csproj", "{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
