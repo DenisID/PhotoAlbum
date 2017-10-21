@@ -55,11 +55,15 @@
     <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\PhotoVote.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Interfaces\IPhotoAlbumService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
