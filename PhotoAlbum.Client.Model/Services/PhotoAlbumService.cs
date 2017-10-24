@@ -4,6 +4,7 @@ using PhotoAlbum.Client.Model.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,25 +13,50 @@ namespace PhotoAlbum.Client.Model.Services
 {
     public class PhotoAlbumService : IPhotoAlbumService
     {
-        private PhotoAlbumContext _dbContext = new PhotoAlbumContext();
+        private PhotoAlbumContext _photoAlbumContext = new PhotoAlbumContext();
         
         public void AddPhoto(byte[] image)
         {
             var photo = new Photo();
             photo.CreationDate = DateTime.Now;
-            _dbContext.Photos.Add(photo);
-            _dbContext.SaveChanges();
+            _photoAlbumContext.Photos.Add(photo);
+            _photoAlbumContext.SaveChanges();
 
             var photoContent = new PhotoContent();
             photoContent.Id = photo.Id;
             photoContent.Image = image;
-            _dbContext.PhotoContents.Add(photoContent);
-            _dbContext.SaveChanges();
+            _photoAlbumContext.PhotoContents.Add(photoContent);
+            _photoAlbumContext.SaveChanges();
         }
 
         public List<PhotoContent> GetAllPhoto()
         {
-            return _dbContext.PhotoContents.ToList();
+            return _photoAlbumContext.PhotoContents.ToList();
+        }
+
+        public Photo GetPhotoById(int photoId)
+        {
+            if (photoId < 0)
+            {
+                throw new ArgumentNullException(nameof(photoId));
+            }
+
+            var photo = _photoAlbumContext.Photos.Find(photoId);
+            //if (photo == null)
+            //{
+            //    throw PhotoNotFoundException.FromPhotoId(photoId);
+            //}
+            //photo.ValidateEntity();
+            return photo;
+        }
+
+        public void DeletePhoto(int photoId)
+        {
+            var photo = _photoAlbumContext.Photos.Find(photoId);
+            var photoContent = _photoAlbumContext.PhotoContents.Find(photoId);
+            _photoAlbumContext.Entry(photoContent).State = EntityState.Deleted;
+            _photoAlbumContext.Entry(photo).State = EntityState.Deleted;
+            _photoAlbumContext.SaveChanges();
         }
     }
 }
