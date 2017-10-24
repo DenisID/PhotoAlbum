@@ -11,12 +11,12 @@ namespace PhotoAlbum.Client.Controllers
 {
     public class TestController : Controller
     {
-        PhotoAlbumService db = new PhotoAlbumService();
+        private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
 
         // GET: Test
         public ActionResult Index()
         {
-            var res = db.GetAllPhoto();
+            var res = _photoAlbumService.GetAllPhoto();
             return View(res);
         }
 
@@ -41,11 +41,16 @@ namespace PhotoAlbum.Client.Controllers
                 // установка массива байтов
                 pic.Image = imageData;
 
-                db.AddPhoto(pic.Image);
+                _photoAlbumService.AddPhoto(pic.Image);
 
                 return RedirectToAction("Index");
             }
             return View(pic);
+        }
+
+        public void Delete(int id)
+        {
+            _photoAlbumService.DeletePhoto(id);
         }
     }
 }
