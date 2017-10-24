@@ -13,7 +13,7 @@ namespace PhotoAlbum.Client.Model.Data
         public PhotoAlbumContext()
             : base("name=DefaultConnection")
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<PhotoAlbumContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<PhotoAlbumContext>());
         }
 
         public DbSet<Photo> Photos { get; set; }
