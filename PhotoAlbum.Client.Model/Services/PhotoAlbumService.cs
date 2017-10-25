@@ -35,9 +35,9 @@ namespace PhotoAlbum.Client.Model.Services
             _photoAlbumContext.SaveChanges();
         }
 
-        public List<PhotoContent> GetAllPhoto()
+        public List<Photo> GetAllPhotos()
         {
-            return _photoAlbumContext.PhotoContents.ToList();
+            return _photoAlbumContext.Photos.ToList();
         }
 
         public Photo GetPhotoById(int photoId)

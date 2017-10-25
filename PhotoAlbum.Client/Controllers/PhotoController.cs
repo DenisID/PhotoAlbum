@@ -1,4 +1,6 @@
-﻿using PhotoAlbum.Client.Models;
+﻿using PhotoAlbum.Client.Dto;
+using PhotoAlbum.Client.Model.Services;
+using PhotoAlbum.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,10 +12,13 @@ namespace PhotoAlbum.Client.Controllers
 {
     public class PhotoController : Controller
     {
+        private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+
         // GET: Photo
         public ActionResult Index()
         {
-            return View();
+            var photos = _photoAlbumService.GetAllPhotos();
+            return View(photos);
         }
 
         public ActionResult AddPhoto()
@@ -26,8 +31,6 @@ namespace PhotoAlbum.Client.Controllers
         {
             if (ModelState.IsValid && addPhotoModel.Image != null)
             {
-
-
                 byte[] imageData = null;
                 // считываем переданный файл в массив байтов
                 using (var binaryReader = new BinaryReader(addPhotoModel.Image.InputStream))
@@ -35,18 +38,21 @@ namespace PhotoAlbum.Client.Controllers
                     imageData = binaryReader.ReadBytes(addPhotoModel.Image.ContentLength);
                 }
                 // установка массива байтов
-                photo.Image = imageData;
+                var addPhotoDto = new AddPhotoDto();
+                addPhotoDto.Image = imageData;
+                addPhotoDto.Title = addPhotoModel.Title;
+                addPhotoDto.Description = addPhotoModel.Description;
 
-                _photoAlbumService.AddPhoto(photo.Image);
+                _photoAlbumService.AddPhoto(addPhotoDto);
 
                 return RedirectToAction("Index");
             }
-            return View(photo);
+            return View();
         }
 
-        public void Delete(int id)
+        public void Delete(int photoId)
         {
-            _photoAlbumService.DeletePhoto(id);
+            _photoAlbumService.DeletePhoto(photoId);
         }
     }
 }
