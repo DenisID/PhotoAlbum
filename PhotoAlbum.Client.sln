@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client", "PhotoAlbum.Client\PhotoAlbum.Client.csproj", "{E0F4FE74-4982-4CAF-A6F0-55341F8BAE53}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F} = {ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}
+		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A} = {7295B3DF-6BA0-433B-970B-E9775A8C8D8A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.Model", "PhotoAlbum.Client.Model\PhotoAlbum.Client.Model.csproj", "{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}"
 EndProject
