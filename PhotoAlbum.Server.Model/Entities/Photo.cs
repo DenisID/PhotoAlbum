@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace PhotoAlbum.Server.Model.Entities
 {
-    class Photo : BaseEntity
+    public class Photo
     {
-        public byte[] Image { get; set; }
-        public string ImageMimeType { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public virtual PhotoDescription PhotoDescription { get; set; }
+        public virtual PhotoContent PhotoContent { get; set; }
+        public virtual ICollection<PhotoVote> Votes { get; set; }
+
+        public Photo()
+        {
+            Votes = new List<PhotoVote>();
+        }
     }
 }
