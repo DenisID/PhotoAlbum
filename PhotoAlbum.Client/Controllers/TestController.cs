@@ -26,7 +26,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(PhotoContentDto pic, HttpPostedFileBase uploadImage)
+        public ActionResult Create(AddPhotoDto photo, HttpPostedFileBase uploadImage)
         {
             if (ModelState.IsValid && uploadImage != null)
             {
@@ -39,13 +39,13 @@ namespace PhotoAlbum.Client.Controllers
                     imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
                 }
                 // установка массива байтов
-                pic.Image = imageData;
+                photo.Image = imageData;
 
-                _photoAlbumService.AddPhoto(pic.Image);
+                _photoAlbumService.AddPhoto(photo.Image);
 
                 return RedirectToAction("Index");
             }
-            return View(pic);
+            return View(photo);
         }
 
         public void Delete(int id)
