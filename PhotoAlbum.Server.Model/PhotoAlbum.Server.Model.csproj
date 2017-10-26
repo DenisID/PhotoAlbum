@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\PhotoAlbumContext.cs" />
     <Compile Include="Entities\Photo.cs" />
     <Compile Include="Entities\PhotoContent.cs" />
     <Compile Include="Entities\PhotoVote.cs" />
