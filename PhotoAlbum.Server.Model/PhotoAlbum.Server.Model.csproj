@@ -62,6 +62,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Server.Dto\PhotoAlbum.Server.Dto.csproj">
+      <Project>{2C67D22A-E7C7-4A1F-A87D-85BB695F0270}</Project>
+      <Name>PhotoAlbum.Server.Dto</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
