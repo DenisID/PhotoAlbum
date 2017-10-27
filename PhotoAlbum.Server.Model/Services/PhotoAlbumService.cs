@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PhotoAlbum.Server.Model.Services
 {
-    class PhotoAlbumService : IPhotoAlbumService
+    public class PhotoAlbumService : IPhotoAlbumService
     {
         private PhotoAlbumContext _photoAlbumContext = new PhotoAlbumContext();
 
