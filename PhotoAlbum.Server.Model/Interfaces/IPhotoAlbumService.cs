@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PhotoAlbum.Server.Dto;
+using PhotoAlbum.Server.Model.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace PhotoAlbum.Server.Model.Interfaces
 {
-    interface IPhotoAlbumService
+    public interface IPhotoAlbumService
     {
+        void AddPhoto(AddPhotoDto addPhotoDto);
+        List<Photo> GetAllPhotos();
+        Photo GetPhotoById(int photoId);
+        void DeletePhoto(int photoId);
     }
 }
