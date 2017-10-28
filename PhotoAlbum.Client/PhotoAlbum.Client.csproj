@@ -291,6 +291,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Client.BusinessServices\PhotoAlbum.Client.BusinessServices.csproj">
+      <Project>{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}</Project>
+      <Name>PhotoAlbum.Client.BusinessServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhotoAlbum.Client.Dto\PhotoAlbum.Client.Dto.csproj">
       <Project>{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}</Project>
       <Name>PhotoAlbum.Client.Dto</Name>
@@ -319,8 +323,6 @@
           <DevelopmentServerPort>33880</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:33880/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:11112/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
