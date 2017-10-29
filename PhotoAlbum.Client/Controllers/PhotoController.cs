@@ -90,6 +90,12 @@ namespace PhotoAlbum.Client.Controllers
             return File(image.Image, image.ImageMimeType);
         }
 
+        public async Task<ActionResult> DeletePhotoById(int id)
+        {
+            await _photoAlbumService.DeletePhotoById(id);
+            return RedirectToAction("Index");
+        }
+
         //[HttpPost]
         //public ActionResult AddPhoto(AddPhotoModel addPhotoModel)
         //{
