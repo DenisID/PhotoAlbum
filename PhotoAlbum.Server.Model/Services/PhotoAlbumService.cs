@@ -36,28 +36,28 @@ namespace PhotoAlbum.Server.Model.Services
             return photo.Id;
         }
 
-        //public void AddPhoto(AddPhotoDto addPhotoDto)
-        //{
-        //    var photo = new Photo();
-        //    photo.CreationDate = DateTime.Now;
-        //    photo.Title = addPhotoDto.Title;
-        //    photo.Description = addPhotoDto.Description;
-
-        //    _photoAlbumContext.Photos.Add(photo);
-        //    _photoAlbumContext.SaveChanges();
-
-        //    var photoContent = new PhotoContent();
-        //    photoContent.Id = photo.Id;
-        //    photoContent.Image = addPhotoDto.Image;
-        //    photoContent.ImageMimeType = addPhotoDto.ImageMimeType;
-
-        //    _photoAlbumContext.PhotoContents.Add(photoContent);
-        //    _photoAlbumContext.SaveChanges();
-        //}
-
-        public List<Photo> GetAllPhotos()
+        public List<PhotoDto> GetAllPhotos()
         {
-            return _photoAlbumContext.Photos.ToList();
+            var photosFromDb = _photoAlbumContext.Photos.ToList();
+            var photos = new List<PhotoDto>();
+            if(photosFromDb != null)
+            {
+                foreach(var photoFromDb in photosFromDb)
+                {
+                    photos.Add(new PhotoDto
+                    {
+                        Id = photoFromDb.Id,
+                        Title = photoFromDb.Title,
+                        Description = photoFromDb.Description,
+                        CreationDate = photoFromDb.CreationDate,
+                        Image = photoFromDb.PhotoContent.Image,
+                        ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
+                    });
+                }
+            }
+
+
+            return photos;
         }
 
         public Photo GetPhotoById(int photoId)
