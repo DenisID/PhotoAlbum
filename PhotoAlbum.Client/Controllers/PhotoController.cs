@@ -19,19 +19,38 @@ namespace PhotoAlbum.Client.Controllers
         //private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
         private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
 
-        public async Task<HttpResponseMessage> Test()
-        {
-            var response = await _photoAlbumService.Test();
-            var result = response.Content;
+        //public async Task<HttpResponseMessage> Test()
+        //{
+        //    var response = await _photoAlbumService.Test();
+        //    var result = response.Content;
             
-            return response;
-        }
+        //    return response;
+        //}
 
         // GET: Photo
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             //var photos = _photoAlbumService.GetAllPhotos();
-            List<PhotoModel> photos = null;
+            List<PhotoModel> photos = new List<PhotoModel>();
+            List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
+
+            // Mapping
+            if(photosDto != null)
+            {
+                foreach(var photoDto in photosDto)
+                {
+                    photos.Add(new PhotoModel
+                    {
+                        Id = photoDto.Id,
+                        Title = photoDto.Title,
+                        Description = photoDto.Description,
+                        CreationDate = photoDto.CreationDate,
+                        Image = photoDto.Image,
+                        ImageMimeType = photoDto.ImageMimeType
+                    });
+                }
+            }
+
             return View(photos);
         }
 
