@@ -21,16 +21,16 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<HttpResponseMessage> Test()
-        {
-            HttpResponseMessage response = await _httpClient.GetAsync("Api/Photo");
-            if (response.IsSuccessStatusCode)
-            {
-                //product = await response.Content.ReadAsAsync<Product>();
-                return response;
-            }
-            return response;
-        }
+        //public async Task<HttpResponseMessage> Test()
+        //{
+        //    HttpResponseMessage response = await _httpClient.GetAsync("Api/Photo");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        //product = await response.Content.ReadAsAsync<Product>();
+        //        return response;
+        //    }
+        //    return response;
+        //}
 
         public async Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto)
         {
@@ -39,6 +39,18 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
             // Return the URI of the created resource.
             return response.Headers.Location;
+        }
+
+        public async Task<List<PhotoDto>> GetAllPhotos()
+        {
+            List<PhotoDto> photos = null;
+            HttpResponseMessage response = await _httpClient.GetAsync("api/photo");
+            if (response.IsSuccessStatusCode)
+            {
+                photos = await response.Content.ReadAsAsync<List<PhotoDto>>();
+            }
+
+            return photos;
         }
     }
 }

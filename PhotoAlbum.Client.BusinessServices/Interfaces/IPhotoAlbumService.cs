@@ -10,8 +10,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 {
     public interface IPhotoAlbumService
     {
-        Task<HttpResponseMessage> Test();
-
         Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto);
+        Task<List<PhotoDto>> GetAllPhotos();
     }
 }
