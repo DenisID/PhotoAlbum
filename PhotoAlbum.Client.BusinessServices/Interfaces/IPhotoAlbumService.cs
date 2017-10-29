@@ -12,5 +12,6 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
     {
         Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto);
         Task<List<PhotoDto>> GetAllPhotos();
+        Task<ImageDto> GetImageById(int imageId);
     }
 }

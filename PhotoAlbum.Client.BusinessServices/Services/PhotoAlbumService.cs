@@ -52,5 +52,17 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
             return photos;
         }
+
+        public async Task<ImageDto> GetImageById(int imageId)
+        {
+            ImageDto image = null;
+            HttpResponseMessage response = await _httpClient.GetAsync($"api/photo/image/{imageId}");
+            if (response.IsSuccessStatusCode)
+            {
+                image = await response.Content.ReadAsAsync<ImageDto>();
+            }
+
+            return image;
+        }
     }
 }
