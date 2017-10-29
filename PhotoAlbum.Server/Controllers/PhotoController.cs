@@ -15,16 +15,22 @@ namespace PhotoAlbum.Server.Controllers
     {
         private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
 
-        public class ResponseDTO
-        {
-            public string value;
-        }
+        //public class ResponseDTO
+        //{
+        //    public string value;
+        //}
 
-        public ResponseDTO GetTest()
+        //public ResponseDTO GetTest()
+        //{
+        //    var result = new ResponseDTO();
+        //    result.value = "Test OK";
+        //    return result;
+        //}
+
+        [HttpGet]
+        public HttpResponseMessage GetAllPhotos()
         {
-            var result = new ResponseDTO();
-            result.value = "Test OK";
-            return result;
+            return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
         }
 
         [HttpPost]
