@@ -1,0 +1,36 @@
+﻿@model PhotoAlbum.Client.Models.CreatePhotoModel
+
+@{
+    ViewBag.Title = "CreatePhoto";
+}
+
+@using (Html.BeginForm("CreatePhoto", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Добавить изображение</legend>
+
+        <div class="editor-label">Название</div>
+        <div class="editor-field">
+            <input type="text" name="Title" />
+        </div>
+
+        <div class="editor-label">Discription</div>
+        <div class="editor-field">
+            <input type="text" name="Description" />
+        </div>
+
+        <div class="editor-label">Файл изображения</div>
+        <div class="editor-field">
+            <input type="file" name="Image" />
+        </div>
+
+        <p>
+            <input type="submit" value="Добавить" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Вернуться к списку", "Index")
+</div>
