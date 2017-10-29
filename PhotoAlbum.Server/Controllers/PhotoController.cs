@@ -34,6 +34,13 @@ namespace PhotoAlbum.Server.Controllers
             return Success(_photoAlbumService.GetAllPhotos());
         }
 
+        [HttpGet]
+        [Route("api/photo/image/{id}")]
+        public HttpResponseMessage GetImageById([FromUri] int id)
+        {
+            return Success(_photoAlbumService.GetImageById(id));
+        }
+
         [HttpPost]
         public HttpResponseMessage CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
         {
