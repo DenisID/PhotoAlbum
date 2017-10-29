@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace PhotoAlbum.Server.Controllers
 {
@@ -14,50 +15,62 @@ namespace PhotoAlbum.Server.Controllers
     {
         private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
 
-        // GET api/values
-        public IEnumerable<string> GetAllPhoto()
-        {         
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        public string Get(int id)
+        public class ResponseDTO
         {
-            return "value";
+            public string value;
         }
 
-        // POST api/photo
-        public void PostPhoto([FromBody]AddPhotoDto addPhotoDto)
+        public ResponseDTO GetTest()
         {
-            if (ModelState.IsValid && addPhotoDto.Image != null)
-            {
-                byte[] imageData = null;
-                // считываем переданный файл в массив байтов
-                using (var binaryReader = new BinaryReader(addPhotoModel.Image.InputStream))
-                {
-                    imageData = binaryReader.ReadBytes(addPhotoModel.Image.ContentLength);
-                }
-                // установка массива байтов
-                var addPhotoDto = new AddPhotoDto();
-                addPhotoDto.Image = imageData;
-                addPhotoDto.Title = addPhotoModel.Title;
-                addPhotoDto.Description = addPhotoModel.Description;
-
-                _photoAlbumService.AddPhoto(addPhotoDto);
-
-                return RedirectToAction("Index");
-            }
-            return View();
+            var result = new ResponseDTO();
+            result.value = "Test OK";
+            return result;
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// GET api/values
+        //public IEnumerable<string> GetAllPhoto()
+        //{         
+        //    return new string[] { "value1", "value2" };
+        //}
 
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
+        //// GET api/values/5
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+
+        //// POST api/photo
+        //public void PostPhoto([FromBody]AddPhotoDto addPhotoDto)
+        //{
+        //    if (ModelState.IsValid && addPhotoDto.Image != null)
+        //    {
+        //        byte[] imageData = null;
+        //        // считываем переданный файл в массив байтов
+        //        using (var binaryReader = new BinaryReader(addPhotoModel.Image.InputStream))
+        //        {
+        //            imageData = binaryReader.ReadBytes(addPhotoModel.Image.ContentLength);
+        //        }
+        //        // установка массива байтов
+        //        var addPhotoDto = new AddPhotoDto();
+        //        addPhotoDto.Image = imageData;
+        //        addPhotoDto.Title = addPhotoModel.Title;
+        //        addPhotoDto.Description = addPhotoModel.Description;
+
+        //        _photoAlbumService.AddPhoto(addPhotoDto);
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View();
+        //}
+
+        //// PUT api/values/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
+
+        //// DELETE api/values/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
