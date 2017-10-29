@@ -3,6 +3,7 @@ using PhotoAlbum.Client.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -63,6 +64,12 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             }
 
             return image;
+        }
+
+        public async Task<HttpStatusCode> DeletePhotoById(int photoId)
+        {
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/photo/{photoId}");
+            return response.StatusCode;
         }
     }
 }
