@@ -73,6 +73,7 @@ namespace PhotoAlbum.Client.Controllers
                 // установка массива байтов
                 var createPhotoDto = new CreatePhotoDto();
                 createPhotoDto.Image = imageData;
+                createPhotoDto.ImageMimeType = createPhotoModel.Image.ContentType;
                 createPhotoDto.Title = createPhotoModel.Title;
                 createPhotoDto.Description = createPhotoModel.Description;
 
@@ -83,7 +84,11 @@ namespace PhotoAlbum.Client.Controllers
             return View();
         }
 
-
+        public async Task<ActionResult> GetImageById(int id)
+        {
+            var image = await _photoAlbumService.GetImageById(id);
+            return File(image.Image, image.ImageMimeType);
+        }
 
         //[HttpPost]
         //public ActionResult AddPhoto(AddPhotoModel addPhotoModel)
