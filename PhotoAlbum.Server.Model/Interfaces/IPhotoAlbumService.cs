@@ -11,10 +11,10 @@ namespace PhotoAlbum.Server.Model.Interfaces
     public interface IPhotoAlbumService
     {
         int CreatePhoto(CreatePhotoDto createPhotoDto);
-        //void AddPhoto(AddPhotoDto addPhotoDto);
         List<PhotoDto> GetAllPhotos();
         ImageDto GetImageById(int imageId);
+        void DeletePhotoById(int photoId);
+        //void AddPhoto(AddPhotoDto addPhotoDto);
         //Photo GetPhotoById(int photoId);
-        void DeletePhoto(int photoId);
     }
 }

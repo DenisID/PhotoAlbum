@@ -71,6 +71,15 @@ namespace PhotoAlbum.Server.Model.Services
             return image;
         }
 
+        public void DeletePhotoById(int photoId)
+        {
+            var photo = _photoAlbumContext.Photos.Find(photoId);
+            var photoContent = _photoAlbumContext.PhotoContents.Find(photoId);
+            _photoAlbumContext.Entry(photoContent).State = EntityState.Deleted;
+            _photoAlbumContext.Entry(photo).State = EntityState.Deleted;
+            _photoAlbumContext.SaveChanges();
+        }
+
         //public Photo GetPhotoById(int photoId)
         //{
         //    if (photoId < 0)
@@ -87,13 +96,6 @@ namespace PhotoAlbum.Server.Model.Services
         //    return photo;
         //}
 
-        public void DeletePhoto(int photoId)
-        {
-            var photo = _photoAlbumContext.Photos.Find(photoId);
-            var photoContent = _photoAlbumContext.PhotoContents.Find(photoId);
-            _photoAlbumContext.Entry(photoContent).State = EntityState.Deleted;
-            _photoAlbumContext.Entry(photo).State = EntityState.Deleted;
-            _photoAlbumContext.SaveChanges();
-        }
+
     }
 }
