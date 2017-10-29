@@ -11,46 +11,46 @@ namespace PhotoAlbum.Client.Controllers
 {
     public class TestController : Controller
     {
-        private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        //private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
 
-        // GET: Test
-        public ActionResult Index()
-        {
-            var res = _photoAlbumService.GetAllPhoto();
-            return View(res);
-        }
+        //// GET: Test
+        //public ActionResult Index()
+        //{
+        //    var res = _photoAlbumService.GetAllPhoto();
+        //    return View(res);
+        //}
 
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public ActionResult Create(AddPhotoDto photo, HttpPostedFileBase uploadImage)
-        {
-            if (ModelState.IsValid && uploadImage != null)
-            {
+        //[HttpPost]
+        //public ActionResult Create(AddPhotoDto photo, HttpPostedFileBase uploadImage)
+        //{
+        //    if (ModelState.IsValid && uploadImage != null)
+        //    {
                 
 
-                byte[] imageData = null;
-                // считываем переданный файл в массив байтов
-                using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                {
-                    imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-                }
-                // установка массива байтов
-                photo.Image = imageData;
+        //        byte[] imageData = null;
+        //        // считываем переданный файл в массив байтов
+        //        using (var binaryReader = new BinaryReader(uploadImage.InputStream))
+        //        {
+        //            imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
+        //        }
+        //        // установка массива байтов
+        //        photo.Image = imageData;
 
-                _photoAlbumService.AddPhoto(photo.Image);
+        //        _photoAlbumService.AddPhoto(photo.Image);
 
-                return RedirectToAction("Index");
-            }
-            return View(photo);
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(photo);
+        //}
 
-        public void Delete(int id)
-        {
-            _photoAlbumService.DeletePhoto(id);
-        }
+        //public void Delete(int id)
+        //{
+        //    _photoAlbumService.DeletePhoto(id);
+        //}
     }
 }

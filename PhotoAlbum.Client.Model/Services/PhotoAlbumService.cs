@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Client.Model.Data;
+﻿using PhotoAlbum.Client.Dto;
+using PhotoAlbum.Client.Model.Data;
 using PhotoAlbum.Client.Model.Entities;
 using PhotoAlbum.Client.Model.Interfaces;
 using System;
@@ -15,23 +16,28 @@ namespace PhotoAlbum.Client.Model.Services
     {
         private PhotoAlbumContext _photoAlbumContext = new PhotoAlbumContext();
         
-        public void AddPhoto(byte[] image)
+        public void AddPhoto(AddPhotoDto addPhotoDto)
         {
             var photo = new Photo();
             photo.CreationDate = DateTime.Now;
+            photo.Title = addPhotoDto.Title;
+            photo.Description = addPhotoDto.Description;
+
             _photoAlbumContext.Photos.Add(photo);
             _photoAlbumContext.SaveChanges();
 
             var photoContent = new PhotoContent();
             photoContent.Id = photo.Id;
-            photoContent.Image = image;
+            photoContent.Image = addPhotoDto.Image;
+            photoContent.ImageMimeType = addPhotoDto.ImageMimeType;
+
             _photoAlbumContext.PhotoContents.Add(photoContent);
             _photoAlbumContext.SaveChanges();
         }
 
-        public List<PhotoContent> GetAllPhoto()
+        public List<Photo> GetAllPhotos()
         {
-            return _photoAlbumContext.PhotoContents.ToList();
+            return _photoAlbumContext.Photos.ToList();
         }
 
         public Photo GetPhotoById(int photoId)

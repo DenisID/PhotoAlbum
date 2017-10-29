@@ -49,16 +49,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Data\PhotoAlbumContext.cs" />
     <Compile Include="Entities\Photo.cs" />
-    <Compile Include="Entities\PhotoDescription.cs" />
+    <Compile Include="Entities\PhotoContent.cs" />
     <Compile Include="Entities\PhotoVote.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Interfaces\IPhotoAlbumService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\PhotoAlbumService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Server.Dto\PhotoAlbum.Server.Dto.csproj">
+      <Project>{2C67D22A-E7C7-4A1F-A87D-85BB695F0270}</Project>
+      <Name>PhotoAlbum.Server.Dto</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

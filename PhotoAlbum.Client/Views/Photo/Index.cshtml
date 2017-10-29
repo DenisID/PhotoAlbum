@@ -1,0 +1,43 @@
+﻿@model IEnumerable<PhotoAlbum.Client.Models.PhotoModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Мои изображения</h2>
+
+<p>
+    @Html.ActionLink("Добавить изображение", "CreatePhoto")
+</p>
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Картинка</th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.Image != null)
+                    {
+                        <p>@item.Title</p>
+                        @*@Html.Raw("<img style='width:300px; height:400px;' src=\"data:image/jpeg;base64,"
+                                + Convert.ToBase64String(item.Image) + "\" />")*@
+                        <img src="@Url.Action("GetImageById", "Photo", new { id = item.Id })" />
+                    }
+                </td>
+
+                <td>
+                    @if (item.Image != null)
+                    {
+                        <p>@item.Description</p>
+                    }
+                </td>
+
+            </tr>
+        }
+    }
+    
+</table>
