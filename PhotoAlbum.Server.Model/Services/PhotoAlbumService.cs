@@ -15,24 +15,45 @@ namespace PhotoAlbum.Server.Model.Services
     {
         private PhotoAlbumContext _photoAlbumContext = new PhotoAlbumContext();
 
-        public void AddPhoto(AddPhotoDto addPhotoDto)
+        public int CreatePhoto(CreatePhotoDto createPhotoDto)
         {
             var photo = new Photo();
             photo.CreationDate = DateTime.Now;
-            photo.Title = addPhotoDto.Title;
-            photo.Description = addPhotoDto.Description;
+            photo.Title = createPhotoDto.Title;
+            photo.Description = createPhotoDto.Description;
 
             _photoAlbumContext.Photos.Add(photo);
             _photoAlbumContext.SaveChanges();
 
             var photoContent = new PhotoContent();
             photoContent.Id = photo.Id;
-            photoContent.Image = addPhotoDto.Image;
-            photoContent.ImageMimeType = addPhotoDto.ImageMimeType;
+            photoContent.Image = createPhotoDto.Image;
+            photoContent.ImageMimeType = createPhotoDto.ImageMimeType;
 
             _photoAlbumContext.PhotoContents.Add(photoContent);
             _photoAlbumContext.SaveChanges();
+
+            return photo.Id;
         }
+
+        //public void AddPhoto(AddPhotoDto addPhotoDto)
+        //{
+        //    var photo = new Photo();
+        //    photo.CreationDate = DateTime.Now;
+        //    photo.Title = addPhotoDto.Title;
+        //    photo.Description = addPhotoDto.Description;
+
+        //    _photoAlbumContext.Photos.Add(photo);
+        //    _photoAlbumContext.SaveChanges();
+
+        //    var photoContent = new PhotoContent();
+        //    photoContent.Id = photo.Id;
+        //    photoContent.Image = addPhotoDto.Image;
+        //    photoContent.ImageMimeType = addPhotoDto.ImageMimeType;
+
+        //    _photoAlbumContext.PhotoContents.Add(photoContent);
+        //    _photoAlbumContext.SaveChanges();
+        //}
 
         public List<Photo> GetAllPhotos()
         {
