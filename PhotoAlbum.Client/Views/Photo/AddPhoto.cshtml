@@ -1,10 +1,10 @@
-﻿@model PhotoAlbum.Client.Models.AddPhotoModel
+﻿@model PhotoAlbum.Client.Models.CreatePhotoModel
 
 @{
-    ViewBag.Title = "AddPhoto";
+    ViewBag.Title = "CreatePhoto";
 }
 
-@using (Html.BeginForm("AddPhoto", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreatePhoto", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     <fieldset>
