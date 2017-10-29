@@ -55,26 +55,37 @@ namespace PhotoAlbum.Server.Model.Services
                     });
                 }
             }
-
-
+            
             return photos;
         }
 
-        public Photo GetPhotoById(int photoId)
+        public ImageDto GetImageById(int imageId)
         {
-            if (photoId < 0)
+            var imageFromDb = _photoAlbumContext.PhotoContents.Find(imageId);
+            var image = new ImageDto
             {
-                throw new ArgumentNullException(nameof(photoId));
-            }
+                Image = imageFromDb.Image,
+                ImageMimeType = imageFromDb.ImageMimeType
+            };
 
-            var photo = _photoAlbumContext.Photos.Find(photoId);
-            //if (photo == null)
-            //{
-            //    throw PhotoNotFoundException.FromPhotoId(photoId);
-            //}
-            //photo.ValidateEntity();
-            return photo;
+            return image;
         }
+
+        //public Photo GetPhotoById(int photoId)
+        //{
+        //    if (photoId < 0)
+        //    {
+        //        throw new ArgumentNullException(nameof(photoId));
+        //    }
+
+        //    var photo = _photoAlbumContext.Photos.Find(photoId);
+        //    //if (photo == null)
+        //    //{
+        //    //    throw PhotoNotFoundException.FromPhotoId(photoId);
+        //    //}
+        //    //photo.ValidateEntity();
+        //    return photo;
+        //}
 
         public void DeletePhoto(int photoId)
         {

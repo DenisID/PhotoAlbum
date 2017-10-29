@@ -13,7 +13,8 @@ namespace PhotoAlbum.Server.Model.Interfaces
         int CreatePhoto(CreatePhotoDto createPhotoDto);
         //void AddPhoto(AddPhotoDto addPhotoDto);
         List<PhotoDto> GetAllPhotos();
-        Photo GetPhotoById(int photoId);
+        ImageDto GetImageById(int imageId);
+        //Photo GetPhotoById(int photoId);
         void DeletePhoto(int photoId);
     }
 }
