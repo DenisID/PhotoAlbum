@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhotoAlbum.Server.Dto
 {
-    class CreatePhotoDto
+    public class CreatePhotoDto
     {
         public byte[] Image { get; set; }
         public string ImageMimeType { get; set; }
