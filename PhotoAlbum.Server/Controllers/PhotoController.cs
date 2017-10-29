@@ -48,6 +48,21 @@ namespace PhotoAlbum.Server.Controllers
             return Success(_photoAlbumService.CreatePhoto(createPhotoDto));
         }
 
+        [HttpDelete]
+        public HttpResponseMessage DeletePhotoById([FromUri] int id)
+        {
+            try
+            {
+                _photoAlbumService.DeletePhotoById(id);
+                return Success();
+            }
+            catch(Exception ex)
+            {
+                return Error(ex);
+            }
+            
+        }
+
         //// GET api/values
         //public IEnumerable<string> GetAllPhoto()
         //{         
