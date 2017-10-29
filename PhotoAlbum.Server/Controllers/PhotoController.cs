@@ -11,7 +11,7 @@ using System.Web.Http.Results;
 
 namespace PhotoAlbum.Server.Controllers
 {
-    public class PhotoController : ApiController
+    public class PhotoController : BaseController
     {
         private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
 
@@ -30,13 +30,15 @@ namespace PhotoAlbum.Server.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllPhotos()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
+            //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
+            return Success(_photoAlbumService.GetAllPhotos());
         }
 
         [HttpPost]
-        public IHttpActionResult CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
+        public HttpResponseMessage CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
         {
-            return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
+            //return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
+            return Success(_photoAlbumService.CreatePhoto(createPhotoDto));
         }
 
         //// GET api/values
