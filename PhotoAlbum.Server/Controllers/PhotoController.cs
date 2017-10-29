@@ -27,6 +27,12 @@ namespace PhotoAlbum.Server.Controllers
             return result;
         }
 
+        [HttpPost]
+        public IHttpActionResult CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
+        {
+            return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
+        }
+
         //// GET api/values
         //public IEnumerable<string> GetAllPhoto()
         //{         
