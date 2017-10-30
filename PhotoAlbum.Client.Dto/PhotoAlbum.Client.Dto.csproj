@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AddPhotoDto.cs" />
     <Compile Include="CreatePhotoDto.cs" />
+    <Compile Include="EditPhotoDto.cs" />
     <Compile Include="ImageDto.cs" />
     <Compile Include="PhotoContentDto.cs" />
     <Compile Include="PhotoDto.cs" />
