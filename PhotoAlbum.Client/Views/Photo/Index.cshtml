@@ -38,6 +38,9 @@
                     @if (item.Image != null)
                     {
                         <p>@item.Description</p>
+                        <p>
+                            @Html.ActionLink("Редактировать", "EditPhoto", new { id = item.Id })
+                        </p>
                     }
                 </td>
 
