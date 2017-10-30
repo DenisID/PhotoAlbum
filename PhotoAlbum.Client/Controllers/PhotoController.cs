@@ -96,6 +96,27 @@ namespace PhotoAlbum.Client.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult EditPhoto(int id)
+        {
+
+            return View();
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> EditPhoto(EditPhotoModel editPhotoModel)
+        {
+            EditPhotoDto editPhotoDto = new EditPhotoDto
+            {
+                Id = editPhotoModel.Id,
+                Title = editPhotoModel.Title,
+                Description = editPhotoModel.Description
+            };
+
+            await _photoAlbumService.EditPhoto(editPhotoDto);
+            return RedirectToAction("Index");
+        }
+
         //[HttpPost]
         //public ActionResult AddPhoto(AddPhotoModel addPhotoModel)
         //{
