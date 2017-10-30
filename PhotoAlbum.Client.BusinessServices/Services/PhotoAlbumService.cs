@@ -71,5 +71,11 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             HttpResponseMessage response = await _httpClient.DeleteAsync($"api/photo/{photoId}");
             return response.StatusCode;
         }
+
+        public async Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto)
+        {
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/products/{editPhotoDto.Id}", editPhotoDto);
+            return response.StatusCode;
+        }
     }
 }
