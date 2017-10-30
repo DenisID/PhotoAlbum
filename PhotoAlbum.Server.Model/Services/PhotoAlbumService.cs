@@ -80,6 +80,22 @@ namespace PhotoAlbum.Server.Model.Services
             _photoAlbumContext.SaveChanges();
         }
 
+        public void EditPhoto(EditPhotoDto editPhotoDto)
+        {
+            //var photo = GetPhotoById(photoDto.Id);
+            var photo = _photoAlbumContext.Photos.Find(editPhotoDto.Id);
+            if(photo != null)
+            {
+                // Mapping
+                photo.Title = editPhotoDto.Title;
+                photo.Description = editPhotoDto.Description;
+
+                _photoAlbumContext.Entry(photo).State = EntityState.Modified;
+                _photoAlbumContext.SaveChanges();
+            }
+            
+        }
+
         //public Photo GetPhotoById(int photoId)
         //{
         //    if (photoId < 0)

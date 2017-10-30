@@ -14,6 +14,7 @@ namespace PhotoAlbum.Server.Model.Interfaces
         List<PhotoDto> GetAllPhotos();
         ImageDto GetImageById(int imageId);
         void DeletePhotoById(int photoId);
+        void EditPhoto(EditPhotoDto editPhotoDto);
         //void AddPhoto(AddPhotoDto addPhotoDto);
         //Photo GetPhotoById(int photoId);
     }
