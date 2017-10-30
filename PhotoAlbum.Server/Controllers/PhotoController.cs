@@ -60,7 +60,20 @@ namespace PhotoAlbum.Server.Controllers
             {
                 return Error(ex);
             }
-            
+        }
+
+        [HttpPut]
+        public HttpResponseMessage EditPhoto([FromBody] EditPhotoDto editPhotoDto)
+        {
+            try
+            {
+                _photoAlbumService.EditPhoto(editPhotoDto);
+                return Success();
+            }
+            catch (Exception ex)
+            {
+                return Error(ex);
+            }
         }
 
         //// GET api/values
