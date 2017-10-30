@@ -207,6 +207,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddPhotoModel.cs" />
     <Compile Include="Models\CreatePhotoModel.cs" />
+    <Compile Include="Models\EditPhotoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PhotoModel.cs" />
@@ -280,6 +281,7 @@
     <Content Include="Views\Photo\AddPhoto.cshtml" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\CreatePhoto.cshtml" />
+    <Content Include="Views\Photo\EditPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
