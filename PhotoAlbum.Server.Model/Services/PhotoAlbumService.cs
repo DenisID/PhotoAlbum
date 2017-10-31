@@ -44,6 +44,7 @@ namespace PhotoAlbum.Server.Model.Services
             {
                 foreach(var photoFromDb in photosFromDb)
                 {
+                    // Mapping
                     photos.Add(new PhotoDto
                     {
                         Id = photoFromDb.Id,
@@ -94,6 +95,23 @@ namespace PhotoAlbum.Server.Model.Services
                 _photoAlbumContext.SaveChanges();
             }
             
+        }
+
+        public EditPhotoDto GetEditPhotoById(int editPhotoId)
+        {
+            var photo = _photoAlbumContext.Photos.Find(editPhotoId);
+            EditPhotoDto editPhotoDto = null;
+            if(photo != null)
+            {
+                // Mapping
+                editPhotoDto = new EditPhotoDto {
+                    Id = photo.Id,
+                    Title = photo.Title,
+                    Description = photo.Description
+                };
+            }
+
+            return editPhotoDto;
         }
 
         //public Photo GetPhotoById(int photoId)
