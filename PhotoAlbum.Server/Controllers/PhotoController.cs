@@ -63,6 +63,8 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpPut]
+        [HttpPost]
+        [Route("api/photo/editphoto")]
         public HttpResponseMessage EditPhoto([FromBody] EditPhotoDto editPhotoDto)
         {
             try
@@ -71,6 +73,20 @@ namespace PhotoAlbum.Server.Controllers
                 return Success();
             }
             catch (Exception ex)
+            {
+                return Error(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/photo/editphoto/{id}")]
+        public HttpResponseMessage GetEditPhotoById(int id)
+        {
+            try
+            {
+                return Success(_photoAlbumService.GetEditPhotoById(id));
+            }
+            catch(Exception ex)
             {
                 return Error(ex);
             }
