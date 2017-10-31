@@ -74,8 +74,20 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
         public async Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto)
         {
-            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/products/{editPhotoDto.Id}", editPhotoDto);
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/photo/editphoto", editPhotoDto);
             return response.StatusCode;
+        }
+
+        public async Task<EditPhotoDto> GetEditPhotoById(int editPhotoId)
+        {
+            EditPhotoDto editoPhotoDto = null;
+            HttpResponseMessage response = await _httpClient.GetAsync($"api/photo/editphoto/{editPhotoId}");
+            if (response.IsSuccessStatusCode)
+            {
+                editoPhotoDto = await response.Content.ReadAsAsync<EditPhotoDto>();
+            }
+
+            return editoPhotoDto;
         }
     }
 }
