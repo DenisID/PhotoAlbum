@@ -6,20 +6,21 @@ using System.Threading.Tasks;
 
 namespace PhotoAlbum.Server.Model.Entities
 {
-    class User : BaseEntity
+    public class User
     {
+        public int Id { get; set; }
         public string Login { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
 
-        public virtual ICollection<PhotoDescription> PhotoDescriptions { get; set; }
-        public virtual ICollection<PhotoVote> PhotoVote { get; set; }
+        public virtual ICollection<Photo> PhotoDescriptions { get; set; }
+        public virtual ICollection<PhotoVote> PhotoVotes { get; set; }
 
         public User()
         {
-            PhotoDescriptions = new List<PhotoDescription>();
-            PhotoVote = new List<PhotoVote>();
+            PhotoDescriptions = new List<Photo>();
+            PhotoVotes = new List<PhotoVote>();
         }
     }
 }

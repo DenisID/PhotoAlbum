@@ -8,17 +8,14 @@ using System.Threading.Tasks;
 
 namespace PhotoAlbum.Server.Model.Entities
 {
-    public class PhotoVote
+    public class PhotoContent
     {
-        [Key, Column(Order = 0)]
-        public int UserId { get; set; }
+        [Key]
+        [ForeignKey("Photo")]
+        public int Id { get; set; }
+        public byte[] Image { get; set; }
+        public string ImageMimeType { get; set; }
 
-        [Key, Column(Order = 1)]
-        public int PhotoId { get; set; }
-
-        public int Vote { get; set; }
-
-        public virtual User User { get; set; }
         public virtual Photo Photo { get; set; }
     }
 }

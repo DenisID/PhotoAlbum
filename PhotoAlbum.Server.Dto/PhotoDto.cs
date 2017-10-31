@@ -4,21 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhotoAlbum.Server.Model.Entities
+namespace PhotoAlbum.Server.Dto
 {
-    public class Photo
+    public class PhotoDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
-
-        public virtual PhotoContent PhotoContent { get; set; }
-        public virtual ICollection<PhotoVote> Votes { get; set; }
-
-        public Photo()
-        {
-            Votes = new List<PhotoVote>();
-        }
+        public byte[] Image { get; set; }
+        public string ImageMimeType { get; set; }
     }
 }

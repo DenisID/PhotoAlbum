@@ -206,7 +206,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -284,6 +286,16 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Server.Dto\PhotoAlbum.Server.Dto.csproj">
+      <Project>{2c67d22a-e7c7-4a1f-a87d-85bb695f0270}</Project>
+      <Name>PhotoAlbum.Server.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhotoAlbum.Server.Model\PhotoAlbum.Server.Model.csproj">
+      <Project>{6c441ff6-77fc-442c-9091-d9732525f37c}</Project>
+      <Name>PhotoAlbum.Server.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
