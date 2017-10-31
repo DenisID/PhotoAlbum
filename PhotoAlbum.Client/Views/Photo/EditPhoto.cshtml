@@ -4,7 +4,37 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
+@{
+    ViewBag.Title = "EditPhoto";
+}
+
+@using (Html.BeginForm("EditPhoto", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Редактировать</legend>
+
+        <div class="editor-label">Название</div>
+        <div class="editor-field">
+            <input type="text" name="Title" value="@Model.Title" />
+        </div>
+
+        <div class="editor-label">Discription</div>
+        <div class="editor-field">
+            <input type="text" name="Description" value="@Model.Description" />
+        </div>
+
+        <p>
+            <input type="submit" value="Сохранить" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Вернуться к списку", "Index")
+</div>
+
+@*<!DOCTYPE html>
 
 <html>
 <head>
@@ -50,4 +80,4 @@
         @Html.ActionLink("Photo", "EditPhoto")
     </div>
 </body>
-</html>
+</html>*@

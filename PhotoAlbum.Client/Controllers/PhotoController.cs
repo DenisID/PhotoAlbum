@@ -97,13 +97,25 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditPhoto(int id)
+        public async Task<ActionResult> EditPhoto(int id)
         {
-
-            return View();
+            EditPhotoModel editPhotoModel = null;
+            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id);
+            if(editPhotoDto != null)
+            {
+                // Mapping
+                editPhotoModel = new EditPhotoModel
+                {
+                    Id = editPhotoDto.Id,
+                    Title = editPhotoDto.Title,
+                    Description = editPhotoDto.Description
+                };
+            }
+            return View(editPhotoModel);
         }
 
-        [HttpPut]
+        //[HttpPut]
+        [HttpPost]
         public async Task<ActionResult> EditPhoto(EditPhotoModel editPhotoModel)
         {
             EditPhotoDto editPhotoDto = new EditPhotoDto
