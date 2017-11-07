@@ -3,7 +3,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using PhotoAlbum.Server.Models;
+using PhotoAlbum.Server.Model.Entities;
+using PhotoAlbum.Server.Model.Data;
+//using PhotoAlbum.Server.Models;
 
 namespace PhotoAlbum.Server
 {
@@ -18,7 +20,7 @@ namespace PhotoAlbum.Server
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<PhotoAlbumContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
