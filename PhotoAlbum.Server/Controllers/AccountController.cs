@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using PhotoAlbum.Server.Models;
 using PhotoAlbum.Server.Providers;
 using PhotoAlbum.Server.Results;
+using PhotoAlbum.Server.Model.Entities;
 
 namespace PhotoAlbum.Server.Controllers
 {
