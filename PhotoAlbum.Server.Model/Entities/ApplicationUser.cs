@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
 
 namespace PhotoAlbum.Server.Model.Entities
 {
@@ -15,6 +16,15 @@ namespace PhotoAlbum.Server.Model.Entities
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
             // Add custom user claims here
             return userIdentity;
+        }
+
+        public virtual ICollection<Photo> Photos { get; set; }
+        public virtual ICollection<PhotoVote> PhotoVotes { get; set; }
+
+        public ApplicationUser() : base()
+        {
+            Photos = new List<Photo>();
+            PhotoVotes = new List<PhotoVote>();
         }
     }
 }
