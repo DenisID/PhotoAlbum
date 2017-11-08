@@ -13,7 +13,12 @@ namespace PhotoAlbum.Server.Controllers
 {
     public class PhotoController : BaseController
     {
-        private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        private readonly IPhotoAlbumService _photoAlbumService;
+
+        public PhotoController(IPhotoAlbumService photoAlbumService)
+        {
+            _photoAlbumService = photoAlbumService;
+        }
 
         //public class ResponseDTO
         //{
