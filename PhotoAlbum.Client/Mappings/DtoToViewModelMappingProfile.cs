@@ -8,17 +8,16 @@ using System.Web;
 
 namespace PhotoAlbum.Client.Mappings
 {
-    public class BaseMappingProfile : Profile
+    public class DtoToViewModelMappingProfile : Profile
     {
         public override string ProfileName
         {
-            get { return "BaseMappings"; }
+            get { return "DtoToViewModelMappings"; }
         }
 
-        public BaseMappingProfile()
+        public DtoToViewModelMappingProfile()
         {
-            CreateMap<EditPhotoViewModel, EditPhotoDto>();
-            //CreateMap<Gadget, GadgetViewModel>();
+            CreateMap<EditPhotoDto, EditPhotoViewModel>();
         }
     }
 }

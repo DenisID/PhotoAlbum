@@ -12,8 +12,8 @@ namespace PhotoAlbum.Client.Mappings
         {
             Mapper.Initialize(x =>
             {
-                //x.AddProfile<DomainToViewModelMappingProfile>();
-                x.AddProfile<BaseMappingProfile>();
+                x.AddProfile<DtoToViewModelMappingProfile>();
+                x.AddProfile<ViewModelToDtoMappingProfile>();
             });
         }
     }

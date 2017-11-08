@@ -221,7 +221,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
-    <Compile Include="Mappings\BaseMappingProfile.cs" />
+    <Compile Include="Mappings\DtoToViewModelMappingProfile.cs" />
+    <Compile Include="Mappings\ViewModelToDtoMappingProfile.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddPhotoModel.cs" />
     <Compile Include="Models\CreatePhotoModel.cs" />
