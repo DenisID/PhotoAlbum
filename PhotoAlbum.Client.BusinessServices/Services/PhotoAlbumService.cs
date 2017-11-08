@@ -89,5 +89,11 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
             return editoPhotoDto;
         }
+
+        public async Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto)
+        {
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Account/Register", registerUserDto);
+            return response.StatusCode;
+        }
     }
 }
