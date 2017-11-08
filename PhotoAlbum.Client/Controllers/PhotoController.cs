@@ -38,7 +38,7 @@ namespace PhotoAlbum.Client.Controllers
         public async Task<ActionResult> Index()
         {
             //var photos = _photoAlbumService.GetAllPhotos();
-            List<PhotoModel> photos = new List<PhotoModel>();
+            List<PhotoViewModel> photos = new List<PhotoViewModel>();
             List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
 
             // Mapping
@@ -46,7 +46,7 @@ namespace PhotoAlbum.Client.Controllers
             {
                 foreach(var photoDto in photosDto)
                 {
-                    photos.Add(new PhotoModel
+                    photos.Add(new PhotoViewModel
                     {
                         Id = photoDto.Id,
                         Title = photoDto.Title,

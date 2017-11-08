@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PhotoAlbum.Client.Models
 {
-    public class PhotoModel
+    public class PhotoViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
