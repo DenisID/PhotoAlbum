@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using PhotoAlbum.Server.Model.Interfaces;
+using PhotoAlbum.Server.Model.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,10 @@ namespace PhotoAlbum.Server.App_Start
         {
             //Register your Web API controllers.  
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            builder.RegisterType<PhotoAlbumService>()
+                   .As<IPhotoAlbumService>()
+                   .InstancePerRequest();
 
             //builder.RegisterType<DBCustomerEntities>()
             //       .As<DbContext>()
