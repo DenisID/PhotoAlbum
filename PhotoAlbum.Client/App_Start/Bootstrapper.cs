@@ -16,29 +16,28 @@ namespace PhotoAlbum.Client.App_Start
     {
         public static void Run()
         {
-            SetAutofacContainer();
-            //Configure AutoMapper
+            AutofacConfig.SetAutofacContainer();
             AutoMapperConfiguration.Configure();
         }
 
-        private static void SetAutofacContainer()
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<PhotoAlbumService>().As<IPhotoAlbumService>().InstancePerRequest();
-            //builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
+        //private static void SetAutofacContainer()
+        //{
+        //    var builder = new ContainerBuilder();
+        //    builder.RegisterControllers(Assembly.GetExecutingAssembly());
+        //    builder.RegisterType<PhotoAlbumService>().As<IPhotoAlbumService>().InstancePerRequest();
+        //    //builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
 
-            //// Repositories
-            //builder.RegisterAssemblyTypes(typeof(GadgetRepository).Assembly)
-            //    .Where(t => t.Name.EndsWith("Repository"))
-            //    .AsImplementedInterfaces().InstancePerRequest();
-            //// Services
-            //builder.RegisterAssemblyTypes(typeof(GadgetService).Assembly)
-            //   .Where(t => t.Name.EndsWith("Service"))
-            //   .AsImplementedInterfaces().InstancePerRequest();
+        //    //// Repositories
+        //    //builder.RegisterAssemblyTypes(typeof(GadgetRepository).Assembly)
+        //    //    .Where(t => t.Name.EndsWith("Repository"))
+        //    //    .AsImplementedInterfaces().InstancePerRequest();
+        //    //// Services
+        //    //builder.RegisterAssemblyTypes(typeof(GadgetService).Assembly)
+        //    //   .Where(t => t.Name.EndsWith("Service"))
+        //    //   .AsImplementedInterfaces().InstancePerRequest();
 
-            IContainer container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-        }
+        //    IContainer container = builder.Build();
+        //    DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+        //}
     }
 }
