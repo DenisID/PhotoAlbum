@@ -16,7 +16,7 @@ namespace PhotoAlbum.Client.App_Start
     {
         public static void Run()
         {
-            AutofacConfig.SetAutofacContainer();
+            AutofacConfig.Initialize();
             AutoMapperConfiguration.Configure();
         }
 
