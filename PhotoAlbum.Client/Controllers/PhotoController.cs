@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Client.BusinessServices.Interfaces;
+﻿using AutoMapper;
+using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Dto;
 //using PhotoAlbum.Client.Model.Services;
@@ -17,13 +18,19 @@ namespace PhotoAlbum.Client.Controllers
     public class PhotoController : Controller
     {
         //private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
-        private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        //private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        private readonly IPhotoAlbumService _photoAlbumService;
+
+        public PhotoController(IPhotoAlbumService photoAlbumService)
+        {
+            _photoAlbumService = photoAlbumService;
+        }
 
         //public async Task<HttpResponseMessage> Test()
         //{
         //    var response = await _photoAlbumService.Test();
         //    var result = response.Content;
-            
+
         //    return response;
         //}
 
@@ -60,22 +67,22 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePhoto(CreatePhotoModel createPhotoModel)
+        public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel createPhotoViewModel)
         {
-            if (ModelState.IsValid && createPhotoModel.Image != null)
+            if (ModelState.IsValid && createPhotoViewModel.Image != null)
             {
                 byte[] imageData = null;
                 // считываем переданный файл в массив байтов
-                using (var binaryReader = new BinaryReader(createPhotoModel.Image.InputStream))
+                using (var binaryReader = new BinaryReader(createPhotoViewModel.Image.InputStream))
                 {
-                    imageData = binaryReader.ReadBytes(createPhotoModel.Image.ContentLength);
+                    imageData = binaryReader.ReadBytes(createPhotoViewModel.Image.ContentLength);
                 }
                 // установка массива байтов
                 var createPhotoDto = new CreatePhotoDto();
                 createPhotoDto.Image = imageData;
-                createPhotoDto.ImageMimeType = createPhotoModel.Image.ContentType;
-                createPhotoDto.Title = createPhotoModel.Title;
-                createPhotoDto.Description = createPhotoModel.Description;
+                createPhotoDto.ImageMimeType = createPhotoViewModel.Image.ContentType;
+                createPhotoDto.Title = createPhotoViewModel.Title;
+                createPhotoDto.Description = createPhotoViewModel.Description;
 
                 await _photoAlbumService.CreatePhoto(createPhotoDto);
 
@@ -104,12 +111,14 @@ namespace PhotoAlbum.Client.Controllers
             if(editPhotoDto != null)
             {
                 // Mapping
-                editPhotoViewModel = new EditPhotoViewModel
-                {
-                    Id = editPhotoDto.Id,
-                    Title = editPhotoDto.Title,
-                    Description = editPhotoDto.Description
-                };
+                //editPhotoViewModel = new EditPhotoViewModel
+                //{
+                //    Id = editPhotoDto.Id,
+                //    Title = editPhotoDto.Title,
+                //    Description = editPhotoDto.Description
+                //};
+
+                editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
             }
             return View(editPhotoViewModel);
         }
