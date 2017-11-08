@@ -224,11 +224,9 @@
     <Compile Include="Mappings\DtoToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDtoMappingProfile.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CreatePhotoViewModel.cs" />
-    <Compile Include="Models\EditPhotoViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PhotoViewModel.cs" />
+    <Compile Include="Models\PhotoViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
