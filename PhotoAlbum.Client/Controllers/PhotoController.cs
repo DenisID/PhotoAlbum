@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Client.BusinessServices.Interfaces;
+﻿using AutoMapper;
+using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Dto;
 //using PhotoAlbum.Client.Model.Services;
@@ -17,13 +18,19 @@ namespace PhotoAlbum.Client.Controllers
     public class PhotoController : Controller
     {
         //private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
-        private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        //private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        private readonly IPhotoAlbumService _photoAlbumService;
+
+        public PhotoController(IPhotoAlbumService photoAlbumService)
+        {
+            _photoAlbumService = photoAlbumService;
+        }
 
         //public async Task<HttpResponseMessage> Test()
         //{
         //    var response = await _photoAlbumService.Test();
         //    var result = response.Content;
-            
+
         //    return response;
         //}
 
@@ -31,7 +38,7 @@ namespace PhotoAlbum.Client.Controllers
         public async Task<ActionResult> Index()
         {
             //var photos = _photoAlbumService.GetAllPhotos();
-            List<PhotoModel> photos = new List<PhotoModel>();
+            List<PhotoViewModel> photos = new List<PhotoViewModel>();
             List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
 
             // Mapping
@@ -39,7 +46,7 @@ namespace PhotoAlbum.Client.Controllers
             {
                 foreach(var photoDto in photosDto)
                 {
-                    photos.Add(new PhotoModel
+                    photos.Add(new PhotoViewModel
                     {
                         Id = photoDto.Id,
                         Title = photoDto.Title,
@@ -60,22 +67,22 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePhoto(CreatePhotoModel createPhotoModel)
+        public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel createPhotoViewModel)
         {
-            if (ModelState.IsValid && createPhotoModel.Image != null)
+            if (ModelState.IsValid && createPhotoViewModel.Image != null)
             {
                 byte[] imageData = null;
                 // считываем переданный файл в массив байтов
-                using (var binaryReader = new BinaryReader(createPhotoModel.Image.InputStream))
+                using (var binaryReader = new BinaryReader(createPhotoViewModel.Image.InputStream))
                 {
-                    imageData = binaryReader.ReadBytes(createPhotoModel.Image.ContentLength);
+                    imageData = binaryReader.ReadBytes(createPhotoViewModel.Image.ContentLength);
                 }
                 // установка массива байтов
                 var createPhotoDto = new CreatePhotoDto();
                 createPhotoDto.Image = imageData;
-                createPhotoDto.ImageMimeType = createPhotoModel.Image.ContentType;
-                createPhotoDto.Title = createPhotoModel.Title;
-                createPhotoDto.Description = createPhotoModel.Description;
+                createPhotoDto.ImageMimeType = createPhotoViewModel.Image.ContentType;
+                createPhotoDto.Title = createPhotoViewModel.Title;
+                createPhotoDto.Description = createPhotoViewModel.Description;
 
                 await _photoAlbumService.CreatePhoto(createPhotoDto);
 
@@ -99,30 +106,32 @@ namespace PhotoAlbum.Client.Controllers
         [HttpGet]
         public async Task<ActionResult> EditPhoto(int id)
         {
-            EditPhotoModel editPhotoModel = null;
+            EditPhotoViewModel editPhotoViewModel = null;
             EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id);
             if(editPhotoDto != null)
             {
                 // Mapping
-                editPhotoModel = new EditPhotoModel
-                {
-                    Id = editPhotoDto.Id,
-                    Title = editPhotoDto.Title,
-                    Description = editPhotoDto.Description
-                };
+                //editPhotoViewModel = new EditPhotoViewModel
+                //{
+                //    Id = editPhotoDto.Id,
+                //    Title = editPhotoDto.Title,
+                //    Description = editPhotoDto.Description
+                //};
+
+                editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
             }
-            return View(editPhotoModel);
+            return View(editPhotoViewModel);
         }
 
         //[HttpPut]
         [HttpPost]
-        public async Task<ActionResult> EditPhoto(EditPhotoModel editPhotoModel)
+        public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
         {
             EditPhotoDto editPhotoDto = new EditPhotoDto
             {
-                Id = editPhotoModel.Id,
-                Title = editPhotoModel.Title,
-                Description = editPhotoModel.Description
+                Id = editPhotoViewModel.Id,
+                Title = editPhotoViewModel.Title,
+                Description = editPhotoViewModel.Description
             };
 
             await _photoAlbumService.EditPhoto(editPhotoDto);

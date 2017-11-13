@@ -14,6 +14,7 @@ namespace PhotoAlbum.Server.Model.Entities
         public DateTime CreationDate { get; set; }
 
         public virtual PhotoContent PhotoContent { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public virtual ICollection<PhotoVote> Votes { get; set; }
 
         public Photo()

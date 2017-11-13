@@ -5,13 +5,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using PhotoAlbum.Server.Model.Entities;
 using PhotoAlbum.Server.Model.Data;
+using PhotoAlbum.Server.Model.Managers;
 //using PhotoAlbum.Server.Models;
 
 namespace PhotoAlbum.Server
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class ApplicationUserManager : CustomUserManager
     {
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
