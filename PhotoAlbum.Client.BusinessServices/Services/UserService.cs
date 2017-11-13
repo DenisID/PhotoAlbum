@@ -30,20 +30,35 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return response.StatusCode;
         }
 
-        public async Task<HttpStatusCode> GetTokenAsync(GetTokenDto getTokenDto)
+        public async Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto)
         {
-            HttpContent content = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("grant_type", "password"),
-                    new KeyValuePair<string, string>("username", getTokenDto.Email),
-                    new KeyValuePair<string, string>("password", getTokenDto.Password)
-                });
-            HttpResponseMessage result = _httpClient.PostAsync("Token", content).Result;
-            string resultContent = result.Content.ReadAsStringAsync().Result;
+            TokenDto token = null;
 
-            var token = JsonConvert.DeserializeObject<JToken>(resultContent);
+            var dict = new Dictionary<string, string>();
+            dict.Add("userName", "Den@gmail.com");
+            dict.Add("password", "DenDen1!");
+            dict.Add("grant_type", "password");
+            var client = new HttpClient();
+            var req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:52670/Token") { Content = new FormUrlEncodedContent(dict) };
+            var res = await client.SendAsync(req);
+            var result = res.Content.ReadAsAsync<TokenDto>();
 
-            return HttpStatusCode.Accepted;
+            return token;
+
+            //HttpContent content = new FormUrlEncodedContent(new[]
+            //    {
+            //        new KeyValuePair<string, string>("grant_type", "password"),
+            //        new KeyValuePair<string, string>("username", getTokenDto.Email),
+            //        new KeyValuePair<string, string>("password", getTokenDto.Password)
+            //    });
+            //object result = _httpClient.PostAsync("Token", content).Result;
+            //string resultContent = result.Content.ReadAsStringAsync().Result;
+
+            //var token = JsonConvert.DeserializeObject<JToken>(resultContent);
+
+            throw new NotImplementedException();
+
+            //return HttpStatusCode.Accepted;
         }
     }
 }
