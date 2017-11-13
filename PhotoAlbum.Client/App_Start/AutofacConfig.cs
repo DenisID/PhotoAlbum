@@ -29,8 +29,13 @@ namespace PhotoAlbum.Client.App_Start
         {
             //var builder = new ContainerBuilder();
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
+
             builder.RegisterType<PhotoAlbumService>()
                    .As<IPhotoAlbumService>()
+                   .InstancePerRequest();
+
+            builder.RegisterType<UserService>()
+                   .As<IUserService>()
                    .InstancePerRequest();
             //builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
 

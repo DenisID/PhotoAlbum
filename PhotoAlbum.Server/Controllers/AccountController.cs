@@ -335,7 +335,8 @@ namespace PhotoAlbum.Server.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                var errorResult = GetErrorResult(result);
+                return errorResult;
             }
 
             return Ok();

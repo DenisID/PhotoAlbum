@@ -18,6 +18,7 @@ namespace PhotoAlbum.Client.Mappings
         public ViewModelToDtoMappingProfile()
         {
             CreateMap<EditPhotoViewModel, EditPhotoDto>();
+            CreateMap<RegisterViewModel, RegisterUserDto>();
         }
     }
 }
