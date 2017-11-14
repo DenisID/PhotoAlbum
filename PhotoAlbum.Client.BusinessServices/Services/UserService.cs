@@ -32,35 +32,17 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
         public async Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto)
         {
-            //TokenDto token = null;
-
             var dict = new Dictionary<string, string>();
             dict.Add("userName", getTokenDto.Email);
             dict.Add("password", getTokenDto.Password);
             dict.Add("grant_type", "password");
-            var client = new HttpClient();
-            var req = new HttpRequestMessage(HttpMethod.Post, "http://localhost:52670/Token") { Content = new FormUrlEncodedContent(dict) };
-            var res = await client.SendAsync(req);
+            var req = new HttpRequestMessage(HttpMethod.Post, "Token") { Content = new FormUrlEncodedContent(dict) };
+            var res = await _httpClient.SendAsync(req);
             var result = await res.Content.ReadAsAsync<TokenDto>();
-            //var str = await res.Content.ReadAsStringAsync();
-            //var result = JsonConvert.DeserializeObject<TokenDto>(str);
 
             return result;
 
-            //HttpContent content = new FormUrlEncodedContent(new[]
-            //    {
-            //        new KeyValuePair<string, string>("grant_type", "password"),
-            //        new KeyValuePair<string, string>("username", getTokenDto.Email),
-            //        new KeyValuePair<string, string>("password", getTokenDto.Password)
-            //    });
-            //object result = _httpClient.PostAsync("Token", content).Result;
-            //string resultContent = result.Content.ReadAsStringAsync().Result;
-
-            //var token = JsonConvert.DeserializeObject<JToken>(resultContent);
-
             throw new NotImplementedException();
-
-            //return HttpStatusCode.Accepted;
         }
     }
 }
