@@ -30,6 +30,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return response.StatusCode;
         }
 
+        // TODO : mb rework
         public async Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto)
         {
             var dict = new Dictionary<string, string>();
@@ -38,11 +39,9 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             dict.Add("grant_type", "password");
             var req = new HttpRequestMessage(HttpMethod.Post, "Token") { Content = new FormUrlEncodedContent(dict) };
             var res = await _httpClient.SendAsync(req);
-            var result = await res.Content.ReadAsAsync<TokenDto>();
+            var token = await res.Content.ReadAsAsync<TokenDto>();
 
-            return result;
-
-            throw new NotImplementedException();
+            return token;
         }
     }
 }
