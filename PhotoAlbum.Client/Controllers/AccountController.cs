@@ -63,7 +63,6 @@ namespace PhotoAlbum.Client.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(string returnUrl)
         {
-            var result = await _userService.GetTokenAsync(new GetTokenDto { Email = $"Den@gmail.com", Password = $"DenDen1!" });
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -73,12 +72,12 @@ namespace PhotoAlbum.Client.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(/*LoginViewModel model, string returnUrl*/)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(/*model*/);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
             //// This doesn't count login failures towards account lockout
             //// To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -97,8 +96,16 @@ namespace PhotoAlbum.Client.Controllers
             //        return View(model);
             //}
 
-            var result = await _userService.GetTokenAsync(new GetTokenDto { Email = $"Den@gmail.com", Password = $"DenDen1!" });
-            return View(/*model*/);
+            var GetTokenDto = Mapper.Map<GetTokenDto>(model);
+
+            var result = await _userService.GetTokenAsync(GetTokenDto);
+            if(result == null)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(model);
+            }
+            return RedirectToLocal(returnUrl);
+            //return View(model);
         }
 
         //

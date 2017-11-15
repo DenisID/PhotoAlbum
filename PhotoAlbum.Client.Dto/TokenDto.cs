@@ -20,7 +20,7 @@ namespace PhotoAlbum.Client.Dto
 
         //"expires_in": 1209599,
         [JsonProperty("expires_in")]
-        public string ExpiresIn { get; set; }
+        public int ExpiresIn { get; set; }
 
         //"userName": "Den@gmail.com",
         [JsonProperty("userName")]
