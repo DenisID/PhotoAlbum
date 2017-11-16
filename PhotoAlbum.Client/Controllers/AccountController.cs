@@ -96,16 +96,27 @@ namespace PhotoAlbum.Client.Controllers
             //        return View(model);
             //}
 
-            var GetTokenDto = Mapper.Map<GetTokenDto>(model);
+            var getTokenDto = Mapper.Map<GetTokenDto>(model);
 
-            var result = await _userService.GetTokenAsync(GetTokenDto);
-            if(result == null)
+            var token = await _userService.GetTokenAsync(getTokenDto);
+
+            AuthenticationProperties options = new AuthenticationProperties();
+
+            options.AllowRefresh = true;
+            options.IsPersistent = true;
+            options.ExpiresUtc = DateTime.UtcNow.AddSeconds(token.ExpiresIn);
+
+            var claims = new[]
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return View(model);
-            }
-            return RedirectToLocal(returnUrl);
-            //return View(model);
+                    new Claim(ClaimTypes.Name, model.Email),
+                    new Claim("AcessToken", string.Format("Bearer {0}", token.AccessToken)),
+                };
+
+            var identity = new ClaimsIdentity(claims, "ApplicationCookie");
+
+            Request.GetOwinContext().Authentication.SignIn(options, identity);
+            
+            return RedirectToAction("Index", "Home");
         }
 
         //
