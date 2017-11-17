@@ -11,6 +11,7 @@ using System.Web.Http.Results;
 
 namespace PhotoAlbum.Server.Controllers
 {
+    //[Authorize]
     public class PhotoController : BaseController
     {
         private readonly IPhotoAlbumService _photoAlbumService;
@@ -49,6 +50,11 @@ namespace PhotoAlbum.Server.Controllers
         [HttpPost]
         public HttpResponseMessage CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
         {
+            var req = Request;
+            var reqC = RequestContext;
+            var reqH = Request.Headers;
+            var reqHA = Request.Headers.Authorization;
+
             //return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
             return Success(_photoAlbumService.CreatePhoto(createPhotoDto));
         }

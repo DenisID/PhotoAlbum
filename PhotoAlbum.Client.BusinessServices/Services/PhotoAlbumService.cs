@@ -20,6 +20,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             _httpClient.BaseAddress = new Uri("http://localhost:52670/");
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
 
         //public async Task<HttpResponseMessage> Test()
