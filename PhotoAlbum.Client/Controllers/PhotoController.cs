@@ -109,8 +109,10 @@ namespace PhotoAlbum.Client.Controllers
         [HttpGet]
         public async Task<ActionResult> EditPhoto(int id)
         {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
             EditPhotoViewModel editPhotoViewModel = null;
-            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id);
+            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id, token);
             if(editPhotoDto != null)
             {
                 // Mapping
