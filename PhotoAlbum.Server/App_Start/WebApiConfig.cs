@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using PhotoAlbum.Server.Handlers;
 
 namespace PhotoAlbum.Server
 {
@@ -25,6 +26,8 @@ namespace PhotoAlbum.Server
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.MessageHandlers.Add(new ResponseHandler());
         }
     }
 }
