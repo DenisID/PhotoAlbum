@@ -34,8 +34,10 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         //    return response;
         //}
 
-        public async Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto)
+        public async Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto, string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/photo", createPhotoDto);
             response.EnsureSuccessStatusCode();
 

@@ -48,6 +48,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public HttpResponseMessage CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
         {
             var req = Request;
@@ -60,6 +61,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public HttpResponseMessage DeletePhotoById([FromUri] int id)
         {
             try
@@ -76,6 +78,7 @@ namespace PhotoAlbum.Server.Controllers
         [HttpPut]
         [HttpPost]
         [Route("api/photo/editphoto")]
+        [Authorize]
         public HttpResponseMessage EditPhoto([FromBody] EditPhotoDto editPhotoDto)
         {
             try
@@ -91,6 +94,7 @@ namespace PhotoAlbum.Server.Controllers
 
         [HttpGet]
         [Route("api/photo/editphoto/{id}")]
+        [Authorize]
         public HttpResponseMessage GetEditPhotoById(int id)
         {
             try

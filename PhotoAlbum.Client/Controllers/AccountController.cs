@@ -109,7 +109,7 @@ namespace PhotoAlbum.Client.Controllers
             var claims = new[]
             {
                     new Claim(ClaimTypes.Name, model.Email),
-                    new Claim("AcessToken", string.Format("Bearer {0}", token.AccessToken)),
+                    new Claim("AcessToken", string.Format(/*"Bearer {0}",*/ token.AccessToken)),
                 };
 
             var identity = new ClaimsIdentity(claims, "ApplicationCookie");

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -69,6 +70,8 @@ namespace PhotoAlbum.Client.Controllers
         [HttpPost]
         public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel createPhotoViewModel)
         {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
             if (ModelState.IsValid && createPhotoViewModel.Image != null)
             {
                 byte[] imageData = null;
@@ -84,7 +87,7 @@ namespace PhotoAlbum.Client.Controllers
                 createPhotoDto.Title = createPhotoViewModel.Title;
                 createPhotoDto.Description = createPhotoViewModel.Description;
 
-                await _photoAlbumService.CreatePhoto(createPhotoDto);
+                await _photoAlbumService.CreatePhoto(createPhotoDto, token);
 
                 return RedirectToAction("Index");
             }
