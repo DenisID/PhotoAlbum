@@ -38,7 +38,7 @@ namespace PhotoAlbum.Server.Model.Services
 
         public List<PhotoDto> GetAllPhotos()
         {
-            var photosFromDb = _photoAlbumContext.Photos.ToList();
+            var photosFromDb = _photoAlbumContext.Photos/*.ToList()*/;
             var photos = new List<PhotoDto>();
             if(photosFromDb != null)
             {
@@ -51,8 +51,8 @@ namespace PhotoAlbum.Server.Model.Services
                         Title = photoFromDb.Title,
                         Description = photoFromDb.Description,
                         CreationDate = photoFromDb.CreationDate,
-                        Image = photoFromDb.PhotoContent.Image,
-                        ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
+                        //Image = photoFromDb.PhotoContent.Image,
+                        //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
                 }
             }
