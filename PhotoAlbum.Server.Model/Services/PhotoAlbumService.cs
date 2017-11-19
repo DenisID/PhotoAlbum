@@ -101,7 +101,14 @@ namespace PhotoAlbum.Server.Model.Services
         {
             var photo = _photoAlbumContext.Photos.Find(editPhotoId);
             EditPhotoDto editPhotoDto = null;
-            if(photo != null)
+            
+            // TODO : add ex
+
+            //if(photo == null)
+            //{
+            //    throw new Exception("Photo Not Found");
+            //}
+            if (photo != null)
             {
                 // Mapping
                 editPhotoDto = new EditPhotoDto {
