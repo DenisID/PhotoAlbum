@@ -11,8 +11,8 @@ namespace PhotoAlbum.Client.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
-        public byte[] Image { get; set; }
-        public string ImageMimeType { get; set; }
+        //public byte[] Image { get; set; }
+        //public string ImageMimeType { get; set; }
     }
 
     public class CreatePhotoViewModel
