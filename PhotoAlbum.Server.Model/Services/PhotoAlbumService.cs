@@ -38,7 +38,7 @@ namespace PhotoAlbum.Server.Model.Services
 
         public List<PhotoDto> GetAllPhotos()
         {
-            var photosFromDb = _photoAlbumContext.Photos.ToList();
+            var photosFromDb = _photoAlbumContext.Photos/*.ToList()*/;
             var photos = new List<PhotoDto>();
             if(photosFromDb != null)
             {
@@ -51,8 +51,8 @@ namespace PhotoAlbum.Server.Model.Services
                         Title = photoFromDb.Title,
                         Description = photoFromDb.Description,
                         CreationDate = photoFromDb.CreationDate,
-                        Image = photoFromDb.PhotoContent.Image,
-                        ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
+                        //Image = photoFromDb.PhotoContent.Image,
+                        //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
                 }
             }
@@ -101,7 +101,14 @@ namespace PhotoAlbum.Server.Model.Services
         {
             var photo = _photoAlbumContext.Photos.Find(editPhotoId);
             EditPhotoDto editPhotoDto = null;
-            if(photo != null)
+            
+            // TODO : add ex
+
+            //if(photo == null)
+            //{
+            //    throw new Exception("Photo Not Found");
+            //}
+            if (photo != null)
             {
                 // Mapping
                 editPhotoDto = new EditPhotoDto {

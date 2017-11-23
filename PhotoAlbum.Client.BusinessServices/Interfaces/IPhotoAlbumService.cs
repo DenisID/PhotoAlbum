@@ -11,12 +11,12 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 {
     public interface IPhotoAlbumService
     {
-        Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto);
+        Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto, string token);
         Task<List<PhotoDto>> GetAllPhotos();
         Task<ImageDto> GetImageById(int imageId);
         Task<HttpStatusCode> DeletePhotoById(int photoId);
         Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto);
-        Task<EditPhotoDto> GetEditPhotoById(int editPhotoId);
+        Task<EditPhotoDto> GetEditPhotoById(int editPhotoId, string token);
         //Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
     }
 }

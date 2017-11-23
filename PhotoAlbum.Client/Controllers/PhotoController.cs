@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -52,8 +53,8 @@ namespace PhotoAlbum.Client.Controllers
                         Title = photoDto.Title,
                         Description = photoDto.Description,
                         CreationDate = photoDto.CreationDate,
-                        Image = photoDto.Image,
-                        ImageMimeType = photoDto.ImageMimeType
+                        //Image = photoDto.Image,
+                        //ImageMimeType = photoDto.ImageMimeType
                     });
                 }
             }
@@ -69,6 +70,8 @@ namespace PhotoAlbum.Client.Controllers
         [HttpPost]
         public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel createPhotoViewModel)
         {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
             if (ModelState.IsValid && createPhotoViewModel.Image != null)
             {
                 byte[] imageData = null;
@@ -84,7 +87,7 @@ namespace PhotoAlbum.Client.Controllers
                 createPhotoDto.Title = createPhotoViewModel.Title;
                 createPhotoDto.Description = createPhotoViewModel.Description;
 
-                await _photoAlbumService.CreatePhoto(createPhotoDto);
+                await _photoAlbumService.CreatePhoto(createPhotoDto, token);
 
                 return RedirectToAction("Index");
             }
@@ -106,8 +109,10 @@ namespace PhotoAlbum.Client.Controllers
         [HttpGet]
         public async Task<ActionResult> EditPhoto(int id)
         {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
             EditPhotoViewModel editPhotoViewModel = null;
-            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id);
+            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id, token);
             if(editPhotoDto != null)
             {
                 // Mapping
