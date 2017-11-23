@@ -22,6 +22,9 @@ namespace PhotoAlbum.Server.Model.Services
             photo.Title = createPhotoDto.Title;
             photo.Description = createPhotoDto.Description;
 
+            var user = _photoAlbumContext.Users.Find(createPhotoDto.UserId);
+            photo.User = user;
+
             _photoAlbumContext.Photos.Add(photo);
             _photoAlbumContext.SaveChanges();
 
@@ -58,6 +61,11 @@ namespace PhotoAlbum.Server.Model.Services
             }
             
             return photos;
+        }
+
+        public PhotoDto GetPhotoById(int photoId)
+        {
+            throw new NotImplementedException();
         }
 
         public ImageDto GetImageById(int imageId)

@@ -1,5 +1,8 @@
-﻿using PhotoAlbum.Server.Dto;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Interfaces;
+using PhotoAlbum.Server.Model.Managers;
 using PhotoAlbum.Server.Model.Services;
 using System;
 using System.Collections.Generic;
@@ -56,6 +59,10 @@ namespace PhotoAlbum.Server.Controllers
             var reqH = Request.Headers;
             var reqHA = Request.Headers.Authorization;
 
+            var user = RequestContext.Principal.Identity.Name;
+            var userId = User.Identity.GetUserId();
+            createPhotoDto.UserId = userId;
+
             //return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
             return Success(_photoAlbumService.CreatePhoto(createPhotoDto));
         }
@@ -66,6 +73,8 @@ namespace PhotoAlbum.Server.Controllers
         {
             try
             {
+                if (User.Identity.GetUserId() == _photoAlbumService.GetEditPhotoById(id).
+
                 _photoAlbumService.DeletePhotoById(id);
                 return Success();
             }
