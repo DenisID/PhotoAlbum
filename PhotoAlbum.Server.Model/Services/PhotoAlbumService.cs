@@ -129,6 +129,29 @@ namespace PhotoAlbum.Server.Model.Services
             return editPhotoDto;
         }
 
+        public void CastPhotoVote(CastPhotoVoteDto castPhotoVoteDto)
+        {
+            var photoVote = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == castPhotoVoteDto.UserId)
+                                                         .Where(x => x.PhotoId == castPhotoVoteDto.PhotoId)
+                                                         .FirstOrDefault();
+
+            if (photoVote == null)
+            {
+                _photoAlbumContext.PhotoVotes.Add(new PhotoVote
+                {
+                    PhotoId = castPhotoVoteDto.PhotoId,
+                    UserId = castPhotoVoteDto.UserId,
+                    Rating = castPhotoVoteDto.Rating
+                });
+            }
+            else
+            {
+                photoVote.Rating = castPhotoVoteDto.Rating;
+                _photoAlbumContext.Entry(photoVote).State = EntityState.Modified;
+            }
+            _photoAlbumContext.SaveChanges();
+        }
+
         //public Photo GetPhotoById(int photoId)
         //{
         //    if (photoId < 0)

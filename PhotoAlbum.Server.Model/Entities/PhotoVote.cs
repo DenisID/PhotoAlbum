@@ -16,7 +16,7 @@ namespace PhotoAlbum.Server.Model.Entities
         [Key, Column(Order = 1)]
         public int PhotoId { get; set; }
 
-        public int Vote { get; set; }
+        public int Rating { get; set; }
 
         public virtual ApplicationUser User { get; set; }
         public virtual Photo Photo { get; set; }

@@ -115,6 +115,28 @@ namespace PhotoAlbum.Server.Controllers
                 return Error(ex);
             }
         }
+        
+        [HttpPost]
+        [Route("api/photo/vote")]
+        [Authorize]
+        public HttpResponseMessage CastVote([FromBody]PhotoVoteDto photoVoteDto)
+        {
+            try
+            {
+                var castPhotoVoteDto = new CastPhotoVoteDto
+                {
+                    PhotoId = photoVoteDto.PhotoId,
+                    UserId = User.Identity.GetUserId(),
+                    Rating = photoVoteDto.Rating
+                };
+                _photoAlbumService.CastPhotoVote(castPhotoVoteDto);
+                return Success();
+            }
+            catch(Exception ex)
+            {
+                return Error(ex);
+            }
+        }
 
         //// GET api/values
         //public IEnumerable<string> GetAllPhoto()
