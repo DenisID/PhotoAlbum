@@ -152,6 +152,15 @@ namespace PhotoAlbum.Server.Model.Services
             _photoAlbumContext.SaveChanges();
         }
 
+        public double GetPhotoRating(int photoId)
+        {
+            var ratingSum = _photoAlbumContext.PhotoVotes.Where(x => x.PhotoId == photoId)
+                                                         .Average(x => x.Rating);
+
+            return ratingSum;
+            //throw new NotImplementedException();
+        }
+
         //public Photo GetPhotoById(int photoId)
         //{
         //    if (photoId < 0)

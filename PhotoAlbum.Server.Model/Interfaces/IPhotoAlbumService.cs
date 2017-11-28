@@ -17,6 +17,7 @@ namespace PhotoAlbum.Server.Model.Interfaces
         void EditPhoto(EditPhotoDto editPhotoDto);
         EditPhotoDto GetEditPhotoById(int editPhotoId);
         void CastPhotoVote(CastPhotoVoteDto castPhotoVoteDto);
+        double GetPhotoRating(int photoId);
         //void AddPhoto(AddPhotoDto addPhotoDto);
         //Photo GetPhotoById(int photoId);
     }

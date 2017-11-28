@@ -138,6 +138,20 @@ namespace PhotoAlbum.Server.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/photo/rating/{id}")]
+        public HttpResponseMessage GetPhotoRating(int id)
+        {
+            try
+            {
+                return Success(_photoAlbumService.GetPhotoRating(id));
+            }
+            catch(Exception ex)
+            {
+                return Error(ex);
+            }
+        }
+
         //// GET api/values
         //public IEnumerable<string> GetAllPhoto()
         //{         
