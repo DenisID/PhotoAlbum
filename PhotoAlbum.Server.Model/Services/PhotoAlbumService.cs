@@ -47,6 +47,7 @@ namespace PhotoAlbum.Server.Model.Services
             {
                 foreach(var photoFromDb in photosFromDb)
                 {
+                    var t = photoFromDb.Votes.ToList();
                     // Mapping
                     photos.Add(new PhotoDto
                     {
@@ -54,6 +55,7 @@ namespace PhotoAlbum.Server.Model.Services
                         Title = photoFromDb.Title,
                         Description = photoFromDb.Description,
                         CreationDate = photoFromDb.CreationDate,
+                        AuthorName = photoFromDb.User.UserName,
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
