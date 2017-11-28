@@ -129,7 +129,7 @@ namespace PhotoAlbum.Server.Model.Services
             return editPhotoDto;
         }
 
-        public void CastPhotoVote(CastPhotoVoteDto castPhotoVoteDto)
+        public void CastPhotoVote(PhotoVoteDto castPhotoVoteDto)
         {
             var photoVote = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == castPhotoVoteDto.UserId)
                                                          .Where(x => x.PhotoId == castPhotoVoteDto.PhotoId)
@@ -158,6 +158,32 @@ namespace PhotoAlbum.Server.Model.Services
                                                          .Average(x => x.Rating);
 
             return ratingSum;
+            //throw new NotImplementedException();
+        }
+
+        public List<PhotoVoteDto> GetUserVotes(string userId)
+        {
+            var photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId).ToList();
+
+            // Mapping
+            if(photoVotes.Count == 0)
+            {
+                throw new Exception("Votes not found");
+            }
+
+            List<PhotoVoteDto> returnedValue = new List<PhotoVoteDto>();
+            foreach(var element in photoVotes)
+            {
+                returnedValue.Add(new PhotoVoteDto
+                {
+                    PhotoId = element.PhotoId,
+                    UserId = element.UserId,
+                    Rating = element.Rating
+                });
+            }
+
+            return returnedValue;
+
             //throw new NotImplementedException();
         }
 
