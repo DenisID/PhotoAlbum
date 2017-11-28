@@ -73,7 +73,7 @@ namespace PhotoAlbum.Server.Controllers
         {
             try
             {
-                if (User.Identity.GetUserId() == _photoAlbumService.GetEditPhotoById(id).
+                //if (User.Identity.GetUserId() == _photoAlbumService.GetEditPhotoById(id))
 
                 _photoAlbumService.DeletePhotoById(id);
                 return Success();
