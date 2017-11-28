@@ -47,7 +47,6 @@ namespace PhotoAlbum.Server.Model.Services
             {
                 foreach(var photoFromDb in photosFromDb)
                 {
-                    var t = photoFromDb.Votes.ToList();
                     // Mapping
                     photos.Add(new PhotoDto
                     {
