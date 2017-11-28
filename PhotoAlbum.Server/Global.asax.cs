@@ -21,6 +21,9 @@ namespace PhotoAlbum.Server
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Bootstrapper.Run();
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
     }
 }
