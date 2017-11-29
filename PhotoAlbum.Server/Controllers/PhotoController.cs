@@ -70,11 +70,18 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpDelete]
+        [Route("api/photo/{id}")]
         [Authorize]
         public HttpResponseMessage DeletePhotoById([FromUri] int id)
         {
             try
             {
+                var user = User.Identity.Name;
+                if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), id))
+                {
+                    throw new Exception("Не достаточно прав");
+                }
+
                 //if (User.Identity.GetUserId() == _photoAlbumService.GetEditPhotoById(id))
 
                 _photoAlbumService.DeletePhotoById(id);

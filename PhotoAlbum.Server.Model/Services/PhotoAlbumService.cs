@@ -188,9 +188,14 @@ namespace PhotoAlbum.Server.Model.Services
             //throw new NotImplementedException();
         }
 
-        public bool IsPhotoOwner(string userId)
+        public bool IsPhotoOwner(string userId, int photoId)
         {
-            throw new NotImplementedException();
+            var user = _photoAlbumContext.Users.Find(userId);
+            var photo = _photoAlbumContext.Photos.Find(photoId);
+
+            return (photo.User == user) ? true : false;
+
+            //throw new NotImplementedException();
         }
 
         //public Photo GetPhotoById(int photoId)
