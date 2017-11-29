@@ -11,7 +11,7 @@ namespace PhotoAlbum.Client.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
-        public string AuthorName { get; set; }
+        public string OwnerName { get; set; }
         //public byte[] Image { get; set; }
         //public string ImageMimeType { get; set; }
     }
