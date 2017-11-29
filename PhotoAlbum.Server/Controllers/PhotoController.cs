@@ -1,5 +1,8 @@
-﻿using PhotoAlbum.Server.Dto;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Interfaces;
+using PhotoAlbum.Server.Model.Managers;
 using PhotoAlbum.Server.Model.Services;
 using System;
 using System.Collections.Generic;
@@ -56,6 +59,10 @@ namespace PhotoAlbum.Server.Controllers
             var reqH = Request.Headers;
             var reqHA = Request.Headers.Authorization;
 
+            var user = RequestContext.Principal.Identity.Name;
+            var userId = User.Identity.GetUserId();
+            createPhotoDto.UserId = userId;
+
             //return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
             return Success(_photoAlbumService.CreatePhoto(createPhotoDto));
         }
@@ -66,6 +73,8 @@ namespace PhotoAlbum.Server.Controllers
         {
             try
             {
+                //if (User.Identity.GetUserId() == _photoAlbumService.GetEditPhotoById(id))
+
                 _photoAlbumService.DeletePhotoById(id);
                 return Success();
             }
@@ -102,6 +111,59 @@ namespace PhotoAlbum.Server.Controllers
                 return Success(_photoAlbumService.GetEditPhotoById(id));
             }
             catch(Exception ex)
+            {
+                return Error(ex);
+            }
+        }
+        
+        [HttpPost]
+        [Route("api/photo/vote")]
+        [Authorize]
+        public HttpResponseMessage CastVote([FromBody]CastPhotoVoteDto photoVoteDto)
+        {
+            try
+            {
+                var castPhotoVoteDto = new PhotoVoteDto
+                {
+                    PhotoId = photoVoteDto.PhotoId,
+                    UserId = User.Identity.GetUserId(),
+                    Rating = photoVoteDto.Rating
+                };
+                _photoAlbumService.CastPhotoVote(castPhotoVoteDto);
+                return Success();
+            }
+            catch(Exception ex)
+            {
+                return Error(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/photo/rating/{id}")]
+        public HttpResponseMessage GetPhotoRating(int id)
+        {
+            try
+            {
+                return Success(_photoAlbumService.GetPhotoRating(id));
+            }
+            catch(Exception ex)
+            {
+                return Error(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/photo/vote")]
+        [Authorize]
+        public HttpResponseMessage GetUserVotes()
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+
+                return Success(_photoAlbumService.GetUserVotes(userId));
+            }
+            catch (Exception ex)
             {
                 return Error(ex);
             }

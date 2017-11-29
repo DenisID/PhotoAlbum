@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PhotoVoteDto.cs" />
     <Compile Include="CreatePhotoDto.cs" />
     <Compile Include="EditPhotoDto.cs" />
     <Compile Include="ImageDto.cs" />
     <Compile Include="PhotoDto.cs" />
+    <Compile Include="CastPhotoVoteDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

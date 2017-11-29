@@ -22,6 +22,9 @@ namespace PhotoAlbum.Server.Model.Services
             photo.Title = createPhotoDto.Title;
             photo.Description = createPhotoDto.Description;
 
+            var user = _photoAlbumContext.Users.Find(createPhotoDto.UserId);
+            photo.User = user;
+
             _photoAlbumContext.Photos.Add(photo);
             _photoAlbumContext.SaveChanges();
 
@@ -51,6 +54,7 @@ namespace PhotoAlbum.Server.Model.Services
                         Title = photoFromDb.Title,
                         Description = photoFromDb.Description,
                         CreationDate = photoFromDb.CreationDate,
+                        AuthorName = photoFromDb.User.UserName,
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
@@ -58,6 +62,11 @@ namespace PhotoAlbum.Server.Model.Services
             }
             
             return photos;
+        }
+
+        public PhotoDto GetPhotoById(int photoId)
+        {
+            throw new NotImplementedException();
         }
 
         public ImageDto GetImageById(int imageId)
@@ -119,6 +128,64 @@ namespace PhotoAlbum.Server.Model.Services
             }
 
             return editPhotoDto;
+        }
+
+        public void CastPhotoVote(PhotoVoteDto castPhotoVoteDto)
+        {
+            var photoVote = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == castPhotoVoteDto.UserId)
+                                                         .Where(x => x.PhotoId == castPhotoVoteDto.PhotoId)
+                                                         .FirstOrDefault();
+
+            if (photoVote == null)
+            {
+                _photoAlbumContext.PhotoVotes.Add(new PhotoVote
+                {
+                    PhotoId = castPhotoVoteDto.PhotoId,
+                    UserId = castPhotoVoteDto.UserId,
+                    Rating = castPhotoVoteDto.Rating
+                });
+            }
+            else
+            {
+                photoVote.Rating = castPhotoVoteDto.Rating;
+                _photoAlbumContext.Entry(photoVote).State = EntityState.Modified;
+            }
+            _photoAlbumContext.SaveChanges();
+        }
+
+        public double GetPhotoRating(int photoId)
+        {
+            var ratingSum = _photoAlbumContext.PhotoVotes.Where(x => x.PhotoId == photoId)
+                                                         .Average(x => x.Rating);
+
+            return ratingSum;
+            //throw new NotImplementedException();
+        }
+
+        public List<PhotoVoteDto> GetUserVotes(string userId)
+        {
+            var photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId).ToList();
+
+            // Mapping
+            if(photoVotes.Count == 0)
+            {
+                throw new Exception("Votes not found");
+            }
+
+            List<PhotoVoteDto> returnedValue = new List<PhotoVoteDto>();
+            foreach(var element in photoVotes)
+            {
+                returnedValue.Add(new PhotoVoteDto
+                {
+                    PhotoId = element.PhotoId,
+                    UserId = element.UserId,
+                    Rating = element.Rating
+                });
+            }
+
+            return returnedValue;
+
+            //throw new NotImplementedException();
         }
 
         //public Photo GetPhotoById(int photoId)
