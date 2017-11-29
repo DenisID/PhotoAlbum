@@ -37,6 +37,7 @@ namespace PhotoAlbum.Server.Controllers
         //}
 
         [HttpGet]
+        [Route("api/photo")]
         public HttpResponseMessage GetAllPhotos()
         {
             //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
@@ -51,6 +52,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpPost]
+        [Route("api/photo")]
         [Authorize]
         public HttpResponseMessage CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
         {
