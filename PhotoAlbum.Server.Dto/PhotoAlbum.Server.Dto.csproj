@@ -50,6 +50,12 @@
     <Compile Include="CastPhotoVoteDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Common\PhotoAlbum.Common.csproj">
+      <Project>{ce2f1d0b-5a10-4b1d-9b88-97334cac2303}</Project>
+      <Name>PhotoAlbum.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

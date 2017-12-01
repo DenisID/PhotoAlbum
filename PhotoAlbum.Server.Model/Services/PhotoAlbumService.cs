@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Server.Dto;
+﻿using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Data;
 using PhotoAlbum.Server.Model.Entities;
 using PhotoAlbum.Server.Model.Interfaces;
@@ -68,9 +69,25 @@ namespace PhotoAlbum.Server.Model.Services
 
         public List<PhotoDto> GetPhotos(PagingParametersDto pagingParameters)
         {
-            var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
-                                                        .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
-                                                        .Take(pagingParameters.PageSize);
+            switch (pagingParameters.Sorting)
+            {
+                case SortOrder.ByCreationDate:
+                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
+                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                                         .Take(pagingParameters.PageSize);
+                    break;
+
+                case SortOrder.ByRating:
+                    // WARNING : error
+                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.Rating)
+                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                                         .Take(pagingParameters.PageSize);
+                    break;
+                default:
+                    throw new Exception("Error");
+                    break;
+            }
+            
 
             var photos = new List<PhotoDto>();
             if (photosFromDb != null)
