@@ -53,7 +53,7 @@ namespace PhotoAlbum.Client.Controllers
                         Title = photoDto.Title,
                         Description = photoDto.Description,
                         CreationDate = photoDto.CreationDate,
-                        AuthorName = photoDto.AuthorName,
+                        OwnerName = photoDto.OwnerName,
                         //Image = photoDto.Image,
                         //ImageMimeType = photoDto.ImageMimeType
                     });

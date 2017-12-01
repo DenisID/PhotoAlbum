@@ -54,7 +54,7 @@ namespace PhotoAlbum.Server.Model.Services
                         Title = photoFromDb.Title,
                         Description = photoFromDb.Description,
                         CreationDate = photoFromDb.CreationDate,
-                        AuthorName = photoFromDb.User.UserName,
+                        OwnerName = photoFromDb.User.UserName,
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
@@ -184,6 +184,16 @@ namespace PhotoAlbum.Server.Model.Services
             }
 
             return returnedValue;
+
+            //throw new NotImplementedException();
+        }
+
+        public bool IsPhotoOwner(string userId, int photoId)
+        {
+            var user = _photoAlbumContext.Users.Find(userId);
+            var photo = _photoAlbumContext.Photos.Find(photoId);
+
+            return (photo.User == user) ? true : false;
 
             //throw new NotImplementedException();
         }
