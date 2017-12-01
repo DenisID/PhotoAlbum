@@ -37,11 +37,19 @@ namespace PhotoAlbum.Server.Controllers
         //}
 
         [HttpGet]
-        [Route("api/photo")]
+        [Route("api/allphoto")]
         public HttpResponseMessage GetAllPhotos()
         {
             //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
             return Success(_photoAlbumService.GetAllPhotos());
+        }
+
+        [HttpGet]
+        [Route("api/photo")]
+        public HttpResponseMessage GetPhotos([FromUri]PagingParametersDto pagingParameters)
+        {
+            //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
+            return Success(_photoAlbumService.GetPhotos(pagingParameters));
         }
 
         [HttpGet]

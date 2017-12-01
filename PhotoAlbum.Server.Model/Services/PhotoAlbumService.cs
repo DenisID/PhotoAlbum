@@ -66,6 +66,36 @@ namespace PhotoAlbum.Server.Model.Services
             return photos;
         }
 
+        public List<PhotoDto> GetPhotos(PagingParametersDto pagingParameters)
+        {
+            var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
+                                                        .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                                        .Take(pagingParameters.PageSize);
+
+            var photos = new List<PhotoDto>();
+            if (photosFromDb != null)
+            {
+                foreach (var photoFromDb in photosFromDb)
+                {
+                    // Mapping
+                    photos.Add(new PhotoDto
+                    {
+                        Id = photoFromDb.Id,
+                        Title = photoFromDb.Title,
+                        Description = photoFromDb.Description,
+                        CreationDate = photoFromDb.CreationDate,
+                        OwnerName = photoFromDb.User.UserName,
+                        //Image = photoFromDb.PhotoContent.Image,
+                        //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
+                    });
+                    // TODO : bad code
+                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
+                }
+            }
+
+            return photos;
+        }
+
         public PhotoDto GetPhotoById(int photoId)
         {
             throw new NotImplementedException();

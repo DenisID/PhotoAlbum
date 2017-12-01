@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PagingParametersDto.cs" />
     <Compile Include="PhotoRatingDto.cs" />
     <Compile Include="PhotoVoteDto.cs" />
     <Compile Include="CreatePhotoDto.cs" />
