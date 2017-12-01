@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.Dto", "Ph
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.BusinessServices", "PhotoAlbum.Client.BusinessServices\PhotoAlbum.Client.BusinessServices.csproj", "{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Common", "PhotoAlbum.Common\PhotoAlbum.Common.csproj", "{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
