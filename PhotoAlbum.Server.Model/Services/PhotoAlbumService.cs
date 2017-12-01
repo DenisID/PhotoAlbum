@@ -58,6 +58,8 @@ namespace PhotoAlbum.Server.Model.Services
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
+                    // TODO : bad code
+                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
                 }
             }
             
@@ -153,12 +155,15 @@ namespace PhotoAlbum.Server.Model.Services
             _photoAlbumContext.SaveChanges();
         }
 
-        public double GetPhotoRating(int photoId)
+        public PhotoRatingDto GetPhotoRating(int photoId)
         {
             var ratingSum = _photoAlbumContext.PhotoVotes.Where(x => x.PhotoId == photoId)
                                                          .Average(x => x.Rating);
-
-            return ratingSum;
+            // Mapping
+            return new PhotoRatingDto
+            {
+                Rating = ratingSum
+            };
             //throw new NotImplementedException();
         }
 

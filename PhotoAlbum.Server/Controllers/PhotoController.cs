@@ -101,6 +101,12 @@ namespace PhotoAlbum.Server.Controllers
         {
             try
             {
+                var user = User.Identity.Name;
+                if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), editPhotoDto.Id))
+                {
+                    throw new Exception("Не достаточно прав");
+                }
+
                 _photoAlbumService.EditPhoto(editPhotoDto);
                 return Success();
             }
