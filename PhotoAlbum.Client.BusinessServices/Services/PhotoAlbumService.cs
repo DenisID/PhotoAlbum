@@ -60,15 +60,23 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return image;
         }
 
-        public async Task<HttpStatusCode> DeletePhotoById(int photoId)
+        public async Task<HttpStatusCode> DeletePhotoById(int photoId, string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             HttpResponseMessage response = await _httpClient.DeleteAsync($"api/photo/{photoId}");
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
             return response.StatusCode;
         }
 
-        public async Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto)
+        public async Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto, string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/photo/editphoto", editPhotoDto);
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
             return response.StatusCode;
         }
 

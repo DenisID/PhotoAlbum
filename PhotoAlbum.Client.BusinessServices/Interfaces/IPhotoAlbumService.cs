@@ -14,8 +14,8 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
         Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto, string token);
         Task<List<PhotoDto>> GetAllPhotos();
         Task<ImageDto> GetImageById(int imageId);
-        Task<HttpStatusCode> DeletePhotoById(int photoId);
-        Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto);
+        Task<HttpStatusCode> DeletePhotoById(int photoId, string token);
+        Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto, string token);
         Task<EditPhotoDto> GetEditPhotoById(int editPhotoId, string token);
         //Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
     }

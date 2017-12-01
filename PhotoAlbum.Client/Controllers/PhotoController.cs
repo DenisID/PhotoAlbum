@@ -103,7 +103,8 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> DeletePhotoById(int id)
         {
-            await _photoAlbumService.DeletePhotoById(id);
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+            await _photoAlbumService.DeletePhotoById(id, token);
             return RedirectToAction("Index");
         }
 
@@ -133,6 +134,8 @@ namespace PhotoAlbum.Client.Controllers
         [HttpPost]
         public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
         {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
             EditPhotoDto editPhotoDto = new EditPhotoDto
             {
                 Id = editPhotoViewModel.Id,
@@ -140,7 +143,7 @@ namespace PhotoAlbum.Client.Controllers
                 Description = editPhotoViewModel.Description
             };
 
-            await _photoAlbumService.EditPhoto(editPhotoDto);
+            await _photoAlbumService.EditPhoto(editPhotoDto, token);
             return RedirectToAction("Index");
         }
 
