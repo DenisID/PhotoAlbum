@@ -17,6 +17,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
         Task<HttpStatusCode> DeletePhotoById(int photoId, string token);
         Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto, string token);
         Task<EditPhotoDto> GetEditPhotoById(int editPhotoId, string token);
+        Task<PhotoRatingDto> GetPhotoRatingAsync(int photoId);
         //Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
     }
 }

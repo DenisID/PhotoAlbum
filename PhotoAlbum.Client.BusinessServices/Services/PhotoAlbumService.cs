@@ -95,6 +95,19 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return editoPhotoDto;
         }
 
+        public async Task<PhotoRatingDto> GetPhotoRatingAsync(int photoId)
+        {
+            PhotoRatingDto photoRatingDto = null;
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/vote/{photoId}");
+            if(apiResponse.IsSuccessStatusCode)
+            {
+                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<PhotoRatingDto>>();
+                photoRatingDto = responseContent.Result;
+            }
+
+            return photoRatingDto;
+        }
+
         //public async Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto)
         //{
         //    HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Account/Register", registerUserDto);

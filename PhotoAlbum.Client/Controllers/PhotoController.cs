@@ -54,6 +54,7 @@ namespace PhotoAlbum.Client.Controllers
                         Description = photoDto.Description,
                         CreationDate = photoDto.CreationDate,
                         OwnerName = photoDto.OwnerName,
+                        Rating = photoDto.Rating,
                         //Image = photoDto.Image,
                         //ImageMimeType = photoDto.ImageMimeType
                     });
@@ -145,6 +146,12 @@ namespace PhotoAlbum.Client.Controllers
 
             await _photoAlbumService.EditPhoto(editPhotoDto, token);
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> GetPhotoRating(int id)
+        {
+            var rating = await _photoAlbumService.GetPhotoRatingAsync(id);
+            return Json(rating.Rating);
         }
 
         //[HttpPost]

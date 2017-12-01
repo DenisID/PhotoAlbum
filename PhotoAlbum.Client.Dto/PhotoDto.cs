@@ -13,6 +13,7 @@ namespace PhotoAlbum.Client.Dto
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public string OwnerName { get; set; }
+        public double Rating { get; set; }
         //public byte[] Image { get; set; }
         //public string ImageMimeType { get; set; }
     }
