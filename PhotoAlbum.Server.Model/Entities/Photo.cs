@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DelegateDecompiler;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace PhotoAlbum.Server.Model.Entities
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Computed]
         public double Rating
         {
             get

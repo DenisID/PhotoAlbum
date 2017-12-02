@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Common.Enums;
+﻿using DelegateDecompiler;
+using PhotoAlbum.Common.Enums;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Data;
 using PhotoAlbum.Server.Model.Entities;
@@ -80,12 +81,12 @@ namespace PhotoAlbum.Server.Model.Services
                                                          .Take(pagingParameters.PageSize);
                     break;
 
-                //case SortOrder.ByRating:
-                //    // WARNING : error
-                //    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.Rating)
-                //                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
-                //                                         .Take(pagingParameters.PageSize);
-                //    break;
+                case SortOrder.ByRating:
+                    // WARNING : error
+                    photosFromDb = (_photoAlbumContext.Photos.OrderByDescending(x => x.Rating)
+                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                                         .Take(pagingParameters.PageSize)).Decompile();
+                    break;
 
                 default:
                     throw new Exception("Error");
