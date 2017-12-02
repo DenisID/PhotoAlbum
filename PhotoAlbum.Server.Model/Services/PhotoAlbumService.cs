@@ -56,11 +56,12 @@ namespace PhotoAlbum.Server.Model.Services
                         Description = photoFromDb.Description,
                         CreationDate = photoFromDb.CreationDate,
                         OwnerName = photoFromDb.User.UserName,
+                        Rating = photoFromDb.Rating,
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
                     // TODO : bad code
-                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
+                    //photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
                 }
             }
             
@@ -69,20 +70,23 @@ namespace PhotoAlbum.Server.Model.Services
 
         public List<PhotoDto> GetPhotos(PagingParametersDto pagingParameters)
         {
+            IQueryable<Photo> photosFromDb = null;
+
             switch (pagingParameters.Sorting)
             {
                 case SortOrder.ByCreationDate:
-                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
+                    photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
                                                          .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
                                                          .Take(pagingParameters.PageSize);
                     break;
 
-                case SortOrder.ByRating:
-                    // WARNING : error
-                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.Rating)
-                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
-                                                         .Take(pagingParameters.PageSize);
-                    break;
+                //case SortOrder.ByRating:
+                //    // WARNING : error
+                //    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.Rating)
+                //                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                //                                         .Take(pagingParameters.PageSize);
+                //    break;
+
                 default:
                     throw new Exception("Error");
                     break;
