@@ -60,15 +60,23 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return image;
         }
 
-        public async Task<HttpStatusCode> DeletePhotoById(int photoId)
+        public async Task<HttpStatusCode> DeletePhotoById(int photoId, string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             HttpResponseMessage response = await _httpClient.DeleteAsync($"api/photo/{photoId}");
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
             return response.StatusCode;
         }
 
-        public async Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto)
+        public async Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto, string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/photo/editphoto", editPhotoDto);
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
             return response.StatusCode;
         }
 
@@ -85,6 +93,19 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             }
 
             return editoPhotoDto;
+        }
+
+        public async Task<PhotoRatingDto> GetPhotoRatingAsync(int photoId)
+        {
+            PhotoRatingDto photoRatingDto = null;
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/vote/{photoId}");
+            if(apiResponse.IsSuccessStatusCode)
+            {
+                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<PhotoRatingDto>>();
+                photoRatingDto = responseContent.Result;
+            }
+
+            return photoRatingDto;
         }
 
         //public async Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto)

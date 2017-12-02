@@ -102,6 +102,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Common\PhotoAlbum.Common.csproj">
+      <Project>{ce2f1d0b-5a10-4b1d-9b88-97334cac2303}</Project>
+      <Name>PhotoAlbum.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhotoAlbum.Server.Dto\PhotoAlbum.Server.Dto.csproj">
       <Project>{2C67D22A-E7C7-4A1F-A87D-85BB695F0270}</Project>
       <Name>PhotoAlbum.Server.Dto</Name>

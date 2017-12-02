@@ -37,11 +37,19 @@ namespace PhotoAlbum.Server.Controllers
         //}
 
         [HttpGet]
-        [Route("api/photo")]
+        [Route("api/allphoto")]
         public HttpResponseMessage GetAllPhotos()
         {
             //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
             return Success(_photoAlbumService.GetAllPhotos());
+        }
+
+        [HttpGet]
+        [Route("api/photo")]
+        public HttpResponseMessage GetPhotos([FromUri]PagingParametersDto pagingParameters)
+        {
+            //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
+            return Success(_photoAlbumService.GetPhotos(pagingParameters));
         }
 
         [HttpGet]
@@ -101,6 +109,12 @@ namespace PhotoAlbum.Server.Controllers
         {
             try
             {
+                var user = User.Identity.Name;
+                if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), editPhotoDto.Id))
+                {
+                    throw new Exception("Не достаточно прав");
+                }
+
                 _photoAlbumService.EditPhoto(editPhotoDto);
                 return Success();
             }

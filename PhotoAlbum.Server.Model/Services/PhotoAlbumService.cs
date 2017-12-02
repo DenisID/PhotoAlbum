@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Server.Dto;
+﻿using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Data;
 using PhotoAlbum.Server.Model.Entities;
 using PhotoAlbum.Server.Model.Interfaces;
@@ -58,9 +59,57 @@ namespace PhotoAlbum.Server.Model.Services
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
+                    // TODO : bad code
+                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
                 }
             }
             
+            return photos;
+        }
+
+        public List<PhotoDto> GetPhotos(PagingParametersDto pagingParameters)
+        {
+            switch (pagingParameters.Sorting)
+            {
+                case SortOrder.ByCreationDate:
+                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
+                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                                         .Take(pagingParameters.PageSize);
+                    break;
+
+                case SortOrder.ByRating:
+                    // WARNING : error
+                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.Rating)
+                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                                         .Take(pagingParameters.PageSize);
+                    break;
+                default:
+                    throw new Exception("Error");
+                    break;
+            }
+            
+
+            var photos = new List<PhotoDto>();
+            if (photosFromDb != null)
+            {
+                foreach (var photoFromDb in photosFromDb)
+                {
+                    // Mapping
+                    photos.Add(new PhotoDto
+                    {
+                        Id = photoFromDb.Id,
+                        Title = photoFromDb.Title,
+                        Description = photoFromDb.Description,
+                        CreationDate = photoFromDb.CreationDate,
+                        OwnerName = photoFromDb.User.UserName,
+                        //Image = photoFromDb.PhotoContent.Image,
+                        //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
+                    });
+                    // TODO : bad code
+                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
+                }
+            }
+
             return photos;
         }
 
@@ -153,12 +202,15 @@ namespace PhotoAlbum.Server.Model.Services
             _photoAlbumContext.SaveChanges();
         }
 
-        public double GetPhotoRating(int photoId)
+        public PhotoRatingDto GetPhotoRating(int photoId)
         {
             var ratingSum = _photoAlbumContext.PhotoVotes.Where(x => x.PhotoId == photoId)
                                                          .Average(x => x.Rating);
-
-            return ratingSum;
+            // Mapping
+            return new PhotoRatingDto
+            {
+                Rating = ratingSum
+            };
             //throw new NotImplementedException();
         }
 

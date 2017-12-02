@@ -12,12 +12,13 @@ namespace PhotoAlbum.Server.Model.Interfaces
     {
         int CreatePhoto(CreatePhotoDto createPhotoDto);
         List<PhotoDto> GetAllPhotos();
+        List<PhotoDto> GetPhotos(PagingParametersDto pagingParameter);
         ImageDto GetImageById(int imageId);
         void DeletePhotoById(int photoId);
         void EditPhoto(EditPhotoDto editPhotoDto);
         EditPhotoDto GetEditPhotoById(int editPhotoId);
         void CastPhotoVote(PhotoVoteDto castPhotoVoteDto);
-        double GetPhotoRating(int photoId);
+        PhotoRatingDto GetPhotoRating(int photoId);
         List<PhotoVoteDto> GetUserVotes(string userId);
 
         bool IsPhotoOwner(string userId, int photoId);
