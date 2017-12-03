@@ -61,7 +61,7 @@ namespace PhotoAlbum.Server.Model.Services
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
-                    // TODO : bad code
+                    //// TODO : bad code
                     //photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
                 }
             }
@@ -76,23 +76,19 @@ namespace PhotoAlbum.Server.Model.Services
             switch (pagingParameters.Sorting)
             {
                 case SortOrder.ByCreationDate:
-                    photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
-                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
-                                                         .Take(pagingParameters.PageSize);
+                    photosFromDb = _photoAlbumContext.Photos.OrderByDescending(x => x.CreationDate);
                     break;
 
                 case SortOrder.ByRating:
-                    // WARNING : error
-                    photosFromDb = (_photoAlbumContext.Photos.OrderByDescending(x => x.Rating)
-                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
-                                                         .Take(pagingParameters.PageSize)).Decompile();
+                    photosFromDb = (_photoAlbumContext.Photos.OrderByDescending(x => x.Rating)).Decompile();
                     break;
 
                 default:
-                    throw new Exception("Error");
-                    break;
+                    throw new Exception("GetPhotos() sorting param error");
             }
-            
+
+            photosFromDb = photosFromDb.Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                       .Take(pagingParameters.PageSize);
 
             var photos = new List<PhotoDto>();
             if (photosFromDb != null)
@@ -107,11 +103,12 @@ namespace PhotoAlbum.Server.Model.Services
                         Description = photoFromDb.Description,
                         CreationDate = photoFromDb.CreationDate,
                         OwnerName = photoFromDb.User.UserName,
+                        Rating = photoFromDb.Rating,
                         //Image = photoFromDb.PhotoContent.Image,
                         //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
                     });
-                    // TODO : bad code
-                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
+                    //// TODO : bad code
+                    //photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
                 }
             }
 
@@ -226,7 +223,7 @@ namespace PhotoAlbum.Server.Model.Services
             // Mapping
             if(photoVotes.Count == 0)
             {
-                throw new Exception("Votes not found");
+                throw new Exception("GetUserVotes() - Votes not found");
             }
 
             List<PhotoVoteDto> returnedValue = new List<PhotoVoteDto>();
