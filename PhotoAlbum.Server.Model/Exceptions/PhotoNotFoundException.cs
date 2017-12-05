@@ -13,10 +13,20 @@ namespace PhotoAlbum.Server.Model.Exceptions
         {
         }
 
-        public PhotoNotFoundException(string message) : base(message) {
+        public PhotoNotFoundException(string message) 
+            : base(message)
+        {
         }
 
-        public PhotoNotFoundException(string message, Exception innerException) : base(message, innerException) {
+        public PhotoNotFoundException(string message, Exception innerException) 
+            : base(message, innerException)
+        {
+        }
+
+        public static PhotoNotFoundException CreateException(int photoId)
+        {
+            string message = $"No Photo found with ID = {photoId}";
+            return new PhotoNotFoundException(message);
         }
     }
 }

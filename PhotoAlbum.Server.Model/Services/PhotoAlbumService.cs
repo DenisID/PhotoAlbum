@@ -81,10 +81,10 @@ namespace PhotoAlbum.Server.Model.Services
 
             photosFromDb = photosFromDb.Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
                                        .Take(pagingParameters.PageSize);
-            throw new PhotoNotFoundException("No photos in database", new PhotoNotFoundException("Iner ex"));
+
             if (photosFromDb == null)
             {
-                throw new PhotoNotFoundException("No photos to database");
+                throw new PhotoNotFoundException("No photos in database");
             }
 
             var photos = new List<PhotoDto>();
@@ -104,6 +104,12 @@ namespace PhotoAlbum.Server.Model.Services
         public ImageDto GetImageById(int imageId)
         {
             var imageFromDb = _photoAlbumContext.PhotoContents.Find(imageId);
+
+            if(imageFromDb == null)
+            {
+                throw PhotoNotFoundException.CreateException(imageId);
+            }
+
             var image = Mapper.Map<PhotoContent, ImageDto>(imageFromDb);
 
             return image;
@@ -113,6 +119,12 @@ namespace PhotoAlbum.Server.Model.Services
         {
             var photo = _photoAlbumContext.Photos.Find(photoId);
             var photoContent = _photoAlbumContext.PhotoContents.Find(photoId);
+
+            if (photo == null || photoContent == null)
+            {
+                throw PhotoNotFoundException.CreateException(photoId);
+            }
+
             _photoAlbumContext.Entry(photoContent).State = EntityState.Deleted;
             _photoAlbumContext.Entry(photo).State = EntityState.Deleted;
             _photoAlbumContext.SaveChanges();
@@ -121,56 +133,54 @@ namespace PhotoAlbum.Server.Model.Services
         public void EditPhoto(EditPhotoDto editPhotoDto)
         {
             var photo = _photoAlbumContext.Photos.Find(editPhotoDto.Id);
-            if(photo != null)
-            {
-                photo.Title = editPhotoDto.Title;
-                photo.Description = editPhotoDto.Description;
 
-                _photoAlbumContext.Entry(photo).State = EntityState.Modified;
-                _photoAlbumContext.SaveChanges();
+            if (photo == null)
+            {
+                throw PhotoNotFoundException.CreateException(editPhotoDto.Id);
             }
-            
+
+            photo.Title = editPhotoDto.Title;
+            photo.Description = editPhotoDto.Description;
+
+            _photoAlbumContext.Entry(photo).State = EntityState.Modified;
+            _photoAlbumContext.SaveChanges();
         }
 
         public EditPhotoDto GetEditPhotoById(int editPhotoId)
         {
             var photo = _photoAlbumContext.Photos.Find(editPhotoId);
-            EditPhotoDto editPhotoDto = null;
-            
-            // TODO : add ex
 
-            //if(photo == null)
-            //{
-            //    throw new Exception("Photo Not Found");
-            //}
-            if (photo != null)
+            if (photo == null)
             {
-                // Mapping
-                //editPhotoDto = new EditPhotoDto {
-                //    Id = photo.Id,
-                //    Title = photo.Title,
-                //    Description = photo.Description
-                //};
-                editPhotoDto = Mapper.Map<Photo, EditPhotoDto>(photo);
+                throw PhotoNotFoundException.CreateException(editPhotoId);
             }
+
+            EditPhotoDto editPhotoDto = null;
+            editPhotoDto = Mapper.Map<Photo, EditPhotoDto>(photo);
 
             return editPhotoDto;
         }
 
         public void CastPhotoVote(PhotoVoteDto castPhotoVoteDto)
         {
+            var photo = _photoAlbumContext.Photos.Find(castPhotoVoteDto.PhotoId);
+            if (photo == null)
+            {
+                throw PhotoNotFoundException.CreateException(castPhotoVoteDto.PhotoId);
+            }
+
+            var user = _photoAlbumContext.Users.Find(castPhotoVoteDto.UserId);
+            if (user == null)
+            {
+                throw UserNotFoundException.CreateException(castPhotoVoteDto.UserId);
+            }
+
             var photoVote = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == castPhotoVoteDto.UserId)
                                                          .Where(x => x.PhotoId == castPhotoVoteDto.PhotoId)
                                                          .FirstOrDefault();
 
             if (photoVote == null)
             {
-                //_photoAlbumContext.PhotoVotes.Add(new PhotoVote
-                //{
-                //    PhotoId = castPhotoVoteDto.PhotoId,
-                //    UserId = castPhotoVoteDto.UserId,
-                //    Rating = castPhotoVoteDto.Rating
-                //});
                 _photoAlbumContext.PhotoVotes.Add(Mapper.Map<PhotoVoteDto, PhotoVote>(castPhotoVoteDto));
             }
             else
@@ -196,33 +206,29 @@ namespace PhotoAlbum.Server.Model.Services
         public List<PhotoVoteDto> GetUserVotes(string userId)
         {
             var photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId).ToList();
-            
-            if(photoVotes.Count == 0)
-            {
-                throw new Exception("GetUserVotes method - Votes not found");
-            }
 
-            List<PhotoVoteDto> returnedValue = new List<PhotoVoteDto>();
+            List<PhotoVoteDto> userVotes = new List<PhotoVoteDto>();
             foreach(var element in photoVotes)
             {
-                //returnedValue.Add(new PhotoVoteDto
-                //{
-                //    PhotoId = element.PhotoId,
-                //    UserId = element.UserId,
-                //    Rating = element.Rating
-                //});
-                returnedValue.Add(Mapper.Map<PhotoVote, PhotoVoteDto>(element));
+                userVotes.Add(Mapper.Map<PhotoVote, PhotoVoteDto>(element));
             }
 
-            return returnedValue;
-
-            //throw new NotImplementedException();
+            return userVotes;
         }
 
         public bool IsPhotoOwner(string userId, int photoId)
         {
             var user = _photoAlbumContext.Users.Find(userId);
+            if (user == null)
+            {
+                throw UserNotFoundException.CreateException(userId);
+            }
+
             var photo = _photoAlbumContext.Photos.Find(photoId);
+            if (user == null)
+            {
+                throw PhotoNotFoundException.CreateException(photoId);
+            }
 
             return (photo.User == user) ? true : false;
         }
@@ -242,7 +248,5 @@ namespace PhotoAlbum.Server.Model.Services
         //    //photo.ValidateEntity();
         //    return photo;
         //}
-
-
     }
 }

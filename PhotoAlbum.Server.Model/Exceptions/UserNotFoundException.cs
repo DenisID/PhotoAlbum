@@ -20,5 +20,11 @@ namespace PhotoAlbum.Server.Model.Exceptions
         public UserNotFoundException(string message, Exception innerException) : base(message, innerException)
         {
         }
+
+        public static UserNotFoundException CreateException(string userId)
+        {
+            string message = $"No User found with ID = {userId}";
+            return new UserNotFoundException(message);
+        }
     }
 }
