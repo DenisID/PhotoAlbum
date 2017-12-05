@@ -23,18 +23,22 @@ namespace PhotoAlbum.Server.Controllers
         {
             _photoAlbumService = photoAlbumService;
         }
-
-        //public class ResponseDTO
-        //{
-        //    public string value;
-        //}
-
-        //public ResponseDTO GetTest()
-        //{
-        //    var result = new ResponseDTO();
-        //    result.value = "Test OK";
-        //    return result;
-        //}
+        
+        [HttpGet]
+        [Route("api/test")]
+        public HttpResponseMessage Test()
+        {
+            try
+            {
+                _photoAlbumService.IsPhotoOwner(null, 1);
+                return Success();
+            }
+            catch(Exception ex)
+            {
+                return Error(ex.Message);
+            }
+            
+        }
 
         [HttpGet]
         [Route("api/allphoto")]
@@ -161,19 +165,19 @@ namespace PhotoAlbum.Server.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("api/photo/rating/{id}")]
-        public HttpResponseMessage GetPhotoRating(int id)
-        {
-            try
-            {
-                return Success(_photoAlbumService.GetPhotoRating(id));
-            }
-            catch(Exception ex)
-            {
-                return Error(ex);
-            }
-        }
+        //[HttpGet]
+        //[Route("api/photo/rating/{id}")]
+        //public HttpResponseMessage GetPhotoRating(int id)
+        //{
+        //    try
+        //    {
+        //        return Success(_photoAlbumService.GetPhotoRating(id));
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return Error(ex);
+        //    }
+        //}
 
         [HttpGet]
         [Route("api/photo/vote")]
@@ -191,18 +195,6 @@ namespace PhotoAlbum.Server.Controllers
                 return Error(ex);
             }
         }
-
-        //// GET api/values
-        //public IEnumerable<string> GetAllPhoto()
-        //{         
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/values/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
         //// POST api/photo
         //public void PostPhoto([FromBody]AddPhotoDto addPhotoDto)
@@ -226,16 +218,6 @@ namespace PhotoAlbum.Server.Controllers
         //        return RedirectToAction("Index");
         //    }
         //    return View();
-        //}
-
-        //// PUT api/values/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //public void Delete(int id)
-        //{
         //}
     }
 }

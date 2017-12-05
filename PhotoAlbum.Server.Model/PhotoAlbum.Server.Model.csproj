@@ -111,6 +111,8 @@
     <Compile Include="Entities\PhotoContent.cs" />
     <Compile Include="Entities\PhotoVote.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Exceptions\PhotoNotFoundException.cs" />
+    <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Interfaces\IPhotoAlbumService.cs" />
     <Compile Include="Managers\CustomUserManager.cs" />
     <Compile Include="Mappings\DtoToEntitiesMappingProfile.cs" />

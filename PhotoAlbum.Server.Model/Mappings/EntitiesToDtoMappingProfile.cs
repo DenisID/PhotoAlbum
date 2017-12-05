@@ -18,7 +18,14 @@ namespace PhotoAlbum.Server.Model.Mappings
 
         public EntitiesToDtoMappingProfile()
         {
-            CreateMap<Photo, PhotoDto>().ForMember()
+            CreateMap<Photo, PhotoDto>()
+                .ForMember(d => d.OwnerName, opt => opt.MapFrom(src => src.User.UserName));
+
+            CreateMap<Photo, EditPhotoDto>();
+
+            CreateMap<PhotoContent, ImageDto>();
+
+            CreateMap<PhotoVote, PhotoVoteDto>();
         }
     }
 }

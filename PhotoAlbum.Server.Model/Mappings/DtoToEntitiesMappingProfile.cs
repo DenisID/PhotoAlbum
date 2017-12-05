@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using PhotoAlbum.Server.Dto;
+using PhotoAlbum.Server.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace PhotoAlbum.Server.Model.Mappings
 
         public DtoToEntitiesMappingProfile()
         {
+            CreateMap<PhotoVoteDto, PhotoVote>();
         }
     }
 }
