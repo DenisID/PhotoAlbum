@@ -37,7 +37,7 @@ namespace PhotoAlbum.Client.Controllers
 
         // GET: Photo
         public async Task<ActionResult> Index()
-        {
+        {            
             //var photos = _photoAlbumService.GetAllPhotos();
             List<PhotoViewModel> photos = new List<PhotoViewModel>();
             List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
