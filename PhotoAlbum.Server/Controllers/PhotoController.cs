@@ -41,7 +41,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpGet]
-        [Route("api/allphoto")]
+        [Route("api/allphotos")]
         public HttpResponseMessage GetAllPhotos()
         {
             //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
