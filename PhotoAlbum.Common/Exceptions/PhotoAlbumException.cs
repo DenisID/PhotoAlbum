@@ -12,10 +12,14 @@ namespace PhotoAlbum.Common.Exceptions
         {
         }
 
-        public PhotoAlbumException(string message) : base(message) {
+        public PhotoAlbumException(string message) 
+            : base(message)
+        {
         }
 
-        public PhotoAlbumException(string message, Exception innerException) : base(message, innerException) {
+        public PhotoAlbumException(string message, Exception innerException) 
+            : base(message, innerException)
+        {
         }
     }
 }

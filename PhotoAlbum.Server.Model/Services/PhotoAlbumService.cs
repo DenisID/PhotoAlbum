@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DelegateDecompiler;
 using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Common.ErrorCodes;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Data;
 using PhotoAlbum.Server.Model.Entities;
@@ -49,7 +50,7 @@ namespace PhotoAlbum.Server.Model.Services
 
             if(photosFromDb == null)
             {
-                throw new PhotoNotFoundException("No photos in database");
+                throw new PhotoNotFoundException(ErrorCodes.NoPhotosInDatabase);
             }
 
             var photos = new List<PhotoDto>();
@@ -84,7 +85,7 @@ namespace PhotoAlbum.Server.Model.Services
 
             if (photosFromDb == null)
             {
-                throw new PhotoNotFoundException("No photos in database");
+                throw new PhotoNotFoundException(ErrorCodes.NoPhotosInDatabase);
             }
 
             var photos = new List<PhotoDto>();
@@ -107,7 +108,7 @@ namespace PhotoAlbum.Server.Model.Services
 
             if(imageFromDb == null)
             {
-                throw PhotoNotFoundException.CreateException(imageId);
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
 
             var image = Mapper.Map<PhotoContent, ImageDto>(imageFromDb);
@@ -122,7 +123,7 @@ namespace PhotoAlbum.Server.Model.Services
 
             if (photo == null || photoContent == null)
             {
-                throw PhotoNotFoundException.CreateException(photoId);
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
 
             _photoAlbumContext.Entry(photoContent).State = EntityState.Deleted;
@@ -136,7 +137,7 @@ namespace PhotoAlbum.Server.Model.Services
 
             if (photo == null)
             {
-                throw PhotoNotFoundException.CreateException(editPhotoDto.Id);
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
 
             photo.Title = editPhotoDto.Title;
@@ -152,7 +153,7 @@ namespace PhotoAlbum.Server.Model.Services
 
             if (photo == null)
             {
-                throw PhotoNotFoundException.CreateException(editPhotoId);
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
 
             EditPhotoDto editPhotoDto = null;
@@ -166,13 +167,13 @@ namespace PhotoAlbum.Server.Model.Services
             var photo = _photoAlbumContext.Photos.Find(castPhotoVoteDto.PhotoId);
             if (photo == null)
             {
-                throw PhotoNotFoundException.CreateException(castPhotoVoteDto.PhotoId);
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
 
             var user = _photoAlbumContext.Users.Find(castPhotoVoteDto.UserId);
             if (user == null)
             {
-                throw UserNotFoundException.CreateException(castPhotoVoteDto.UserId);
+                throw new UserNotFoundException(ErrorCodes.UserNotFound);
             }
 
             var photoVote = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == castPhotoVoteDto.UserId)
@@ -221,13 +222,13 @@ namespace PhotoAlbum.Server.Model.Services
             var user = _photoAlbumContext.Users.Find(userId);
             if (user == null)
             {
-                throw UserNotFoundException.CreateException(userId);
+                throw new UserNotFoundException(ErrorCodes.UserNotFound);
             }
 
             var photo = _photoAlbumContext.Photos.Find(photoId);
             if (user == null)
             {
-                throw PhotoNotFoundException.CreateException(photoId);
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
 
             return (photo.User == user) ? true : false;
