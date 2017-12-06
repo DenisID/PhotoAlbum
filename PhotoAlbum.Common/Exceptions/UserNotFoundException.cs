@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhotoAlbum.Server.Model.Exceptions
+namespace PhotoAlbum.Common.Exceptions
 {
-    class UserNotFoundException : PhotoAlbumException
+    public class UserNotFoundException : PhotoAlbumException
     {
         public UserNotFoundException()
         {

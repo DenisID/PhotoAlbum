@@ -324,6 +324,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Common\PhotoAlbum.Common.csproj">
+      <Project>{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}</Project>
+      <Name>PhotoAlbum.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PhotoAlbum.Server.Dto\PhotoAlbum.Server.Dto.csproj">
       <Project>{2c67d22a-e7c7-4a1f-a87d-85bb695f0270}</Project>
       <Name>PhotoAlbum.Server.Dto</Name>

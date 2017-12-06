@@ -2,10 +2,10 @@
 using DelegateDecompiler;
 using PhotoAlbum.Common.Enums;
 using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Data;
 using PhotoAlbum.Server.Model.Entities;
-using PhotoAlbum.Server.Model.Exceptions;
 using PhotoAlbum.Server.Model.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -18,11 +18,8 @@ namespace PhotoAlbum.Server.Model.Interfaces
         void EditPhoto(EditPhotoDto editPhotoDto);
         EditPhotoDto GetEditPhotoById(int editPhotoId);
         void CastPhotoVote(PhotoVoteDto castPhotoVoteDto);
-        //PhotoRatingDto GetPhotoRating(int photoId);
         List<PhotoVoteDto> GetUserVotes(string userId);
 
         bool IsPhotoOwner(string userId, int photoId);
-        //void AddPhoto(AddPhotoDto addPhotoDto);
-        //Photo GetPhotoById(int photoId);
     }
 }
