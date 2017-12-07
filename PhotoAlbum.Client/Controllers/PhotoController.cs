@@ -26,10 +26,14 @@ namespace PhotoAlbum.Client.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
-        public async Task<JsonResult> Test()
+
+
+        public async Task Test()
         {
-            return Json(_photoAlbumService.GetPhotosAsync(new PagingParametersDto()), JsonRequestBehavior.AllowGet);
+            await _photoAlbumService.Test();
         }
+
+
 
         // GET: Photo
         public async Task<ActionResult> Index()

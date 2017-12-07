@@ -25,6 +25,15 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
 
+
+
+        public async Task Test()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync("api/test");
+        }
+
+
+
         public async Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
