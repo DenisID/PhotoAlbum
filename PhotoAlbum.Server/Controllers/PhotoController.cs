@@ -115,20 +115,6 @@ namespace PhotoAlbum.Server.Controllers
             return Success();
         }
 
-        //[HttpGet]
-        //[Route("api/photo/rating/{id}")]
-        //public HttpResponseMessage GetPhotoRating(int id)
-        //{
-        //    try
-        //    {
-        //        return Success(_photoAlbumService.GetPhotoRating(id));
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        return Error(ex);
-        //    }
-        //}
-
         [HttpGet]
         [Route("api/photo/vote")]
         [Authorize]
@@ -138,29 +124,5 @@ namespace PhotoAlbum.Server.Controllers
 
             return Success(_photoAlbumService.GetUserVotes(userId));
         }
-
-        //// POST api/photo
-        //public void PostPhoto([FromBody]AddPhotoDto addPhotoDto)
-        //{
-        //    if (ModelState.IsValid && addPhotoDto.Image != null)
-        //    {
-        //        byte[] imageData = null;
-        //        // считываем переданный файл в массив байтов
-        //        using (var binaryReader = new BinaryReader(addPhotoModel.Image.InputStream))
-        //        {
-        //            imageData = binaryReader.ReadBytes(addPhotoModel.Image.ContentLength);
-        //        }
-        //        // установка массива байтов
-        //        var addPhotoDto = new AddPhotoDto();
-        //        addPhotoDto.Image = imageData;
-        //        addPhotoDto.Title = addPhotoModel.Title;
-        //        addPhotoDto.Description = addPhotoModel.Description;
-
-        //        _photoAlbumService.AddPhoto(addPhotoDto);
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View();
-        //}
     }
 }
