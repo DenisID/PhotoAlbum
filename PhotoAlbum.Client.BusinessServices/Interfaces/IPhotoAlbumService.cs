@@ -11,7 +11,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 {
     public interface IPhotoAlbumService
     {
-        Task Test()
+        Task Test();
 
         Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token);
         Task<List<PhotoDto>> GetAllPhotosAsync();
