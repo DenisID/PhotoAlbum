@@ -18,8 +18,6 @@ namespace PhotoAlbum.Client.Controllers
 {
     public class PhotoController : Controller
     {
-        //private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
-        //private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
         private readonly IPhotoAlbumService _photoAlbumService;
 
         public PhotoController(IPhotoAlbumService photoAlbumService)
@@ -27,18 +25,9 @@ namespace PhotoAlbum.Client.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
-        //public async Task<HttpResponseMessage> Test()
-        //{
-        //    var response = await _photoAlbumService.Test();
-        //    var result = response.Content;
-
-        //    return response;
-        //}
-
         // GET: Photo
         public async Task<ActionResult> Index()
         {            
-            //var photos = _photoAlbumService.GetAllPhotos();
             List<PhotoViewModel> photos = new List<PhotoViewModel>();
             List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
 
@@ -54,9 +43,7 @@ namespace PhotoAlbum.Client.Controllers
                         Description = photoDto.Description,
                         CreationDate = photoDto.CreationDate,
                         OwnerName = photoDto.OwnerName,
-                        Rating = photoDto.Rating,
-                        //Image = photoDto.Image,
-                        //ImageMimeType = photoDto.ImageMimeType
+                        Rating = photoDto.Rating
                     });
                 }
             }
@@ -118,14 +105,6 @@ namespace PhotoAlbum.Client.Controllers
             EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id, token);
             if(editPhotoDto != null)
             {
-                // Mapping
-                //editPhotoViewModel = new EditPhotoViewModel
-                //{
-                //    Id = editPhotoDto.Id,
-                //    Title = editPhotoDto.Title,
-                //    Description = editPhotoDto.Description
-                //};
-
                 editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
             }
             return View(editPhotoViewModel);
