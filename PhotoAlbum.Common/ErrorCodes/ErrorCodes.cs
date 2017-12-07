@@ -8,9 +8,9 @@ namespace PhotoAlbum.Common.ErrorCodes
 {
     public class ErrorCodes
     {
-        public static string PhotoNotFound { get; } = "PhotoNotFound";
-        public static string NoPhotosInDatabase { get; } = "NoPhotosInDatabase";
-        public static string UserNotFound { get; } = "UserNotFound";
-        public static string NotEnoughRights { get; } = "NotEnoughRights";
+        public const string PhotoNotFound = "PhotoNotFound";
+        public const string NoPhotosInDatabase = "NoPhotosInDatabase";
+        public const string UserNotFound = "UserNotFound";
+        public const string NotEnoughRights = "NotEnoughRights";
     }
 }
