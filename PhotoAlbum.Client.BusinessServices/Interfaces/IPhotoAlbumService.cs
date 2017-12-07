@@ -11,7 +11,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 {
     public interface IPhotoAlbumService
     {
-        Task<Uri> CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token);
+        Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token);
         Task<List<PhotoDto>> GetAllPhotosAsync();
         Task<ImageDto> GetImageByIdAsync(int imageId);
         Task<HttpStatusCode> DeletePhotoByIdAsync(int photoId, string token);
