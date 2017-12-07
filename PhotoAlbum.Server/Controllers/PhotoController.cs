@@ -26,12 +26,16 @@ namespace PhotoAlbum.Server.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
+
+
         [HttpGet]
         [Route("api/test")]
         public HttpResponseMessage Test()
         {
             return Success(_photoAlbumService.GetPhotosCount());
         }
+
+
 
         [HttpGet]
         [Route("api/allphotos")]
