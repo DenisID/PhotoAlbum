@@ -97,6 +97,12 @@ namespace PhotoAlbum.Server.Model.Services
             return photos;
         }
 
+        public int GetPhotosCount()
+        {
+            return _photoAlbumContext.Photos.Count();
+
+        }
+
         public PhotoDto GetPhotoById(int photoId)
         {
             throw new NotImplementedException();

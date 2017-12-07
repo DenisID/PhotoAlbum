@@ -19,6 +19,7 @@ namespace PhotoAlbum.Server.Model.Interfaces
         EditPhotoDto GetEditPhotoById(int editPhotoId);
         void CastPhotoVote(PhotoVoteDto castPhotoVoteDto);
         List<PhotoVoteDto> GetUserVotes(string userId);
+        int GetPhotosCount();
 
         bool IsPhotoOwner(string userId, int photoId);
     }

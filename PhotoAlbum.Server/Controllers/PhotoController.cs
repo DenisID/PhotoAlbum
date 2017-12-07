@@ -27,6 +27,13 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpGet]
+        [Route("api/test")]
+        public HttpResponseMessage Test()
+        {
+            return Success(_photoAlbumService.GetPhotosCount());
+        }
+
+        [HttpGet]
         [Route("api/allphotos")]
         public HttpResponseMessage GetAllPhotos()
         {
@@ -38,6 +45,13 @@ namespace PhotoAlbum.Server.Controllers
         public HttpResponseMessage GetPhotos([FromUri]PagingParametersDto pagingParameters)
         {
             return Success(_photoAlbumService.GetPhotos(pagingParameters));
+        }
+
+        [HttpGet]
+        [Route("api/photo/count")]
+        public HttpResponseMessage GetPhotosCount()
+        {
+            return Success(_photoAlbumService.GetPhotosCount());
         }
 
         [HttpGet]
