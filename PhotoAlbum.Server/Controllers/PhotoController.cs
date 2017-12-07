@@ -107,7 +107,6 @@ namespace PhotoAlbum.Server.Controllers
 
         [HttpGet]
         [Route("api/photo/editphoto/{id}")]
-        [Authorize]
         public HttpResponseMessage GetEditPhotoById(int id)
         {
             return Success(_photoAlbumService.GetEditPhotoById(id));

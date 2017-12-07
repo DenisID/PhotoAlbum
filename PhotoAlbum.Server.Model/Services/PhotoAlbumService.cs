@@ -95,7 +95,6 @@ namespace PhotoAlbum.Server.Model.Services
             var photos = new List<PhotoDto>();
             foreach (var photoFromDb in photosFromDb)
             {
-                // Error
                 photos.Add(Mapper.Map<Photo, PhotoDto>(photoFromDb));
             }
 
