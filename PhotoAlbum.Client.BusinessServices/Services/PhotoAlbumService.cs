@@ -1,5 +1,8 @@
-﻿using PhotoAlbum.Client.BusinessServices.Interfaces;
+﻿using PhotoAlbum.Client.BusinessServices.Helpers;
+using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.Dto;
+using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -29,7 +32,18 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
         public async Task Test()
         {
-            HttpResponseMessage response = await _httpClient.GetAsync("api/test");
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync("api/test");
+            if (apiResponse.IsSuccessStatusCode)
+            {
+                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+                var t = responseContent.Result;
+            }
+            else
+            {
+                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+                responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+                apiResponse.EnsureSuccessStatusCode();
+            }
         }
 
 

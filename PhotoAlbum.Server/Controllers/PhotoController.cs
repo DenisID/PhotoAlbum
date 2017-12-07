@@ -32,6 +32,8 @@ namespace PhotoAlbum.Server.Controllers
         [Route("api/test")]
         public HttpResponseMessage Test()
         {
+            throw new Exception("TestEx");
+            throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             return Success(_photoAlbumService.GetPhotosCount());
         }
 
