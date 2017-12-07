@@ -22,21 +22,16 @@ namespace PhotoAlbum.Server.Model.Services
 
         public int CreatePhoto(CreatePhotoDto createPhotoDto)
         {
-            var photo = new Photo();
+            var photo = Mapper.Map<CreatePhotoDto, Photo>(createPhotoDto);
             photo.CreationDate = DateTime.Now;
-            photo.Title = createPhotoDto.Title;
-            photo.Description = createPhotoDto.Description;
-
             var user = _photoAlbumContext.Users.Find(createPhotoDto.UserId);
             photo.User = user;
 
             _photoAlbumContext.Photos.Add(photo);
             _photoAlbumContext.SaveChanges();
 
-            var photoContent = new PhotoContent();
+            var photoContent = Mapper.Map<CreatePhotoDto, PhotoContent>(createPhotoDto);
             photoContent.Id = photo.Id;
-            photoContent.Image = createPhotoDto.Image;
-            photoContent.ImageMimeType = createPhotoDto.ImageMimeType;
 
             _photoAlbumContext.PhotoContents.Add(photoContent);
             _photoAlbumContext.SaveChanges();
@@ -46,6 +41,7 @@ namespace PhotoAlbum.Server.Model.Services
                 UserId = createPhotoDto.UserId,
                 PhotoId = photo.Id,
             };
+
             _photoAlbumContext.PhotoVotes.Add(photoVote);
             _photoAlbumContext.SaveChanges();
 
