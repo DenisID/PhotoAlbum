@@ -36,8 +36,14 @@ namespace PhotoAlbum.Client.Controllers
 
 
         // GET: Photo
-        public async Task<ActionResult> Index()
-        {            
+        public async Task<ActionResult> Index(int page = 1)
+        {
+            //int pageSize = 3; // количество объектов на страницу
+            //List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto { PageSize  = pageSize});
+            //PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = phones.Count };
+            //IndexViewModel ivm = new IndexViewModel { PageInfo = pageInfo, Phones = phonesPerPages };
+            //return View(ivm);
+
             List<PhotoViewModel> photos = new List<PhotoViewModel>();
             //List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
             List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto());
