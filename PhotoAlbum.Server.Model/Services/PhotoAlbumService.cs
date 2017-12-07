@@ -40,6 +40,14 @@ namespace PhotoAlbum.Server.Model.Services
 
             _photoAlbumContext.PhotoContents.Add(photoContent);
             _photoAlbumContext.SaveChanges();
+            
+            var photoVote = new PhotoVote
+            {
+                UserId = createPhotoDto.UserId,
+                PhotoId = photo.Id,
+            };
+            _photoAlbumContext.PhotoVotes.Add(photoVote);
+            _photoAlbumContext.SaveChanges();
 
             return photo.Id;
         }
@@ -87,10 +95,11 @@ namespace PhotoAlbum.Server.Model.Services
             {
                 throw new PhotoNotFoundException(ErrorCodes.NoPhotosInDatabase);
             }
-
+            
             var photos = new List<PhotoDto>();
             foreach (var photoFromDb in photosFromDb)
             {
+                // Error
                 photos.Add(Mapper.Map<Photo, PhotoDto>(photoFromDb));
             }
 

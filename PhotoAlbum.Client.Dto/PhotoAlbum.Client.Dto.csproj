@@ -50,6 +50,7 @@
     <Compile Include="EditPhotoDto.cs" />
     <Compile Include="GetTokenDto.cs" />
     <Compile Include="ImageDto.cs" />
+    <Compile Include="PagingParametersDto.cs" />
     <Compile Include="PhotoContentDto.cs" />
     <Compile Include="PhotoDto.cs" />
     <Compile Include="PhotoRatingDto.cs" />
@@ -60,6 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Common\PhotoAlbum.Common.csproj">
+      <Project>{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}</Project>
+      <Name>PhotoAlbum.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,12 +2,14 @@
 using PhotoAlbum.Client.Dto;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PhotoAlbum.Client.BusinessServices.Services
 {
@@ -47,9 +49,32 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return photos;
         }
 
+        public async Task<List<PhotoDto>> GetPhotosAsync(PagingParametersDto paginParametersDto)
+        {
+            List<PhotoDto> photos = null;
+
+            var query = HttpUtility.ParseQueryString(string.Empty);
+
+            query["PageNumber"] = paginParametersDto.PageNumber.ToString();
+            query["PageSize"] = paginParametersDto.PageSize.ToString();
+            query["Sorting"] = paginParametersDto.Sorting.ToString();
+
+            var queryString = query.ToString();
+
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo?" + queryString);
+            if (apiResponse.IsSuccessStatusCode)
+            {
+                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
+                photos = responseContent.Result;
+            }
+
+            return photos;
+        }
+
         public async Task<ImageDto> GetImageByIdAsync(int imageId)
         {
             ImageDto image = null;
+
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/image/{imageId}");
             if (apiResponse.IsSuccessStatusCode)
             {

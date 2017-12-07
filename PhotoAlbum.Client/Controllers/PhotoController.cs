@@ -4,6 +4,7 @@ using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Dto;
 //using PhotoAlbum.Client.Model.Services;
 using PhotoAlbum.Client.Models;
+using PhotoAlbum.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,14 +26,20 @@ namespace PhotoAlbum.Client.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
+        public async Task<JsonResult> Test()
+        {
+            return Json(_photoAlbumService.GetPhotosAsync(new PagingParametersDto()), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Photo
         public async Task<ActionResult> Index()
         {            
             List<PhotoViewModel> photos = new List<PhotoViewModel>();
-            List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
+            //List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
+            List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto());
 
             // Mapping
-            if(photosDto != null)
+            if (photosDto != null)
             {
                 foreach(var photoDto in photosDto)
                 {

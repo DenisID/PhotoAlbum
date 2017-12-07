@@ -18,6 +18,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
         Task<HttpStatusCode> EditPhotoAsync(EditPhotoDto editPhotoDto, string token);
         Task<EditPhotoDto> GetEditPhotoByIdAsync(int editPhotoId, string token);
         Task<PhotoRatingDto> GetPhotoRatingAsync(int photoId);
+        Task<List<PhotoDto>> GetPhotosAsync(PagingParametersDto paginParametersDto);
         //Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
     }
 }
