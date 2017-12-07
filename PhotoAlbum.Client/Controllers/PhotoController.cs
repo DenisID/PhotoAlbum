@@ -29,7 +29,7 @@ namespace PhotoAlbum.Client.Controllers
         public async Task<ActionResult> Index()
         {            
             List<PhotoViewModel> photos = new List<PhotoViewModel>();
-            List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
+            List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
 
             // Mapping
             if(photosDto != null)
@@ -76,7 +76,7 @@ namespace PhotoAlbum.Client.Controllers
                 createPhotoDto.Title = createPhotoViewModel.Title;
                 createPhotoDto.Description = createPhotoViewModel.Description;
 
-                await _photoAlbumService.CreatePhoto(createPhotoDto, token);
+                await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
 
                 return RedirectToAction("Index");
             }
@@ -85,14 +85,14 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> GetImageById(int id)
         {
-            var image = await _photoAlbumService.GetImageById(id);
+            var image = await _photoAlbumService.GetImageByIdAsync(id);
             return File(image.Image, image.ImageMimeType);
         }
 
         public async Task<ActionResult> DeletePhotoById(int id)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
-            await _photoAlbumService.DeletePhotoById(id, token);
+            await _photoAlbumService.DeletePhotoByIdAsync(id, token);
             return RedirectToAction("Index");
         }
 
@@ -102,7 +102,7 @@ namespace PhotoAlbum.Client.Controllers
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             EditPhotoViewModel editPhotoViewModel = null;
-            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id, token);
+            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoByIdAsync(id, token);
             if(editPhotoDto != null)
             {
                 editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
@@ -123,7 +123,7 @@ namespace PhotoAlbum.Client.Controllers
                 Description = editPhotoViewModel.Description
             };
 
-            await _photoAlbumService.EditPhoto(editPhotoDto, token);
+            await _photoAlbumService.EditPhotoAsync(editPhotoDto, token);
             return RedirectToAction("Index");
         }
 

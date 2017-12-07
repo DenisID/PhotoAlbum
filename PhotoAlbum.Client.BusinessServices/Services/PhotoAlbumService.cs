@@ -23,7 +23,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
 
-        public async Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto, string token)
+        public async Task<Uri> CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -34,7 +34,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return response.Headers.Location;
         }
 
-        public async Task<List<PhotoDto>> GetAllPhotos()
+        public async Task<List<PhotoDto>> GetAllPhotosAsync()
         {
             List<PhotoDto> photos = null;
             HttpResponseMessage apiResponse = await _httpClient.GetAsync("api/photo");
@@ -47,7 +47,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return photos;
         }
 
-        public async Task<ImageDto> GetImageById(int imageId)
+        public async Task<ImageDto> GetImageByIdAsync(int imageId)
         {
             ImageDto image = null;
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/image/{imageId}");
@@ -60,7 +60,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return image;
         }
 
-        public async Task<HttpStatusCode> DeletePhotoById(int photoId, string token)
+        public async Task<HttpStatusCode> DeletePhotoByIdAsync(int photoId, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -70,7 +70,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return response.StatusCode;
         }
 
-        public async Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto, string token)
+        public async Task<HttpStatusCode> EditPhotoAsync(EditPhotoDto editPhotoDto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -80,7 +80,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return response.StatusCode;
         }
 
-        public async Task<EditPhotoDto> GetEditPhotoById(int editPhotoId, string token)
+        public async Task<EditPhotoDto> GetEditPhotoByIdAsync(int editPhotoId, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
