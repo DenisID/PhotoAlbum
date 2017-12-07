@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Interfaces;
 using PhotoAlbum.Server.Model.Managers;
@@ -14,7 +17,6 @@ using System.Web.Http.Results;
 
 namespace PhotoAlbum.Server.Controllers
 {
-    //[Authorize]
     public class PhotoController : BaseController
     {
         private readonly IPhotoAlbumService _photoAlbumService;
@@ -24,23 +26,10 @@ namespace PhotoAlbum.Server.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
-        //public class ResponseDTO
-        //{
-        //    public string value;
-        //}
-
-        //public ResponseDTO GetTest()
-        //{
-        //    var result = new ResponseDTO();
-        //    result.value = "Test OK";
-        //    return result;
-        //}
-
         [HttpGet]
-        [Route("api/allphoto")]
+        [Route("api/allphotos")]
         public HttpResponseMessage GetAllPhotos()
         {
-            //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
             return Success(_photoAlbumService.GetAllPhotos());
         }
 
@@ -48,7 +37,6 @@ namespace PhotoAlbum.Server.Controllers
         [Route("api/photo")]
         public HttpResponseMessage GetPhotos([FromUri]PagingParametersDto pagingParameters)
         {
-            //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
             return Success(_photoAlbumService.GetPhotos(pagingParameters));
         }
 
@@ -64,16 +52,10 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
         {
-            var req = Request;
-            var reqC = RequestContext;
-            var reqH = Request.Headers;
-            var reqHA = Request.Headers.Authorization;
-
             var user = RequestContext.Principal.Identity.Name;
             var userId = User.Identity.GetUserId();
             createPhotoDto.UserId = userId;
 
-            //return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
             return Success(_photoAlbumService.CreatePhoto(createPhotoDto));
         }
 
@@ -82,23 +64,15 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage DeletePhotoById([FromUri] int id)
         {
-            try
+            //var user = User.Identity.Name;
+            if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), id))
             {
-                var user = User.Identity.Name;
-                if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), id))
-                {
-                    throw new Exception("Не достаточно прав");
-                }
-
-                //if (User.Identity.GetUserId() == _photoAlbumService.GetEditPhotoById(id))
-
-                _photoAlbumService.DeletePhotoById(id);
-                return Success();
+                throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);
             }
-            catch(Exception ex)
-            {
-                return Error(ex);
-            }
+
+            _photoAlbumService.DeletePhotoById(id);
+
+            return Success();
         }
 
         [HttpPut]
@@ -107,21 +81,14 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage EditPhoto([FromBody] EditPhotoDto editPhotoDto)
         {
-            try
+            //var user = User.Identity.Name;
+            if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), editPhotoDto.Id))
             {
-                var user = User.Identity.Name;
-                if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), editPhotoDto.Id))
-                {
-                    throw new Exception("Не достаточно прав");
-                }
+                throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);
+            }
 
-                _photoAlbumService.EditPhoto(editPhotoDto);
-                return Success();
-            }
-            catch (Exception ex)
-            {
-                return Error(ex);
-            }
+            _photoAlbumService.EditPhoto(editPhotoDto);
+            return Success();
         }
 
         [HttpGet]
@@ -129,14 +96,7 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage GetEditPhotoById(int id)
         {
-            try
-            {
-                return Success(_photoAlbumService.GetEditPhotoById(id));
-            }
-            catch(Exception ex)
-            {
-                return Error(ex);
-            }
+            return Success(_photoAlbumService.GetEditPhotoById(id));
         }
         
         [HttpPost]
@@ -144,65 +104,40 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage CastVote([FromBody]CastPhotoVoteDto photoVoteDto)
         {
-            try
+            var castPhotoVoteDto = new PhotoVoteDto
             {
-                var castPhotoVoteDto = new PhotoVoteDto
-                {
-                    PhotoId = photoVoteDto.PhotoId,
-                    UserId = User.Identity.GetUserId(),
-                    Rating = photoVoteDto.Rating
-                };
-                _photoAlbumService.CastPhotoVote(castPhotoVoteDto);
-                return Success();
-            }
-            catch(Exception ex)
-            {
-                return Error(ex);
-            }
+                PhotoId = photoVoteDto.PhotoId,
+                UserId = User.Identity.GetUserId(),
+                Rating = photoVoteDto.Rating
+            };
+            _photoAlbumService.CastPhotoVote(castPhotoVoteDto);
+
+            return Success();
         }
 
-        [HttpGet]
-        [Route("api/photo/rating/{id}")]
-        public HttpResponseMessage GetPhotoRating(int id)
-        {
-            try
-            {
-                return Success(_photoAlbumService.GetPhotoRating(id));
-            }
-            catch(Exception ex)
-            {
-                return Error(ex);
-            }
-        }
+        //[HttpGet]
+        //[Route("api/photo/rating/{id}")]
+        //public HttpResponseMessage GetPhotoRating(int id)
+        //{
+        //    try
+        //    {
+        //        return Success(_photoAlbumService.GetPhotoRating(id));
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return Error(ex);
+        //    }
+        //}
 
         [HttpGet]
         [Route("api/photo/vote")]
         [Authorize]
         public HttpResponseMessage GetUserVotes()
         {
-            try
-            {
-                var userId = User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
 
-                return Success(_photoAlbumService.GetUserVotes(userId));
-            }
-            catch (Exception ex)
-            {
-                return Error(ex);
-            }
+            return Success(_photoAlbumService.GetUserVotes(userId));
         }
-
-        //// GET api/values
-        //public IEnumerable<string> GetAllPhoto()
-        //{         
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/values/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
 
         //// POST api/photo
         //public void PostPhoto([FromBody]AddPhotoDto addPhotoDto)
@@ -226,16 +161,6 @@ namespace PhotoAlbum.Server.Controllers
         //        return RedirectToAction("Index");
         //    }
         //    return View();
-        //}
-
-        //// PUT api/values/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //public void Delete(int id)
-        //{
         //}
     }
 }

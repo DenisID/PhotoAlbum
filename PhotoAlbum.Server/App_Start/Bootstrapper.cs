@@ -14,6 +14,7 @@ namespace PhotoAlbum.Server.App_Start
         public static void Run()
         {
             AutofacConfig.Initialize(GlobalConfiguration.Configuration);
+            AutoMapperConfig.Configure();
         }
     }
 }

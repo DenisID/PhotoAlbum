@@ -18,6 +18,7 @@ namespace PhotoAlbum.Client.App_Start
         {
             AutofacConfig.Initialize();
             AutoMapperConfig.Configure();
+            log4net.Config.XmlConfigurator.Configure();
         }
 
         //private static void SetAutofacContainer()

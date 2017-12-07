@@ -20,7 +20,7 @@ namespace PhotoAlbum.Client
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            // Autofac and Automapper configurations
+            // Autofac, Automapper and Log4Net configurations
             Bootstrapper.Run();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;

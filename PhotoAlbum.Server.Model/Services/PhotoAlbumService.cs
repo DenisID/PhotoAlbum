@@ -1,4 +1,8 @@
-﻿using PhotoAlbum.Common.Enums;
+﻿using AutoMapper;
+using DelegateDecompiler;
+using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Data;
 using PhotoAlbum.Server.Model.Entities;
@@ -42,72 +46,52 @@ namespace PhotoAlbum.Server.Model.Services
 
         public List<PhotoDto> GetAllPhotos()
         {
-            var photosFromDb = _photoAlbumContext.Photos/*.ToList()*/;
-            var photos = new List<PhotoDto>();
-            if(photosFromDb != null)
+            var photosFromDb = _photoAlbumContext.Photos;
+
+            if(photosFromDb == null)
             {
-                foreach(var photoFromDb in photosFromDb)
-                {
-                    // Mapping
-                    photos.Add(new PhotoDto
-                    {
-                        Id = photoFromDb.Id,
-                        Title = photoFromDb.Title,
-                        Description = photoFromDb.Description,
-                        CreationDate = photoFromDb.CreationDate,
-                        OwnerName = photoFromDb.User.UserName,
-                        //Image = photoFromDb.PhotoContent.Image,
-                        //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
-                    });
-                    // TODO : bad code
-                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
-                }
+                throw new PhotoNotFoundException(ErrorCodes.NoPhotosInDatabase);
             }
-            
+
+            var photos = new List<PhotoDto>();
+            foreach (var photoFromDb in photosFromDb)
+            {
+                photos.Add(Mapper.Map<Photo, PhotoDto>(photoFromDb));
+            }
+
             return photos;
         }
 
         public List<PhotoDto> GetPhotos(PagingParametersDto pagingParameters)
         {
+            IQueryable<Photo> photosFromDb = null;
+
             switch (pagingParameters.Sorting)
             {
                 case SortOrder.ByCreationDate:
-                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.CreationDate)
-                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
-                                                         .Take(pagingParameters.PageSize);
+                    photosFromDb = _photoAlbumContext.Photos.OrderByDescending(x => x.CreationDate);
                     break;
 
                 case SortOrder.ByRating:
-                    // WARNING : error
-                    var photosFromDb = _photoAlbumContext.Photos.OrderBy(x => x.Rating)
-                                                         .Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
-                                                         .Take(pagingParameters.PageSize);
+                    photosFromDb = (_photoAlbumContext.Photos.OrderByDescending(x => x.Rating)).Decompile();
                     break;
+
                 default:
-                    throw new Exception("Error");
-                    break;
+                    throw new Exception("PhotoAlbumService.GetPhotos method - sorting param error");
             }
-            
+
+            photosFromDb = photosFromDb.Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                       .Take(pagingParameters.PageSize);
+
+            if (photosFromDb == null)
+            {
+                throw new PhotoNotFoundException(ErrorCodes.NoPhotosInDatabase);
+            }
 
             var photos = new List<PhotoDto>();
-            if (photosFromDb != null)
+            foreach (var photoFromDb in photosFromDb)
             {
-                foreach (var photoFromDb in photosFromDb)
-                {
-                    // Mapping
-                    photos.Add(new PhotoDto
-                    {
-                        Id = photoFromDb.Id,
-                        Title = photoFromDb.Title,
-                        Description = photoFromDb.Description,
-                        CreationDate = photoFromDb.CreationDate,
-                        OwnerName = photoFromDb.User.UserName,
-                        //Image = photoFromDb.PhotoContent.Image,
-                        //ImageMimeType = photoFromDb.PhotoContent.ImageMimeType
-                    });
-                    // TODO : bad code
-                    photos.Last().Rating = GetPhotoRating(photos.Last().Id).Rating;
-                }
+                photos.Add(Mapper.Map<Photo, PhotoDto>(photoFromDb));
             }
 
             return photos;
@@ -121,11 +105,13 @@ namespace PhotoAlbum.Server.Model.Services
         public ImageDto GetImageById(int imageId)
         {
             var imageFromDb = _photoAlbumContext.PhotoContents.Find(imageId);
-            var image = new ImageDto
+
+            if(imageFromDb == null)
             {
-                Image = imageFromDb.Image,
-                ImageMimeType = imageFromDb.ImageMimeType
-            };
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
+            }
+
+            var image = Mapper.Map<PhotoContent, ImageDto>(imageFromDb);
 
             return image;
         }
@@ -134,6 +120,12 @@ namespace PhotoAlbum.Server.Model.Services
         {
             var photo = _photoAlbumContext.Photos.Find(photoId);
             var photoContent = _photoAlbumContext.PhotoContents.Find(photoId);
+
+            if (photo == null || photoContent == null)
+            {
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
+            }
+
             _photoAlbumContext.Entry(photoContent).State = EntityState.Deleted;
             _photoAlbumContext.Entry(photo).State = EntityState.Deleted;
             _photoAlbumContext.SaveChanges();
@@ -141,58 +133,56 @@ namespace PhotoAlbum.Server.Model.Services
 
         public void EditPhoto(EditPhotoDto editPhotoDto)
         {
-            //var photo = GetPhotoById(photoDto.Id);
             var photo = _photoAlbumContext.Photos.Find(editPhotoDto.Id);
-            if(photo != null)
-            {
-                // Mapping
-                photo.Title = editPhotoDto.Title;
-                photo.Description = editPhotoDto.Description;
 
-                _photoAlbumContext.Entry(photo).State = EntityState.Modified;
-                _photoAlbumContext.SaveChanges();
+            if (photo == null)
+            {
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
-            
+
+            photo.Title = editPhotoDto.Title;
+            photo.Description = editPhotoDto.Description;
+
+            _photoAlbumContext.Entry(photo).State = EntityState.Modified;
+            _photoAlbumContext.SaveChanges();
         }
 
         public EditPhotoDto GetEditPhotoById(int editPhotoId)
         {
             var photo = _photoAlbumContext.Photos.Find(editPhotoId);
-            EditPhotoDto editPhotoDto = null;
-            
-            // TODO : add ex
 
-            //if(photo == null)
-            //{
-            //    throw new Exception("Photo Not Found");
-            //}
-            if (photo != null)
+            if (photo == null)
             {
-                // Mapping
-                editPhotoDto = new EditPhotoDto {
-                    Id = photo.Id,
-                    Title = photo.Title,
-                    Description = photo.Description
-                };
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
+
+            EditPhotoDto editPhotoDto = null;
+            editPhotoDto = Mapper.Map<Photo, EditPhotoDto>(photo);
 
             return editPhotoDto;
         }
 
         public void CastPhotoVote(PhotoVoteDto castPhotoVoteDto)
         {
+            var photo = _photoAlbumContext.Photos.Find(castPhotoVoteDto.PhotoId);
+            if (photo == null)
+            {
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
+            }
+
+            var user = _photoAlbumContext.Users.Find(castPhotoVoteDto.UserId);
+            if (user == null)
+            {
+                throw new UserNotFoundException(ErrorCodes.UserNotFound);
+            }
+
             var photoVote = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == castPhotoVoteDto.UserId)
                                                          .Where(x => x.PhotoId == castPhotoVoteDto.PhotoId)
                                                          .FirstOrDefault();
 
             if (photoVote == null)
             {
-                _photoAlbumContext.PhotoVotes.Add(new PhotoVote
-                {
-                    PhotoId = castPhotoVoteDto.PhotoId,
-                    UserId = castPhotoVoteDto.UserId,
-                    Rating = castPhotoVoteDto.Rating
-                });
+                _photoAlbumContext.PhotoVotes.Add(Mapper.Map<PhotoVoteDto, PhotoVote>(castPhotoVoteDto));
             }
             else
             {
@@ -202,52 +192,46 @@ namespace PhotoAlbum.Server.Model.Services
             _photoAlbumContext.SaveChanges();
         }
 
-        public PhotoRatingDto GetPhotoRating(int photoId)
-        {
-            var ratingSum = _photoAlbumContext.PhotoVotes.Where(x => x.PhotoId == photoId)
-                                                         .Average(x => x.Rating);
-            // Mapping
-            return new PhotoRatingDto
-            {
-                Rating = ratingSum
-            };
-            //throw new NotImplementedException();
-        }
+        //public PhotoRatingDto GetPhotoRating(int photoId)
+        //{
+        //    var ratingSum = _photoAlbumContext.PhotoVotes.Where(x => x.PhotoId == photoId)
+        //                                                 .Average(x => x.Rating);
+        //    // Mapping
+        //    return new PhotoRatingDto
+        //    {
+        //        Rating = ratingSum
+        //    };
+        //    //throw new NotImplementedException();
+        //}
 
         public List<PhotoVoteDto> GetUserVotes(string userId)
         {
             var photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId).ToList();
 
-            // Mapping
-            if(photoVotes.Count == 0)
-            {
-                throw new Exception("Votes not found");
-            }
-
-            List<PhotoVoteDto> returnedValue = new List<PhotoVoteDto>();
+            List<PhotoVoteDto> userVotes = new List<PhotoVoteDto>();
             foreach(var element in photoVotes)
             {
-                returnedValue.Add(new PhotoVoteDto
-                {
-                    PhotoId = element.PhotoId,
-                    UserId = element.UserId,
-                    Rating = element.Rating
-                });
+                userVotes.Add(Mapper.Map<PhotoVote, PhotoVoteDto>(element));
             }
 
-            return returnedValue;
-
-            //throw new NotImplementedException();
+            return userVotes;
         }
 
         public bool IsPhotoOwner(string userId, int photoId)
         {
             var user = _photoAlbumContext.Users.Find(userId);
+            if (user == null)
+            {
+                throw new UserNotFoundException(ErrorCodes.UserNotFound);
+            }
+
             var photo = _photoAlbumContext.Photos.Find(photoId);
+            if (user == null)
+            {
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
+            }
 
             return (photo.User == user) ? true : false;
-
-            //throw new NotImplementedException();
         }
 
         //public Photo GetPhotoById(int photoId)
@@ -265,7 +249,5 @@ namespace PhotoAlbum.Server.Model.Services
         //    //photo.ValidateEntity();
         //    return photo;
         //}
-
-
     }
 }
