@@ -33,17 +33,18 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public async Task Test()
         {
             HttpResponseMessage apiResponse = await _httpClient.GetAsync("api/test");
-            if (apiResponse.IsSuccessStatusCode)
-            {
-                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
-                var t = responseContent.Result;
-            }
-            else
-            {
-                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
-                responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-                apiResponse.EnsureSuccessStatusCode();
-            }
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            //if (!apiResponse.IsSuccessStatusCode)
+            //{
+            //    responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            //    apiResponse.EnsureSuccessStatusCode();
+            //}
         }
 
 
@@ -52,19 +53,33 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/photo", createPhotoDto);
-            response.EnsureSuccessStatusCode();
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync("api/photo", createPhotoDto);
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
         }
 
         public async Task<List<PhotoDto>> GetAllPhotosAsync()
         {
             List<PhotoDto> photos = null;
             HttpResponseMessage apiResponse = await _httpClient.GetAsync("api/photo");
-            if (apiResponse.IsSuccessStatusCode)
-            {
-                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
-                photos = responseContent.Result;
-            }
+
+            //if (apiResponse.IsSuccessStatusCode)
+            //{
+            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
+            //    photos = responseContent.Result;
+            //}
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            photos = responseContent.Result;
 
             return photos;
         }
@@ -82,11 +97,19 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var queryString = query.ToString();
 
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo?" + queryString);
-            if (apiResponse.IsSuccessStatusCode)
-            {
-                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
-                photos = responseContent.Result;
-            }
+
+            //if (apiResponse.IsSuccessStatusCode)
+            //{
+            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
+            //    photos = responseContent.Result;
+            //}
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            photos = responseContent.Result;
 
             return photos;
         }
@@ -96,11 +119,18 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             ImageDto image = null;
 
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/image/{imageId}");
-            if (apiResponse.IsSuccessStatusCode)
-            {
-                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<ImageDto>>();
-                image = responseContent.Result;
-            }
+            //if (apiResponse.IsSuccessStatusCode)
+            //{
+            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<ImageDto>>();
+            //    image = responseContent.Result;
+            //}
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<ImageDto>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            image = responseContent.Result;
 
             return image;
         }
@@ -109,33 +139,54 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/photo/{photoId}");
+            HttpResponseMessage apiResponse = await _httpClient.DeleteAsync($"api/photo/{photoId}");
             _httpClient.DefaultRequestHeaders.Authorization = null;
 
-            return response.StatusCode;
+            // Exceptions check
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            return apiResponse.StatusCode;
         }
 
         public async Task<HttpStatusCode> EditPhotoAsync(EditPhotoDto editPhotoDto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"api/photo/editphoto", editPhotoDto);
+            HttpResponseMessage apiResponse = await _httpClient.PutAsJsonAsync($"api/photo/editphoto", editPhotoDto);
             _httpClient.DefaultRequestHeaders.Authorization = null;
 
-            return response.StatusCode;
+            // Exceptions check
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            return apiResponse.StatusCode;
         }
 
         public async Task<EditPhotoDto> GetEditPhotoByIdAsync(int editPhotoId, string token)
         {
+            EditPhotoDto editoPhotoDto = null;
+
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            EditPhotoDto editoPhotoDto = null;
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/editphoto/{editPhotoId}");
-            if (apiResponse.IsSuccessStatusCode)
-            {
-                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditPhotoDto>>();
-                editoPhotoDto = responseContent.Result;
-            }
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            //if (apiResponse.IsSuccessStatusCode)
+            //{
+            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditPhotoDto>>();
+            //    editoPhotoDto = responseContent.Result;
+            //}
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditPhotoDto>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            editoPhotoDto = responseContent.Result;
 
             return editoPhotoDto;
         }
@@ -143,12 +194,21 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public async Task<PhotoRatingDto> GetPhotoRatingAsync(int photoId)
         {
             PhotoRatingDto photoRatingDto = null;
+
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/vote/{photoId}");
-            if(apiResponse.IsSuccessStatusCode)
-            {
-                var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<PhotoRatingDto>>();
-                photoRatingDto = responseContent.Result;
-            }
+            //if(apiResponse.IsSuccessStatusCode)
+            //{
+            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<PhotoRatingDto>>();
+            //    photoRatingDto = responseContent.Result;
+            //}
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<PhotoRatingDto>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            photoRatingDto = responseContent.Result;
 
             return photoRatingDto;
         }
