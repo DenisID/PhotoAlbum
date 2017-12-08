@@ -46,7 +46,11 @@ namespace PhotoAlbum.Client.Controllers
 
             List<PhotoViewModel> photos = new List<PhotoViewModel>();
             //List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
-            List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto());
+            List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
+            {
+                PageNumber = 1,
+                PageSize = 3
+            });
 
             // Mapping
             if (photosDto != null)
@@ -148,6 +152,16 @@ namespace PhotoAlbum.Client.Controllers
         {
             var rating = await _photoAlbumService.GetPhotoRatingAsync(id);
             return Json(rating.Rating);
+        }
+
+        public async Task<ActionResult> GetTopArticlesFromNextSection(int lastRowId, bool isHistoryBack)
+        {
+            var sectionArticles = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
+            {
+                PageNumber = lastRowId,
+                PageSize = 4
+            });
+            return Json(sectionArticles, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpPost]

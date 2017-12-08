@@ -4,7 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Мои изображения</h2>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+@*<h2>Мои изображения</h2>
 
 <p>
     @Html.ActionLink("Добавить изображение", "CreatePhoto")
@@ -19,36 +22,109 @@
         foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td>*@
+
                     @*@if (item.Image != null)
                     {*@
-                    <p>@item.Title</p>
+
+                    @*<p>@item.Title</p>
                     <p>@item.OwnerName</p>
-                    <p>Rating: @item.Rating</p>
+                    <p>Rating: @item.Rating</p>*@
+
                     @*@Html.Raw("<img style='width:300px; height:400px;' src=\"data:image/jpeg;base64,"
                             + Convert.ToBase64String(item.Image) + "\" />")*@
-                    <img src="@Url.Action("GetImageById", "Photo", new { id = item.Id })" />
+
+                    @*<img src="@Url.Action("GetImageById", "Photo", new { id = item.Id })" />
                     <br />
                     <button class="btn" type="button" id="deletePhotoButton"
                             onclick="location.href='@Url.Action("DeletePhotoById", "Photo", new { id = item.Id })'">
                         Delete
                     </button>
-                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>*@
+
                     @*}*@
+@*\
                 </td>
 
-                <td>
+                <td>*@
+
                     @*@if (item.Image != null)
                     {*@
-                        <p>@item.Description</p>
+
+                        @*<p>@item.Description</p>
                         <p>
                             @Html.ActionLink("Редактировать", "EditPhoto", new { id = item.Id })
-                        </p>
+                        </p>*@
+
                     @*}*@
-                </td>
+
+                @*</td>
 
             </tr>
         }
     }
     
-</table>
+</table>*@
+
+
+<div id="sectionArticles"></div>
+<input type="hidden" id="lastRowId" value="1" />
+
+<script>
+    //get default articles
+    $(document).ready(function () {
+        GetArticlesFromNextSection(false);
+    });
+
+    //get next articles automatic
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            GetArticlesFromNextSection(true);
+        }
+    });
+
+    //common handler
+    function GetArticlesFromNextSection(scrollPage) {
+        var lastRowId = ($("#lastRowId").val() * 1);
+        var isHistoryBack = (lastRowId > 1 && !scrollPage);
+
+        $.ajax({
+            type: 'GET',
+            url: '/Photo/GetTopArticlesFromNextSection?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack,
+            dataType: 'json',
+            success: function (jsonData) {
+                var rowid = lastRowId + 1;
+
+                if (jsonData == null) {
+                    return;
+                }
+
+                $.each(jsonData, function (index, item) {
+                    var sectionIndex = (isHistoryBack ? index + 1 : rowid);
+                    var articleData = "";
+                    //$.each(section.SectionArticles, function (index, item) {
+                        articleData += '<li>' +
+                                   //'<p>' + item.Title + '</p>' +
+                                   //'<p>' + item.Description + '</p>' +
+                                   + item.Title + 
+                                   '<br/>' + item.Description +
+                                   '<br/>' + item.OwnerName +
+                                   '<br/>' + item.Rating +
+                                   '<br/>'+'<img src="/Photo/GetImageById/' + item.Id + '" />'
+                        '</li>';
+                    //});
+                    $('#sectionArticles').append(articleData);
+                });
+
+                if (!isHistoryBack) {
+                    $("#lastRowId").val(rowid);
+                }
+            },
+            error: function () {
+                //alert('Error');
+            }
+        });
+
+        return false;
+    }
+</script>
