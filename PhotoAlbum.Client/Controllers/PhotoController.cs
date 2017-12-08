@@ -30,46 +30,41 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task Test()
         {
-            await _photoAlbumService.Test();
+            await GetPhotos(1, false);
+            //await _photoAlbumService.Test();
         }
 
 
 
         // GET: Photo
-        public async Task<ActionResult> Index(int page = 1)
+        public async Task<ActionResult> Index()
         {
-            //int pageSize = 3; // количество объектов на страницу
-            //List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto { PageSize  = pageSize});
-            //PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = phones.Count };
-            //IndexViewModel ivm = new IndexViewModel { PageInfo = pageInfo, Phones = phonesPerPages };
-            //return View(ivm);
+            //List<PhotoViewModel> photos = new List<PhotoViewModel>();
+            ////List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
+            //List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
+            //{
+            //    PageNumber = 1,
+            //    PageSize = 3
+            //});
 
-            List<PhotoViewModel> photos = new List<PhotoViewModel>();
-            //List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
-            List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
-            {
-                PageNumber = 1,
-                PageSize = 3
-            });
+            //// Mapping
+            //if (photosDto != null)
+            //{
+            //    foreach(var photoDto in photosDto)
+            //    {
+            //        photos.Add(new PhotoViewModel
+            //        {
+            //            Id = photoDto.Id,
+            //            Title = photoDto.Title,
+            //            Description = photoDto.Description,
+            //            CreationDate = photoDto.CreationDate,
+            //            OwnerName = photoDto.OwnerName,
+            //            Rating = photoDto.Rating
+            //        });
+            //    }
+            //}
 
-            // Mapping
-            if (photosDto != null)
-            {
-                foreach(var photoDto in photosDto)
-                {
-                    photos.Add(new PhotoViewModel
-                    {
-                        Id = photoDto.Id,
-                        Title = photoDto.Title,
-                        Description = photoDto.Description,
-                        CreationDate = photoDto.CreationDate,
-                        OwnerName = photoDto.OwnerName,
-                        Rating = photoDto.Rating
-                    });
-                }
-            }
-
-            return View(photos);
+            return View(/*photos*/);
         }
 
         public ActionResult CreatePhoto()
@@ -154,14 +149,15 @@ namespace PhotoAlbum.Client.Controllers
             return Json(rating.Rating);
         }
 
-        public async Task<ActionResult> GetTopArticlesFromNextSection(int lastRowId, bool isHistoryBack)
+        public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack)
         {
-            var sectionArticles = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
+            //throw new Exception("TestEx");
+            var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
             {
                 PageNumber = lastRowId,
                 PageSize = 4
             });
-            return Json(sectionArticles, JsonRequestBehavior.AllowGet);
+            return Json(photos, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpPost]

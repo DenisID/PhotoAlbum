@@ -71,26 +71,26 @@
 <input type="hidden" id="lastRowId" value="1" />
 
 <script>
-    //get default articles
+    // Get default data
     $(document).ready(function () {
         GetArticlesFromNextSection(false);
     });
 
-    //get next articles automatic
+    // Get next data automatic
     $(window).scroll(function () {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             GetArticlesFromNextSection(true);
         }
     });
 
-    //common handler
+    // Common handler
     function GetArticlesFromNextSection(scrollPage) {
         var lastRowId = ($("#lastRowId").val() * 1);
         var isHistoryBack = (lastRowId > 1 && !scrollPage);
 
         $.ajax({
             type: 'GET',
-            url: '/Photo/GetTopArticlesFromNextSection?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack,
+            url: '/Photo/GetPhotos?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack,
             dataType: 'json',
             success: function (jsonData) {
                 var rowid = lastRowId + 1;
@@ -120,8 +120,8 @@
                     $("#lastRowId").val(rowid);
                 }
             },
-            error: function () {
-                //alert('Error');
+            error: function (jsonData) {
+                window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
             }
         });
 

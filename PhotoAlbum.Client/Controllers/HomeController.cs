@@ -26,5 +26,14 @@ namespace PhotoAlbum.Client.Controllers
 
             return View();
         }
+
+        // TODO : string id = bad
+        public ActionResult Error(string message)
+        {
+            var model = new HandleErrorInfo(new Exception(message),
+                                            "NaN",
+                                            "NaN");
+            return View(model);
+        }
     }
 }
