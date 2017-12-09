@@ -50,7 +50,6 @@ namespace PhotoAlbum.Server.Controllers
         [Route("api/photo")]
         public HttpResponseMessage GetPhotos([FromUri]PagingParametersDto pagingParameters)
         {
-            //throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             return Success(_photoAlbumService.GetPhotos(pagingParameters));
         }
 
