@@ -34,7 +34,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public async Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("userName", getTokenDto.Email);
+            dict.Add("userName", getTokenDto.Login);
             dict.Add("password", getTokenDto.Password);
             dict.Add("grant_type", "password");
             var req = new HttpRequestMessage(HttpMethod.Post, "Token") { Content = new FormUrlEncodedContent(dict) };

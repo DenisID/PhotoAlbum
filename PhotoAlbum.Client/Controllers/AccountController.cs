@@ -79,23 +79,6 @@ namespace PhotoAlbum.Client.Controllers
                 return View(model);
             }
 
-            //// This doesn't count login failures towards account lockout
-            //// To enable password failures to trigger account lockout, change to shouldLockout: true
-            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid login attempt.");
-            //        return View(model);
-            //}
-
             var getTokenDto = Mapper.Map<GetTokenDto>(model);
 
             var token = await _userService.GetTokenAsync(getTokenDto);
@@ -108,8 +91,8 @@ namespace PhotoAlbum.Client.Controllers
 
             var claims = new[]
             {
-                    new Claim(ClaimTypes.Name, model.Email),
-                    new Claim("AcessToken", string.Format(/*"Bearer {0}",*/ token.AccessToken)),
+                    new Claim(ClaimTypes.Name, model.Login),
+                    new Claim("AcessToken", string.Format(token.AccessToken)),
                 };
 
             var identity = new ClaimsIdentity(claims, "ApplicationCookie");
