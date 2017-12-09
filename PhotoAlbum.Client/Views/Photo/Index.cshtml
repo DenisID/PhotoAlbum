@@ -68,9 +68,8 @@
     
 </table>*@
 
-<h2>Мои изображения</h2>
 <p>
-    @Html.ActionLink("Добавить изображение", "CreatePhoto")
+    @Html.ActionLink(Resources.ResourceEN.AddPhoto, "CreatePhoto")
 </p>
 
 <div id="sectionArticles"></div>
@@ -118,19 +117,19 @@
                                         '</div>' +
                                         '<div class="photoRatings"' +
                                             '<div class="photoRating">' +
-                                                '<div class="ratingText">' + 'Rating: ' + '</div>' +
+                                                '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
                                                 '<div class="starRating">' +
                                                     '<div id="photoRatingId_' + item.Id + '"></div>' +
                                                 '</div>' +
                                             '</div>' +
                                             '<div class="photoUserRating">' +
-                                                '<div class="maRatingText">' + 'My rating: ' + '</div>' +
+                                                '<div class="maRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
                                                 '<div class="starRating">' +
                                                     '<div id="photoMyRatingId_' + item.Id + '"></div>' +
                                                 '</div>' +
                                             "</div>" +
                                         '</div>' +
-                                   '</div>'; 
+                                   '</div>';
                     $('#sectionArticles').append(articleData);
                     $(function () {
                         $('#photoRatingId_' + item.Id).rateYo({
@@ -153,5 +152,5 @@
         return false;
     }
 
-    
+
 </script>
