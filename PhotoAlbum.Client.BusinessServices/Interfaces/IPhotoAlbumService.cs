@@ -22,6 +22,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
         Task<PhotoRatingDto> GetPhotoRatingAsync(int photoId);
         Task<List<PhotoDto>> GetPhotosAsync(PagingParametersDto paginParametersDto);
         Task<List<UserVoteDto>> GetUserVotesAsync(string token, int? photoId = null);
+        Task<HttpStatusCode> CastPhotoVote(PhotoVoteDto photoVoteDto, string token);
         //Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
     }
 }

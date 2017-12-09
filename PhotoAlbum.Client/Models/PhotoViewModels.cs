@@ -33,6 +33,12 @@ namespace PhotoAlbum.Client.Models
         public string Description { get; set; }
     }
 
+    public class PhotoVoteViewModel
+    {
+        public int PhotoId { get; set; }
+        public int Rating { get; set; }
+    }
+
     public class PageInfo
     {
         public int PageNumber { get; set; } // номер текущей страницы

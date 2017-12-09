@@ -146,7 +146,7 @@ namespace PhotoAlbum.Client.Controllers
         public async Task<ActionResult> GetPhotoRating(int id)
         {
             var rating = await _photoAlbumService.GetPhotoRatingAsync(id);
-            return Json(rating.Rating);
+            return Json(rating, JsonRequestBehavior.AllowGet);
         }
 
         public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack)
@@ -173,6 +173,17 @@ namespace PhotoAlbum.Client.Controllers
 
             var userVotes = await _photoAlbumService.GetUserVotesAsync(token, id);
             return Json(userVotes, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CastPhotoVote(PhotoVoteViewModel model)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var photoVoteDto = Mapper.Map<PhotoVoteDto>(model);
+
+            var result = await _photoAlbumService.CastPhotoVote(photoVoteDto, token);
+            return null;
         }
 
         //[HttpPost]

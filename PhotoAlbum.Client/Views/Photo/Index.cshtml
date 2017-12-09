@@ -78,6 +78,7 @@
 <script>
     var userVotes = null;
 
+    // Get all current user votes
     $.ajax({
         type: 'GET',
         url: '/Photo/GetAllUserVotes',
@@ -93,12 +94,12 @@
         }
     });
 
-    // Get default data
+    // Get default photo data
     $(document).ready(function () {
         GetArticlesFromNextSection(false);
     });
 
-    // Get next data automatic
+    // Get next photo data automatic
     $(window).scroll(function () {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             GetArticlesFromNextSection(true);
@@ -148,14 +149,16 @@
                                         '</div>' +
                                    '</div>';
                     $('#sectionArticles').append(articleData);
-                    $(function () {
+
+                    $(function BuildRatingStar() {
                         $('#photoRatingId_' + item.Id).rateYo({
                             rating: Math.round(item.Rating),
                             fullStar: true,
                             readOnly: true
                         });
                     });
-                    $(function () {
+
+                    $(function BuildUserRatingStar() {
                         let photoRating = 0;
                         if (userVotes != null) {
                             $.each(userVotes, function (index, voteItem) {
@@ -164,11 +167,40 @@
                                 };
                             });
                         };
-                        
 
                         $('#photoMyRatingId_' + item.Id).rateYo({
-                            rating: photoRating,
+                            rating: Math.round(photoRating),
                             fullStar: true,
+                        })
+                        // On user rating change
+                        .on("rateyo.set", function (e, data) {
+                            $.post(
+                                "/Photo/CastPhotoVote",
+                                {
+                                    PhotoId: item.Id,
+                                    Rating: data.rating
+                                },
+                                function onSuccess() {
+                                    // Change rating star
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '/Photo/GetPhotoRating/' + item.Id,
+                                        dataType: 'json',
+                                        success: function (jsonData) {
+                                            if (jsonData == null) {
+                                                return;
+                                            }
+
+                                            let photoRating = jsonData.Rating;
+
+                                            $('#photoRatingId_' + item.Id).rateYo("rating", Math.round(photoRating));
+                                        },
+                                        error: function (jsonData) {
+                                            window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+                                        }
+                                    });
+                                }
+                            );
                         });
                     });
                 });
