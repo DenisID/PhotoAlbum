@@ -106,17 +106,26 @@
                 $.each(jsonData, function (index, item) {
                     var sectionIndex = (isHistoryBack ? index + 1 : rowid);
                     var articleData = "";
-                    //$.each(section.SectionArticles, function (index, item) {
-                        articleData += '<li>' +
-                                   //'<p>' + item.Title + '</p>' +
-                                   //'<p>' + item.Description + '</p>' +
-                                   + item.Title + 
-                                   '<br/>' + item.Description +
-                                   '<br/>' + item.OwnerName +
-                                   '<br/>' + item.Rating +
-                                   '<br/>'+'<img src="/Photo/GetImageById/' + item.Id + '" />'
-                        '</li>';
-                    //});
+                    //articleData += '<li>' +
+                    //                item.Title + 
+                    //                '<br/>' + item.Description +
+                    //                '<br/>' + item.OwnerName +
+                    //                '<br/>' + item.Rating +
+                    //                '<br/>'+'<img src="/Photo/GetImageById/' + item.Id + '" />'
+                    //                '</li>';
+                    articleData += '<div>' +
+                                        '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
+                                        '<div class="photoTitile"><H3>' + item.Title + '</H3></div>' +
+                                        '<div class="photoDescription">' + item.Description + '</div>' +
+                                        '<div class="photoOwnerAndDate">' +
+                                            '<span class="photoOwner">' + 'Added by ' + item.OwnerName + '</span>' +
+                                            '<span class="photoDate">' + Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))) + '</span>' +
+                                        '</div>' +
+                                        '<div class="photoRating"' +
+                                            '<span class="photoRating">' + 'Rating: ' + item.Rating + '</span>' +
+                                            '<span class="photoUserRating">' + 'My rating: ' + "</span>" +
+                                        '</div>' +
+                                   '</div>'; 
                     $('#sectionArticles').append(articleData);
                 });
 
