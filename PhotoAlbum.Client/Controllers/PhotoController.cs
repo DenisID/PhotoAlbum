@@ -151,13 +151,20 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack)
         {
-            //throw new Exception("TestEx");
             var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
             {
                 PageNumber = lastRowId,
-                PageSize = 4
+                PageSize = 5
             });
             return Json(photos, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetUserVotes()
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var userVotes = await _photoAlbumService.GetUserVotesAsync(token);
+            return Json(userVotes, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpPost]

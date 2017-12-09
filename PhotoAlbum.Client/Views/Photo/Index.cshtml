@@ -138,6 +138,12 @@
                             readOnly: true
                         });
                     });
+                    $(function () {
+                        $('#photoMyRatingId_' + item.Id).rateYo({
+                            rating: 5,
+                            fullStar: true,
+                        });
+                    });
                 });
 
                 if (!isHistoryBack) {
