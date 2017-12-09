@@ -334,7 +334,7 @@ namespace PhotoAlbum.Server.Controllers
                 UserName = model.Login,
                 Email = model.Email
             };
-
+            
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)

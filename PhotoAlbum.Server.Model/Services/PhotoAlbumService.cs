@@ -201,19 +201,7 @@ namespace PhotoAlbum.Server.Model.Services
             }
             _photoAlbumContext.SaveChanges();
         }
-
-        //public PhotoRatingDto GetPhotoRating(int photoId)
-        //{
-        //    var ratingSum = _photoAlbumContext.PhotoVotes.Where(x => x.PhotoId == photoId)
-        //                                                 .Average(x => x.Rating);
-        //    // Mapping
-        //    return new PhotoRatingDto
-        //    {
-        //        Rating = ratingSum
-        //    };
-        //    //throw new NotImplementedException();
-        //}
-
+        
         public List<PhotoVoteDto> GetUserVotes(string userId)
         {
             var photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId).ToList();
@@ -243,21 +231,6 @@ namespace PhotoAlbum.Server.Model.Services
 
             return (photo.User == user) ? true : false;
         }
-
-        //public Photo GetPhotoById(int photoId)
-        //{
-        //    if (photoId < 0)
-        //    {
-        //        throw new ArgumentNullException(nameof(photoId));
-        //    }
-
-        //    var photo = _photoAlbumContext.Photos.Find(photoId);
-        //    //if (photo == null)
-        //    //{
-        //    //    throw PhotoNotFoundException.FromPhotoId(photoId);
-        //    //}
-        //    //photo.ValidateEntity();
-        //    return photo;
-        //}
+        
     }
 }
