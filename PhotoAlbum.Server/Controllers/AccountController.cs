@@ -329,7 +329,11 @@ namespace PhotoAlbum.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser()
+            {
+                UserName = model.Login,
+                Email = model.Email
+            };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
