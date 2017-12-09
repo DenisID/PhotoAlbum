@@ -8,9 +8,10 @@ namespace PhotoAlbum.Common.ErrorCodes
 {
     public class ErrorCodes
     {
-        public const string PhotoNotFound = "PhotoNotFound";
-        public const string NoPhotosInDatabase = "NoPhotosInDatabase";
-        public const string UserNotFound = "UserNotFound";
-        public const string NotEnoughRights = "NotEnoughRights";
+        public const string PhotoNotFound = "Photo Not Found";
+        public const string NoPhotosInDatabase = "No Photos In Database";
+        public const string UserNotFound = "User Not Found";
+        public const string NotEnoughRights = "Not Enough Rights";
+        public const string UserInfoNotFound = "User Info Not Found";
     }
 }

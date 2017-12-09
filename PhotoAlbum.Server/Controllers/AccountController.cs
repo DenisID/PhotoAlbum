@@ -356,6 +356,26 @@ namespace PhotoAlbum.Server.Controllers
             return Ok();
         }
 
+        // POST api/Account/ChangeUserProfile
+        [Route("ChangeUserProfile")]
+        public async Task<IHttpActionResult> ChangeUserProfile(ChangeUserProfileBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = RequestContext.Principal.Identity.Name;
+            var userId = User.Identity.GetUserId();
+
+            var dto = Mapper.Map<ChangeUserProfileBindingModel, ChangeUserProfileDto>(model);
+            dto.UserId = userId;
+
+            _photoAlbumService.ChangeUserProfile(dto);
+
+            return Ok();
+        }
+
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]

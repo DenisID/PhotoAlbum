@@ -18,6 +18,7 @@ namespace PhotoAlbum.Server.Mappings
         public ModelsToDtoMappingProfile()
         {
             CreateMap<RegisterBindingModel, CreateUserInfoDto>();
+            CreateMap<ChangeUserProfileBindingModel, ChangeUserProfileDto>();
         }
     }
 }

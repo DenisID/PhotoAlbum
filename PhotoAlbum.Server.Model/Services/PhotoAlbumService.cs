@@ -247,5 +247,29 @@ namespace PhotoAlbum.Server.Model.Services
             _photoAlbumContext.UserInfoes.Add(userInfo);
             _photoAlbumContext.SaveChanges();
         }
+        
+        public void ChangeUserProfile(ChangeUserProfileDto dto)
+        {
+            var user = _photoAlbumContext.Users.Find(dto.UserId);
+            if (user == null)
+            {
+                throw new UserNotFoundException(ErrorCodes.UserNotFound);
+            }
+
+            var userInfo = _photoAlbumContext.UserInfoes.FirstOrDefault(x => x.UserId == dto.UserId);
+            if (userInfo == null)
+            {
+                throw new UserInfoNotFoundException(ErrorCodes.UserInfoNotFound);
+            }
+
+            user.Email = dto.Email;
+            _photoAlbumContext.Entry(user).State = EntityState.Modified;
+
+            userInfo.FirstName = dto.FirstName;
+            userInfo.LastName = dto.LastName;
+            _photoAlbumContext.Entry(userInfo).State = EntityState.Modified;
+
+            _photoAlbumContext.SaveChanges();
+        }
     }
 }
