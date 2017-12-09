@@ -19,6 +19,8 @@ namespace PhotoAlbum.Server.Model.Mappings
         public DtoToEntitiesMappingProfile()
         {
             CreateMap<PhotoVoteDto, PhotoVote>();
+            CreateMap<CreatePhotoDto, Photo>();
+            CreateMap<CreatePhotoDto, PhotoContent>();
         }
     }
 }

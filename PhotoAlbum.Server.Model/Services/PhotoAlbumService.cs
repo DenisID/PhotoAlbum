@@ -22,23 +22,27 @@ namespace PhotoAlbum.Server.Model.Services
 
         public int CreatePhoto(CreatePhotoDto createPhotoDto)
         {
-            var photo = new Photo();
+            var photo = Mapper.Map<CreatePhotoDto, Photo>(createPhotoDto);
             photo.CreationDate = DateTime.Now;
-            photo.Title = createPhotoDto.Title;
-            photo.Description = createPhotoDto.Description;
-
             var user = _photoAlbumContext.Users.Find(createPhotoDto.UserId);
             photo.User = user;
 
             _photoAlbumContext.Photos.Add(photo);
             _photoAlbumContext.SaveChanges();
 
-            var photoContent = new PhotoContent();
+            var photoContent = Mapper.Map<CreatePhotoDto, PhotoContent>(createPhotoDto);
             photoContent.Id = photo.Id;
-            photoContent.Image = createPhotoDto.Image;
-            photoContent.ImageMimeType = createPhotoDto.ImageMimeType;
 
             _photoAlbumContext.PhotoContents.Add(photoContent);
+            _photoAlbumContext.SaveChanges();
+            
+            var photoVote = new PhotoVote
+            {
+                UserId = createPhotoDto.UserId,
+                PhotoId = photo.Id,
+            };
+
+            _photoAlbumContext.PhotoVotes.Add(photoVote);
             _photoAlbumContext.SaveChanges();
 
             return photo.Id;
@@ -87,7 +91,7 @@ namespace PhotoAlbum.Server.Model.Services
             {
                 throw new PhotoNotFoundException(ErrorCodes.NoPhotosInDatabase);
             }
-
+            
             var photos = new List<PhotoDto>();
             foreach (var photoFromDb in photosFromDb)
             {
@@ -95,6 +99,12 @@ namespace PhotoAlbum.Server.Model.Services
             }
 
             return photos;
+        }
+
+        public int GetPhotosCount()
+        {
+            return _photoAlbumContext.Photos.Count();
+
         }
 
         public PhotoDto GetPhotoById(int photoId)

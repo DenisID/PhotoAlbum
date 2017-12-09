@@ -4,6 +4,7 @@ using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Dto;
 //using PhotoAlbum.Client.Model.Services;
 using PhotoAlbum.Client.Models;
+using PhotoAlbum.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,8 +19,6 @@ namespace PhotoAlbum.Client.Controllers
 {
     public class PhotoController : Controller
     {
-        //private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
-        //private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
         private readonly IPhotoAlbumService _photoAlbumService;
 
         public PhotoController(IPhotoAlbumService photoAlbumService)
@@ -27,41 +26,45 @@ namespace PhotoAlbum.Client.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
-        //public async Task<HttpResponseMessage> Test()
-        //{
-        //    var response = await _photoAlbumService.Test();
-        //    var result = response.Content;
 
-        //    return response;
-        //}
+
+        public async Task Test()
+        {
+            await GetPhotos(1, false);
+            //await _photoAlbumService.Test();
+        }
+
+
 
         // GET: Photo
         public async Task<ActionResult> Index()
-        {            
-            //var photos = _photoAlbumService.GetAllPhotos();
-            List<PhotoViewModel> photos = new List<PhotoViewModel>();
-            List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
+        {
+            //List<PhotoViewModel> photos = new List<PhotoViewModel>();
+            ////List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
+            //List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
+            //{
+            //    PageNumber = 1,
+            //    PageSize = 3
+            //});
 
-            // Mapping
-            if(photosDto != null)
-            {
-                foreach(var photoDto in photosDto)
-                {
-                    photos.Add(new PhotoViewModel
-                    {
-                        Id = photoDto.Id,
-                        Title = photoDto.Title,
-                        Description = photoDto.Description,
-                        CreationDate = photoDto.CreationDate,
-                        OwnerName = photoDto.OwnerName,
-                        Rating = photoDto.Rating,
-                        //Image = photoDto.Image,
-                        //ImageMimeType = photoDto.ImageMimeType
-                    });
-                }
-            }
+            //// Mapping
+            //if (photosDto != null)
+            //{
+            //    foreach(var photoDto in photosDto)
+            //    {
+            //        photos.Add(new PhotoViewModel
+            //        {
+            //            Id = photoDto.Id,
+            //            Title = photoDto.Title,
+            //            Description = photoDto.Description,
+            //            CreationDate = photoDto.CreationDate,
+            //            OwnerName = photoDto.OwnerName,
+            //            Rating = photoDto.Rating
+            //        });
+            //    }
+            //}
 
-            return View(photos);
+            return View(/*photos*/);
         }
 
         public ActionResult CreatePhoto()
@@ -89,7 +92,7 @@ namespace PhotoAlbum.Client.Controllers
                 createPhotoDto.Title = createPhotoViewModel.Title;
                 createPhotoDto.Description = createPhotoViewModel.Description;
 
-                await _photoAlbumService.CreatePhoto(createPhotoDto, token);
+                await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
 
                 return RedirectToAction("Index");
             }
@@ -98,14 +101,14 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> GetImageById(int id)
         {
-            var image = await _photoAlbumService.GetImageById(id);
+            var image = await _photoAlbumService.GetImageByIdAsync(id);
             return File(image.Image, image.ImageMimeType);
         }
 
         public async Task<ActionResult> DeletePhotoById(int id)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
-            await _photoAlbumService.DeletePhotoById(id, token);
+            await _photoAlbumService.DeletePhotoByIdAsync(id, token);
             return RedirectToAction("Index");
         }
 
@@ -115,17 +118,9 @@ namespace PhotoAlbum.Client.Controllers
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             EditPhotoViewModel editPhotoViewModel = null;
-            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoById(id, token);
+            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoByIdAsync(id, token);
             if(editPhotoDto != null)
             {
-                // Mapping
-                //editPhotoViewModel = new EditPhotoViewModel
-                //{
-                //    Id = editPhotoDto.Id,
-                //    Title = editPhotoDto.Title,
-                //    Description = editPhotoDto.Description
-                //};
-
                 editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
             }
             return View(editPhotoViewModel);
@@ -144,7 +139,7 @@ namespace PhotoAlbum.Client.Controllers
                 Description = editPhotoViewModel.Description
             };
 
-            await _photoAlbumService.EditPhoto(editPhotoDto, token);
+            await _photoAlbumService.EditPhotoAsync(editPhotoDto, token);
             return RedirectToAction("Index");
         }
 
@@ -152,6 +147,17 @@ namespace PhotoAlbum.Client.Controllers
         {
             var rating = await _photoAlbumService.GetPhotoRatingAsync(id);
             return Json(rating.Rating);
+        }
+
+        public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack)
+        {
+            //throw new Exception("TestEx");
+            var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
+            {
+                PageNumber = lastRowId,
+                PageSize = 4
+            });
+            return Json(photos, JsonRequestBehavior.AllowGet);
         }
 
         //[HttpPost]

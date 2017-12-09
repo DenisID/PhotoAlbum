@@ -11,13 +11,16 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 {
     public interface IPhotoAlbumService
     {
-        Task<Uri> CreatePhoto(CreatePhotoDto createPhotoDto, string token);
-        Task<List<PhotoDto>> GetAllPhotos();
-        Task<ImageDto> GetImageById(int imageId);
-        Task<HttpStatusCode> DeletePhotoById(int photoId, string token);
-        Task<HttpStatusCode> EditPhoto(EditPhotoDto editPhotoDto, string token);
-        Task<EditPhotoDto> GetEditPhotoById(int editPhotoId, string token);
+        Task Test();
+
+        Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token);
+        Task<List<PhotoDto>> GetAllPhotosAsync();
+        Task<ImageDto> GetImageByIdAsync(int imageId);
+        Task<HttpStatusCode> DeletePhotoByIdAsync(int photoId, string token);
+        Task<HttpStatusCode> EditPhotoAsync(EditPhotoDto editPhotoDto, string token);
+        Task<EditPhotoDto> GetEditPhotoByIdAsync(int editPhotoId, string token);
         Task<PhotoRatingDto> GetPhotoRatingAsync(int photoId);
+        Task<List<PhotoDto>> GetPhotosAsync(PagingParametersDto paginParametersDto);
         //Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
     }
 }
