@@ -213,13 +213,22 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return photoRatingDto;
         }
 
-        public async Task<List<UserVoteDto>> GetUserVotesAsync(string token)
+        public async Task<List<UserVoteDto>> GetUserVotesAsync(string token, int? photoId = null)
         {
             List<UserVoteDto> userVotesDto = null;
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/vote");
+            HttpResponseMessage apiResponse = null;
+            if (photoId == null)
+            {
+                apiResponse = await _httpClient.GetAsync($"api/photo/vote");
+            }
+            else
+            {
+                apiResponse = await _httpClient.GetAsync($"api/photo/vote/{photoId}");
+            }
+            
             _httpClient.DefaultRequestHeaders.Authorization = null;
             
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<UserVoteDto>>>();

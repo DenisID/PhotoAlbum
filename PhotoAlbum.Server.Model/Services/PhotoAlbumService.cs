@@ -202,10 +202,21 @@ namespace PhotoAlbum.Server.Model.Services
             _photoAlbumContext.SaveChanges();
         }
         
-        public List<PhotoVoteDto> GetUserVotes(string userId)
+        public List<PhotoVoteDto> GetUserVotes(string userId, int? photoId = null)
         {
-            var photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId).ToList();
+            List<PhotoVote> photoVotes = new List<PhotoVote>();
 
+            if (photoId == null)
+            {
+                photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId).ToList();
+            }
+            else
+            {
+                photoVotes = _photoAlbumContext.PhotoVotes.Where(x => x.UserId == userId)
+                                                          .Where(x => x.PhotoId == photoId)
+                                                          .ToList();
+            }
+            
             List<PhotoVoteDto> userVotes = new List<PhotoVoteDto>();
             foreach(var element in photoVotes)
             {

@@ -137,11 +137,21 @@ namespace PhotoAlbum.Server.Controllers
         [HttpGet]
         [Route("api/photo/vote")]
         [Authorize]
-        public HttpResponseMessage GetUserVotes()
+        public HttpResponseMessage GetAllUserVotes()
         {
             var userId = User.Identity.GetUserId();
 
             return Success(_photoAlbumService.GetUserVotes(userId));
+        }
+
+        [HttpGet]
+        [Route("api/photo/vote/{id}")]
+        [Authorize]
+        public HttpResponseMessage GetUserVote(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            return Success(_photoAlbumService.GetUserVotes(userId, id));
         }
     }
 }

@@ -76,6 +76,23 @@
 <input type="hidden" id="lastRowId" value="1" />
 
 <script>
+    var userVotes = null;
+
+    $.ajax({
+        type: 'GET',
+        url: '/Photo/GetAllUserVotes',
+        dataType: 'json',
+        success: function (jsonData) {
+            if (jsonData == null) {
+                return;
+            }
+            userVotes = jsonData;
+        },
+        error: function (jsonData) {
+            window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+        }
+    });
+
     // Get default data
     $(document).ready(function () {
         GetArticlesFromNextSection(false);
@@ -139,8 +156,18 @@
                         });
                     });
                     $(function () {
+                        let photoRating = 0;
+                        if (userVotes != null) {
+                            $.each(userVotes, function (index, voteItem) {
+                                if (voteItem.PhotoId === item.Id) {
+                                    photoRating = voteItem.Rating;
+                                };
+                            });
+                        };
+                        
+
                         $('#photoMyRatingId_' + item.Id).rateYo({
-                            rating: 5,
+                            rating: photoRating,
                             fullStar: true,
                         });
                     });

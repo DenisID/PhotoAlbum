@@ -159,11 +159,19 @@ namespace PhotoAlbum.Client.Controllers
             return Json(photos, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<ActionResult> GetUserVotes()
+        public async Task<ActionResult> GetAllUserVotes()
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             var userVotes = await _photoAlbumService.GetUserVotesAsync(token);
+            return Json(userVotes, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetUserVotes(int id)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var userVotes = await _photoAlbumService.GetUserVotesAsync(token, id);
             return Json(userVotes, JsonRequestBehavior.AllowGet);
         }
 
