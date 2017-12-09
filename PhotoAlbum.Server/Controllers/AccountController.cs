@@ -17,6 +17,9 @@ using PhotoAlbum.Server.Models;
 using PhotoAlbum.Server.Providers;
 using PhotoAlbum.Server.Results;
 using PhotoAlbum.Server.Model.Entities;
+using PhotoAlbum.Server.Model.Interfaces;
+using AutoMapper;
+using PhotoAlbum.Server.Dto;
 
 namespace PhotoAlbum.Server.Controllers
 {
@@ -26,9 +29,11 @@ namespace PhotoAlbum.Server.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private readonly IPhotoAlbumService _photoAlbumService;
 
-        public AccountController()
+        public AccountController(IPhotoAlbumService photoAlbumService)
         {
+            _photoAlbumService = photoAlbumService;
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -342,6 +347,11 @@ namespace PhotoAlbum.Server.Controllers
                 var errorResult = GetErrorResult(result);
                 return errorResult;
             }
+            
+            var createUserInfoDto = Mapper.Map<RegisterBindingModel, CreateUserInfoDto>(model);
+            createUserInfoDto.UserId = user.Id;
+
+            _photoAlbumService.CreateUserInfo(createUserInfoDto);            
 
             return Ok();
         }

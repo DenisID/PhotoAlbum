@@ -232,5 +232,20 @@ namespace PhotoAlbum.Server.Model.Services
             return (photo.User == user) ? true : false;
         }
         
+        public void CreateUserInfo(CreateUserInfoDto createUserInfoDto)
+        {
+            var user = _photoAlbumContext.Users.Find(createUserInfoDto.UserId);
+
+            if(user == null)
+            {
+                throw new UserNotFoundException(ErrorCodes.UserNotFound);
+            }
+
+            var userInfo = Mapper.Map<CreateUserInfoDto, UserInfo>(createUserInfoDto);
+            userInfo.User = user;
+
+            _photoAlbumContext.UserInfoes.Add(userInfo);
+            _photoAlbumContext.SaveChanges();
+        }
     }
 }

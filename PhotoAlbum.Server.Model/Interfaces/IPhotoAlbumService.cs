@@ -22,5 +22,6 @@ namespace PhotoAlbum.Server.Model.Interfaces
         int GetPhotosCount();
 
         bool IsPhotoOwner(string userId, int photoId);
+        void CreateUserInfo(CreateUserInfoDto createUserInfoDto);
     }
 }

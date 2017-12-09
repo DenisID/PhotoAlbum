@@ -21,7 +21,7 @@ namespace PhotoAlbum.Server.Model.Data
         public DbSet<Photo> Photos { get; set; }
         public DbSet<PhotoContent> PhotoContents { get; set; }
         public DbSet<PhotoVote> PhotoVotes { get; set; }
-        public DbSet<UserInfo> UserInfos { get; set; }
+        public DbSet<UserInfo> UserInfoes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
