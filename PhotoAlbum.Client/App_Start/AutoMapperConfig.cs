@@ -15,6 +15,7 @@ namespace PhotoAlbum.Client.App_Start
             {
                 x.AddProfile<DtoToViewModelMappingProfile>();
                 x.AddProfile<ViewModelToDtoMappingProfile>();
+                x.AddProfile<ViewModelToViewModelMappingProfile>();
             });
         }
     }

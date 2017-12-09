@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Mappings\DtoToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDtoMappingProfile.cs" />
+    <Compile Include="Mappings\ViewModelToViewModelMappingProfile.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
