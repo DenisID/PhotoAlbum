@@ -20,6 +20,7 @@ namespace PhotoAlbum.Server.Model.Interfaces
         void CastPhotoVote(PhotoVoteDto castPhotoVoteDto);
         List<PhotoVoteDto> GetUserVotes(string userId, int? photoId = null);
         int GetPhotosCount();
+        PhotoRatingDto GetPhotoRating(int photoId);
 
         bool IsPhotoOwner(string userId, int photoId);
         void CreateUserInfo(CreateUserInfoDto createUserInfoDto);

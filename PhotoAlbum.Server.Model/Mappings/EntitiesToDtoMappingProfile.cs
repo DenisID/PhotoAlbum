@@ -26,6 +26,7 @@ namespace PhotoAlbum.Server.Model.Mappings
             CreateMap<PhotoContent, ImageDto>();
 
             CreateMap<PhotoVote, PhotoVoteDto>();
+            CreateMap<Photo, PhotoRatingDto>();
         }
     }
 }

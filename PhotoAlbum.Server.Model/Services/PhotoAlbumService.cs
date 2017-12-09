@@ -282,5 +282,19 @@ namespace PhotoAlbum.Server.Model.Services
 
             _photoAlbumContext.SaveChanges();
         }
+
+        public PhotoRatingDto GetPhotoRating(int photoId)
+        {
+            var photoFromDb = _photoAlbumContext.Photos.Find(photoId);
+
+            if (photoFromDb == null)
+            {
+                throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
+            }
+
+            var photoRating = Mapper.Map<PhotoRatingDto>(photoFromDb);
+
+            return photoRating;
+        }
     }
 }

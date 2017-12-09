@@ -121,7 +121,7 @@ namespace PhotoAlbum.Server.Controllers
         [HttpPost]
         [Route("api/photo/vote")]
         [Authorize]
-        public HttpResponseMessage CastVote([FromBody]CastPhotoVoteDto photoVoteDto)
+        public HttpResponseMessage CastPhotoVote([FromBody]CastPhotoVoteDto photoVoteDto)
         {
             var castPhotoVoteDto = new PhotoVoteDto
             {
@@ -152,6 +152,13 @@ namespace PhotoAlbum.Server.Controllers
             var userId = User.Identity.GetUserId();
 
             return Success(_photoAlbumService.GetUserVotes(userId, id));
+        }
+
+        [HttpGet]
+        [Route("api/photo/rating/{id}")]
+        public HttpResponseMessage GetPhotoRating(int id)
+        {
+            return Success(_photoAlbumService.GetPhotoRating(id));
         }
     }
 }
