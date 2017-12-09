@@ -22,10 +22,16 @@ namespace PhotoAlbum.Client
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
-
+        
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/rateyo")
+                            .IncludeDirectory("~/Scripts/rateyo", "*.js", true));
+
+            bundles.Add(new StyleBundle("~/Content/rateyo")
+                            .IncludeDirectory("~/Content/rateyo", "*.css", true));
         }
     }
 }

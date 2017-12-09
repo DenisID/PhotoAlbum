@@ -260,6 +260,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\rateyo\jquery.rateyo.css" />
+    <Content Include="Content\rateyo\jquery.rateyo.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -354,6 +356,8 @@
     <Content Include="Content\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\glyphicons-halflings-regular.woff" />
     <Content Include="Content\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\rateyo\jquery.rateyo.less" />
+    <Content Include="Content\rateyo\jquery.rateyo.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\affix.js" />
     <Content Include="Scripts\bootstrap\alert.js" />
@@ -375,6 +379,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\rateyo\jquery.min.js" />
+    <Content Include="Scripts\rateyo\jquery.rateyo.js" />
+    <Content Include="Scripts\rateyo\jquery.rateyo.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -420,6 +427,7 @@
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\CreatePhoto.cshtml" />
     <Content Include="Views\Photo\EditPhoto.cshtml" />
+    <Content Include="Scripts\rateyo\jquery.rateyo.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

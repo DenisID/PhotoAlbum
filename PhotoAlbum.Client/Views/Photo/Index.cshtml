@@ -4,8 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")*@
+@Scripts.Render("~/bundles/rateyo")
+@Styles.Render("~/Content/rateyo")
 
 @*<h2>Мои изображения</h2>
 
@@ -106,13 +108,6 @@
                 $.each(jsonData, function (index, item) {
                     var sectionIndex = (isHistoryBack ? index + 1 : rowid);
                     var articleData = "";
-                    //articleData += '<li>' +
-                    //                item.Title + 
-                    //                '<br/>' + item.Description +
-                    //                '<br/>' + item.OwnerName +
-                    //                '<br/>' + item.Rating +
-                    //                '<br/>'+'<img src="/Photo/GetImageById/' + item.Id + '" />'
-                    //                '</li>';
                     articleData += '<div>' +
                                         '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
                                         '<div class="photoTitile"><H3>' + item.Title + '</H3></div>' +
@@ -121,12 +116,29 @@
                                             '<span class="photoOwner">' + 'Added by ' + item.OwnerName + '</span>' +
                                             '<span class="photoDate">' + Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))) + '</span>' +
                                         '</div>' +
-                                        '<div class="photoRating"' +
-                                            '<span class="photoRating">' + 'Rating: ' + item.Rating + '</span>' +
-                                            '<span class="photoUserRating">' + 'My rating: ' + "</span>" +
+                                        '<div class="photoRatings"' +
+                                            '<div class="photoRating">' +
+                                                '<div class="ratingText">' + 'Rating: ' + '</div>' +
+                                                '<div class="starRating">' +
+                                                    '<div id="photoRatingId_' + item.Id + '"></div>' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="photoUserRating">' +
+                                                '<div class="maRatingText">' + 'My rating: ' + '</div>' +
+                                                '<div class="starRating">' +
+                                                    '<div id="photoMyRatingId_' + item.Id + '"></div>' +
+                                                '</div>' +
+                                            "</div>" +
                                         '</div>' +
                                    '</div>'; 
                     $('#sectionArticles').append(articleData);
+                    $(function () {
+                        $('#photoRatingId_' + item.Id).rateYo({
+                            rating: Math.round(item.Rating),
+                            fullStar: true,
+                            readOnly: true
+                        });
+                    });
                 });
 
                 if (!isHistoryBack) {
@@ -140,4 +152,6 @@
 
         return false;
     }
+
+    
 </script>
