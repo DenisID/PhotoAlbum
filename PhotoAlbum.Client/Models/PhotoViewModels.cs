@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoAlbum.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -48,5 +49,12 @@ namespace PhotoAlbum.Client.Models
         {
             get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
         }
+    }
+
+    public class PhotoIndexViewModel
+    {
+        public string Sorting { get; set; }
+        public string ByCreationDate { get; } = SortOrder.ByCreationDate.ToString();
+        public string ByRating { get; } = SortOrder.ByRating.ToString();
     }
 }

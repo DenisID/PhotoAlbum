@@ -79,6 +79,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New first.
+        /// </summary>
+        public static string NewFirst {
+            get {
+                return ResourceManager.GetString("NewFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popular first.
+        /// </summary>
+        public static string PopularFirst {
+            get {
+                return ResourceManager.GetString("PopularFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rating.
         /// </summary>
         public static string Rating {

@@ -28,43 +28,20 @@ namespace PhotoAlbum.Client.Controllers
 
 
 
-        public async Task Test()
-        {
-            await GetPhotos(1, false);
-            //await _photoAlbumService.Test();
-        }
+        //public async Task Test()
+        //{
+        //    await GetPhotos(1, false);
+        //    //await _photoAlbumService.Test();
+        //}
 
 
 
         // GET: Photo
         public async Task<ActionResult> Index()
         {
-            //List<PhotoViewModel> photos = new List<PhotoViewModel>();
-            ////List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
-            //List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
-            //{
-            //    PageNumber = 1,
-            //    PageSize = 3
-            //});
+            var model = new PhotoIndexViewModel();
 
-            //// Mapping
-            //if (photosDto != null)
-            //{
-            //    foreach(var photoDto in photosDto)
-            //    {
-            //        photos.Add(new PhotoViewModel
-            //        {
-            //            Id = photoDto.Id,
-            //            Title = photoDto.Title,
-            //            Description = photoDto.Description,
-            //            CreationDate = photoDto.CreationDate,
-            //            OwnerName = photoDto.OwnerName,
-            //            Rating = photoDto.Rating
-            //        });
-            //    }
-            //}
-
-            return View(/*photos*/);
+            return View(model);
         }
 
         public ActionResult CreatePhoto()
@@ -149,12 +126,13 @@ namespace PhotoAlbum.Client.Controllers
             return Json(rating, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack)
+        public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting)
         {
             var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
             {
                 PageNumber = lastRowId,
-                PageSize = 5
+                PageSize = 5,
+                Sorting = sorting
             });
             return Json(photos, JsonRequestBehavior.AllowGet);
         }

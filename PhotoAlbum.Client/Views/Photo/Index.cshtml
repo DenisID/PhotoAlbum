@@ -1,11 +1,9 @@
-﻿@model IEnumerable<PhotoAlbum.Client.Models.PhotoViewModel>
+﻿@model PhotoAlbum.Client.Models.PhotoIndexViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-@*@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")*@
 @Scripts.Render("~/bundles/rateyo")
 @Styles.Render("~/Content/rateyo")
 
@@ -68,18 +66,42 @@
     
 </table>*@
 
+<div class="sortOrder">
+    <span class="sortNewFirst">
+        @Resources.ResourceEN.NewFirst:     @Html.RadioButtonFor(m => m.Sorting, Model.ByCreationDate, new { Checked = "checked" })
+    </span>
+    <span class="sortPopularFirst">
+        @Resources.ResourceEN.PopularFirst: @Html.RadioButtonFor(m => m.Sorting, Model.ByRating)
+    </span>
+</div>
+
+@{
+    Model.Sorting = Model.ByCreationDate;
+} 
+
 <p>
     @Html.ActionLink(Resources.ResourceEN.AddPhoto, "CreatePhoto")
 </p>
 
-<div id="sectionArticles"></div>
+<div id="sectionPhotos"></div>
 <input type="hidden" id="lastRowId" value="1" />
 
 <script>
     var userVotes = null;
+    var sorting = "@Model.Sorting";
+
+    // On radio button change
+    $("input[name=Sorting]:radio").change(function () {
+        $('#sectionPhotos').empty();
+        $("#lastRowId").val(1);
+        GetAllCurrentUserVotes();
+        sorting = $('input[name=Sorting]:checked').val();
+        GetPhotosFromNextSection(false, sorting);
+    });
 
     // Get all current user votes
-    $.ajax({
+    function GetAllCurrentUserVotes() {
+        $.ajax({
         type: 'GET',
         url: '/Photo/GetAllUserVotes',
         dataType: 'json',
@@ -92,28 +114,31 @@
         error: function (jsonData) {
             window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
         }
-    });
+        });
+    }
+
+    GetAllCurrentUserVotes();
 
     // Get default photo data
     $(document).ready(function () {
-        GetArticlesFromNextSection(false);
+        GetPhotosFromNextSection(false, sorting);
     });
 
     // Get next photo data automatic
     $(window).scroll(function () {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            GetArticlesFromNextSection(true);
+            GetPhotosFromNextSection(true, sorting);
         }
     });
 
     // Common handler
-    function GetArticlesFromNextSection(scrollPage) {
+    function GetPhotosFromNextSection(scrollPage, sort) {
         var lastRowId = ($("#lastRowId").val() * 1);
         var isHistoryBack = (lastRowId > 1 && !scrollPage);
 
         $.ajax({
             type: 'GET',
-            url: '/Photo/GetPhotos?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack,
+            url: '/Photo/GetPhotos?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack + '&Sorting=' + sort,
             dataType: 'json',
             success: function (jsonData) {
                 var rowid = lastRowId + 1;
@@ -148,7 +173,7 @@
                                             "</div>" +
                                         '</div>' +
                                    '</div>';
-                    $('#sectionArticles').append(articleData);
+                    $('#sectionPhotos').append(articleData);
 
                     $(function BuildRatingStar() {
                         $('#photoRatingId_' + item.Id).rateYo({

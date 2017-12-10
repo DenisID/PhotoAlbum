@@ -123,6 +123,12 @@
   <data name="MyRating" xml:space="preserve">
     <value>My rating</value>
   </data>
+  <data name="NewFirst" xml:space="preserve">
+    <value>New first</value>
+  </data>
+  <data name="PopularFirst" xml:space="preserve">
+    <value>Popular first</value>
+  </data>
   <data name="Rating" xml:space="preserve">
     <value>Rating</value>
   </data>
