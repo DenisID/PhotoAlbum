@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PhotoAlbum.Client.BusinessServices.Helpers;
 using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.Dto;
 using System;
@@ -42,6 +43,22 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var token = await res.Content.ReadAsAsync<TokenDto>();
 
             return token;
+        }
+
+        public List<UserNameDto> GetAllUserNamesAsync()
+        {
+            List<UserNameDto> userNames = null;
+            HttpResponseMessage apiResponse = _httpClient.GetAsync("api/Account/GetAllUserNames").Result;
+            
+            var responseContent = apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<UserNameDto>>>().Result;
+            
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            userNames = responseContent.Result;
+
+            return userNames;
         }
     }
 }

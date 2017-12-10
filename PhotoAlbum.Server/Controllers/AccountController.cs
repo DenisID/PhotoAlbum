@@ -72,6 +72,16 @@ namespace PhotoAlbum.Server.Controllers
             };
         }
 
+        // POST api/Account/GetAllUserNames
+        [AllowAnonymous]
+        [Route("GetAllUserNames")]
+        public async Task<List<UserNameDto>> GetAllUserNames()
+        {
+            var userNamesDto = UserManager.GetAllUserNames();
+
+            return userNamesDto;
+        }
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()

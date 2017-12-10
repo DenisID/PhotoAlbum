@@ -12,5 +12,6 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
     {
         Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
         Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto);
+        List<UserNameDto> GetAllUserNamesAsync();
     }
 }

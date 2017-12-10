@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterUserDto.cs" />
     <Compile Include="TokenDto.cs" />
+    <Compile Include="UserNameDto.cs" />
     <Compile Include="UserVoteDto.cs" />
     <Compile Include="WebApiResponseDto.cs" />
   </ItemGroup>

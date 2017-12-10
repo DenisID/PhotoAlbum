@@ -237,7 +237,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return userVotesDto;
         }
 
-        public async Task<HttpStatusCode> CastPhotoVote(PhotoVoteDto photoVoteDto, string token)
+        public async Task<HttpStatusCode> CastPhotoVoteAsync(PhotoVoteDto photoVoteDto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 

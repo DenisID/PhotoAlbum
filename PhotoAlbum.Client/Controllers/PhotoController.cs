@@ -26,18 +26,24 @@ namespace PhotoAlbum.Client.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
+        
 
-
-        //public async Task Test()
-        //{
-        //    await GetPhotos(1, false);
-        //    //await _photoAlbumService.Test();
-        //}
+        public async Task Test(string username)
+        {
+            
+        }
 
 
 
         // GET: Photo
         public async Task<ActionResult> Index()
+        {
+            var model = new PhotoIndexViewModel();
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> User(string username)
         {
             var model = new PhotoIndexViewModel();
 
@@ -160,7 +166,7 @@ namespace PhotoAlbum.Client.Controllers
 
             var photoVoteDto = Mapper.Map<PhotoVoteDto>(model);
 
-            var result = await _photoAlbumService.CastPhotoVote(photoVoteDto, token);
+            var result = await _photoAlbumService.CastPhotoVoteAsync(photoVoteDto, token);
             return null;
         }
 
