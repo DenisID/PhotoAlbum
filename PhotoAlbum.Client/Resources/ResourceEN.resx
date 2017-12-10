@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="AddNewPhoto" xml:space="preserve">
     <value>Add new photo</value>
   </data>
   <data name="AddPhoto" xml:space="preserve">
     <value>Add photo</value>
+  </data>
+  <data name="AllPhotos" xml:space="preserve">
+    <value>All photos</value>
+  </data>
+  <data name="DeletePhoto" xml:space="preserve">
+    <value>Delete photo</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descritption</value>
+  </data>
+  <data name="EditPhoto" xml:space="preserve">
+    <value>Edit photo</value>
+  </data>
+  <data name="MyPhotos" xml:space="preserve">
+    <value>My photos</value>
   </data>
   <data name="MyRating" xml:space="preserve">
     <value>My rating</value>
@@ -129,10 +147,22 @@
   <data name="NewFirst" xml:space="preserve">
     <value>New first</value>
   </data>
+  <data name="PhotoAlbum" xml:space="preserve">
+    <value>Photo album</value>
+  </data>
   <data name="PopularFirst" xml:space="preserve">
     <value>Popular first</value>
   </data>
   <data name="Rating" xml:space="preserve">
     <value>Rating</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Select file</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
   </data>
 </root>

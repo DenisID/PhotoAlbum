@@ -20,15 +20,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @*@Html.ActionLink("Photo album", "Index", "Photo", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("All photos", "Index", "Photo")</li>
-                    <li>@Html.ActionLink("My photos", "Index", "Photo")</li>
+                    <li>@Html.ActionLink(@Resources.ResourceEN.AllPhotos, "Index", "Photo")</li>
+                    <li>@Html.ActionLink(@Resources.ResourceEN.MyPhotos, "Manage", User.Identity.Name)</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -38,7 +34,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - @Resources.ResourceEN.PhotoAlbum</p>
         </footer>
     </div>
 

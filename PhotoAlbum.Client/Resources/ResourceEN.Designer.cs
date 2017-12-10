@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add new photo.
         /// </summary>
         public static string AddNewPhoto {
@@ -75,6 +84,51 @@ namespace Resources {
         public static string AddPhoto {
             get {
                 return ResourceManager.GetString("AddPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All photos.
+        /// </summary>
+        public static string AllPhotos {
+            get {
+                return ResourceManager.GetString("AllPhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete photo.
+        /// </summary>
+        public static string DeletePhoto {
+            get {
+                return ResourceManager.GetString("DeletePhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descritption.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit photo.
+        /// </summary>
+        public static string EditPhoto {
+            get {
+                return ResourceManager.GetString("EditPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My photos.
+        /// </summary>
+        public static string MyPhotos {
+            get {
+                return ResourceManager.GetString("MyPhotos", resourceCulture);
             }
         }
         
@@ -97,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Photo album.
+        /// </summary>
+        public static string PhotoAlbum {
+            get {
+                return ResourceManager.GetString("PhotoAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Popular first.
         /// </summary>
         public static string PopularFirst {
@@ -111,6 +174,33 @@ namespace Resources {
         public static string Rating {
             get {
                 return ResourceManager.GetString("Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select file.
+        /// </summary>
+        public static string SelectFile {
+            get {
+                return ResourceManager.GetString("SelectFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

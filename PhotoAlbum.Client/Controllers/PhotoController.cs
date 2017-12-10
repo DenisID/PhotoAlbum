@@ -52,14 +52,15 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> UserPageManage(string username)
         {
-            var model = new UserPageViewModel() { UserName = username };
+            //var model = new UserPageViewModel() { UserName = username };
+            var model = new UserPageViewModel() { UserName = User.Identity.Name };
 
             return View(model);
         }
 
         public ActionResult CreatePhoto()
         {
-            return PartialView("_CreatePhoto");
+            return PartialView();
         }
 
         [HttpPost]
@@ -83,7 +84,7 @@ namespace PhotoAlbum.Client.Controllers
                 createPhotoDto.Description = createPhotoViewModel.Description;
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
-
+                
                 return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
             }
             return View();
@@ -99,7 +100,7 @@ namespace PhotoAlbum.Client.Controllers
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
             await _photoAlbumService.DeletePhotoByIdAsync(id, token);
-            return RedirectToAction("Index");
+            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
         }
 
         [HttpGet]
@@ -113,7 +114,7 @@ namespace PhotoAlbum.Client.Controllers
             {
                 editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
             }
-            return View(editPhotoViewModel);
+            return PartialView(editPhotoViewModel);
         }
         
         [HttpPost]
@@ -129,7 +130,7 @@ namespace PhotoAlbum.Client.Controllers
             };
 
             await _photoAlbumService.EditPhotoAsync(editPhotoDto, token);
-            return RedirectToAction("Index");
+            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
         }
 
         public async Task<ActionResult> GetPhotoRating(int id)

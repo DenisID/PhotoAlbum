@@ -79,26 +79,56 @@
     Model.SortPhoto.Sorting = Model.SortPhoto.ByCreationDate;
 }
 
-@*<p>
-    @Html.ActionLink(Resources.ResourceEN.AddPhoto, "CreatePhoto")
-</p>*@
+@*Modal window*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
 
-<div class="addNewPhotoButton">
-    <button class="btn" type="button" id="addNewPhotoButton"
-            onclick="location.href='@Url.Action("CreatePhoto", "Photo")'">
-        @Resources.ResourceEN.AddNewPhoto
-    </button>
+            </div>
+            <div class="modal-body"><div class="te">Please wait...</div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 
-<a href="#" onclick="editProduct()" class="btn btn-primary">Edit</a>
+@Html.ActionLink(Resources.ResourceEN.AddNewPhoto, "CreatePhoto", "Photo", new { @class = "dialog-window btn btn-primary btn-large" })
 
 <div id="sectionPhotos"></div>
 <input type="hidden" id="lastRowId" value="1" />
-
 <script>
     // On add new photo button click
-    
+    $(document).ready(function () {
+        $("body").on("click", "a.dialog-window", null, function (e) {
 
+            e.preventDefault();
+
+            var $link = $(this); // Reference to <a/> link
+            var title = $link.text();// this is title to fetch in html
+            $('#myModal .modal-title').html(title);
+
+            var url = $(this).attr('href');
+            if (url.indexOf('#') == 0) {
+                $('#myModal').modal('show');
+            }
+            else {
+                $.get(url, function (data) {
+                    $('#myModal .te').html(data);
+                    $('#myModal').modal();
+                }).then(function () { $('input:text:visible:first').focus(); });
+            }
+        });
+    });
+
+    // Global variables
     var userVotes = null;
     var sorting = "@Model.SortPhoto.Sorting";
 
@@ -164,7 +194,17 @@
                     var articleData = "";
                     articleData += '<div>' +
                                         '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
-                                        '<div class="photoTitile"><H3>' + item.Title + '</H3></div>' +
+                                        '<div class="photoTitile">' +
+                                            '<span class ="photoTitle">' +
+                                                '<H3>' + item.Title + '</H3>' +
+                                            '</span>' +
+                                            '<span class ="photoEditButton">' +
+                                                '<a href="/Photo/EditPhoto/' + item.Id + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.ResourceEN.EditPhoto' + '</a>' +
+                                            '</span>' +
+                                            '<span class ="photoDeleteButton">' +
+                                                '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large">' + '@Resources.ResourceEN.DeletePhoto' + '</a>' +
+                                            '</span>' +
+                                        '</div>' +
                                         '<div class="photoDescription">' + item.Description + '</div>' +
                                         '<div class="photoOwnerAndDate">' +
                                             '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +

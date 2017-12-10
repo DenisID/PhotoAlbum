@@ -261,6 +261,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\jqueryui\jquery-ui.css" />
+    <Content Include="Content\jqueryui\jquery-ui.min.css" />
+    <Content Include="Content\jqueryui\jquery-ui.structure.css" />
+    <Content Include="Content\jqueryui\jquery-ui.structure.min.css" />
+    <Content Include="Content\jqueryui\jquery-ui.theme.css" />
+    <Content Include="Content\jqueryui\jquery-ui.theme.min.css" />
     <Content Include="Content\rateyo\jquery.rateyo.css" />
     <Content Include="Content\rateyo\jquery.rateyo.min.css" />
     <Content Include="favicon.ico" />
@@ -375,10 +381,15 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.2.1.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jqueryui\jquery-ui.js" />
+    <Content Include="Scripts\jqueryui\jquery-ui.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\rateyo\jquery.min.js" />
     <Content Include="Scripts\rateyo\jquery.rateyo.js" />
@@ -431,7 +442,6 @@
     <Content Include="Scripts\rateyo\jquery.rateyo.min.js.map" />
     <Content Include="Views\Photo\UserPage.cshtml" />
     <Content Include="Views\Photo\UserPageManage.cshtml" />
-    <Content Include="Views\Photo\_CreatePhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

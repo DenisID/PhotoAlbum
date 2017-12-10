@@ -8,29 +8,23 @@
 {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Добавить изображение</legend>
-
-        <div class="editor-label">Название</div>
-        <div class="editor-field">
-            <input type="text" name="Title" />
-        </div>
-
-        <div class="editor-label">Discription</div>
-        <div class="editor-field">
-            <input type="text" name="Description" />
-        </div>
-
-        <div class="editor-label">Файл изображения</div>
+        <div class="editor-label">@Resources.ResourceEN.SelectFile</div>
         <div class="editor-field">
             <input type="file" name="Image" />
         </div>
 
+        <div class="editor-label">@Resources.ResourceEN.Title</div>
+        <div class="editor-field">
+            <input type="text" name="Title" />
+        </div>
+
+        <div class="editor-label">@Resources.ResourceEN.Description</div>
+        <div class="editor-field">
+            <input type="text" name="Description" />
+        </div>
+
         <p>
-            <input type="submit" value="Добавить" />
+            <input type="submit" value="@Resources.ResourceEN.Save" />
         </p>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Вернуться к списку", "Index")
-</div>
