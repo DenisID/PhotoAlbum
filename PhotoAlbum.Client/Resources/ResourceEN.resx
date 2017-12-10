@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewPhoto" xml:space="preserve">
+    <value>Add new photo</value>
+  </data>
   <data name="AddPhoto" xml:space="preserve">
     <value>Add photo</value>
   </data>

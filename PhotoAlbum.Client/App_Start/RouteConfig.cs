@@ -16,6 +16,13 @@ namespace PhotoAlbum.Client
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "UserManage",
+                url: "{username}/manage",
+                defaults: new { controller = "Photo", action = "UserPageManage" },
+                constraints: new { username = new UserNameConstraint(new UserService()) }
+            );
+
+            routes.MapRoute(
                 name: "User",
                 url: "{username}",
                 defaults: new { controller = "Photo", action = "UserPage" },

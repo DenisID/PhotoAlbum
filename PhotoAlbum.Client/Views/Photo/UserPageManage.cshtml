@@ -1,7 +1,7 @@
 ﻿@model PhotoAlbum.Client.Models.UserPageViewModel
 
 @{
-    ViewBag.Title = "UserPage";
+    ViewBag.Title = "UserPageManage";
 }
 
 @Scripts.Render("~/bundles/rateyo")
@@ -83,10 +83,22 @@
     @Html.ActionLink(Resources.ResourceEN.AddPhoto, "CreatePhoto")
 </p>*@
 
+<div class="addNewPhotoButton">
+    <button class="btn" type="button" id="addNewPhotoButton"
+            onclick="location.href='@Url.Action("CreatePhoto", "Photo")'">
+        @Resources.ResourceEN.AddNewPhoto
+    </button>
+</div>
+
+<a href="#" onclick="editProduct()" class="btn btn-primary">Edit</a>
+
 <div id="sectionPhotos"></div>
 <input type="hidden" id="lastRowId" value="1" />
 
 <script>
+    // On add new photo button click
+    
+
     var userVotes = null;
     var sorting = "@Model.SortPhoto.Sorting";
 
@@ -241,6 +253,4 @@
 
         return false;
     }
-
-
 </script>

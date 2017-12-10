@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new photo.
+        /// </summary>
+        public static string AddNewPhoto {
+            get {
+                return ResourceManager.GetString("AddNewPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add photo.
         /// </summary>
         public static string AddPhoto {

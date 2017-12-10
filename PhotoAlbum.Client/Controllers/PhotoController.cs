@@ -59,7 +59,7 @@ namespace PhotoAlbum.Client.Controllers
 
         public ActionResult CreatePhoto()
         {
-            return View();
+            return PartialView("_CreatePhoto");
         }
 
         [HttpPost]
@@ -84,7 +84,7 @@ namespace PhotoAlbum.Client.Controllers
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
             }
             return View();
         }
@@ -115,8 +115,7 @@ namespace PhotoAlbum.Client.Controllers
             }
             return View(editPhotoViewModel);
         }
-
-        //[HttpPut]
+        
         [HttpPost]
         public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
         {
