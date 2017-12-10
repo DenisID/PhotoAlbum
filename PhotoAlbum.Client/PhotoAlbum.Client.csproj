@@ -429,6 +429,7 @@
     <Content Include="Views\Photo\CreatePhoto.cshtml" />
     <Content Include="Views\Photo\EditPhoto.cshtml" />
     <Content Include="Scripts\rateyo\jquery.rateyo.min.js.map" />
+    <Content Include="Views\Photo\UserPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

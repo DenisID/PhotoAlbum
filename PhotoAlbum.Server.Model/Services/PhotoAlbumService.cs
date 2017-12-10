@@ -101,6 +101,44 @@ namespace PhotoAlbum.Server.Model.Services
             return photos;
         }
 
+        public List<PhotoDto> GetUserPhotos(PagingParametersDto pagingParameters, string userName)
+        {
+            IQueryable<Photo> photosFromDb = null;
+
+            switch (pagingParameters.Sorting)
+            {
+                case SortOrder.ByCreationDate:
+                    photosFromDb = _photoAlbumContext.Photos.Where(x => x.User.UserName == userName)
+                                                            .OrderByDescending(x => x.CreationDate);
+                    break;
+
+                case SortOrder.ByRating:
+                    photosFromDb = (_photoAlbumContext.Photos.Where(x => x.User.UserName == userName)
+                                                             .OrderByDescending(x => x.Rating))
+                                                             .Decompile();
+                    break;
+
+                default:
+                    throw new Exception("PhotoAlbumService.GetPhotos method - sorting param error");
+            }
+
+            photosFromDb = photosFromDb.Skip((pagingParameters.PageNumber - 1) * pagingParameters.PageSize)
+                                       .Take(pagingParameters.PageSize);
+
+            if (photosFromDb == null)
+            {
+                throw new PhotoNotFoundException(ErrorCodes.NoPhotosInDatabase);
+            }
+
+            var photos = new List<PhotoDto>();
+            foreach (var photoFromDb in photosFromDb)
+            {
+                photos.Add(Mapper.Map<Photo, PhotoDto>(photoFromDb));
+            }
+
+            return photos;
+        }
+
         public int GetPhotosCount()
         {
             return _photoAlbumContext.Photos.Count();

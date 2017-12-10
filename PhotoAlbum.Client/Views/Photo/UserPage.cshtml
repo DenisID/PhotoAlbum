@@ -1,7 +1,7 @@
-﻿@model PhotoAlbum.Client.Models.SortPhotoViewModel
+﻿@model PhotoAlbum.Client.Models.UserPageViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "UserPage";
 }
 
 @Scripts.Render("~/bundles/rateyo")
@@ -9,93 +9,93 @@
 
 @*<h2>Мои изображения</h2>
 
-<p>
-    @Html.ActionLink("Добавить изображение", "CreatePhoto")
-</p>
-<table>
-    <tr>
-        <th>Название</th>
-        <th>Картинка</th>
-    </tr>
-    @if (Model != null)
-    {
-        foreach (var item in Model)
+    <p>
+        @Html.ActionLink("Добавить изображение", "CreatePhoto")
+    </p>
+    <table>
+        <tr>
+            <th>Название</th>
+            <th>Картинка</th>
+        </tr>
+        @if (Model != null)
         {
-            <tr>
-                <td>*@
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>*@
 
-                    @*@if (item.Image != null)
-                    {*@
+@*@if (item.Image != null)
+    {*@
 
-                    @*<p>@item.Title</p>
-                    <p>@item.OwnerName</p>
-                    <p>Rating: @item.Rating</p>*@
+@*<p>@item.Title</p>
+    <p>@item.OwnerName</p>
+    <p>Rating: @item.Rating</p>*@
 
-                    @*@Html.Raw("<img style='width:300px; height:400px;' src=\"data:image/jpeg;base64,"
-                            + Convert.ToBase64String(item.Image) + "\" />")*@
+@*@Html.Raw("<img style='width:300px; height:400px;' src=\"data:image/jpeg;base64,"
+    + Convert.ToBase64String(item.Image) + "\" />")*@
 
-                    @*<img src="@Url.Action("GetImageById", "Photo", new { id = item.Id })" />
-                    <br />
-                    <button class="btn" type="button" id="deletePhotoButton"
-                            onclick="location.href='@Url.Action("DeletePhotoById", "Photo", new { id = item.Id })'">
-                        Delete
-                    </button>
-                    <span class="glyphicon glyphicon-star"></span>*@
+@*<img src="@Url.Action("GetImageById", "Photo", new { id = item.Id })" />
+    <br />
+    <button class="btn" type="button" id="deletePhotoButton"
+            onclick="location.href='@Url.Action("DeletePhotoById", "Photo", new { id = item.Id })'">
+        Delete
+    </button>
+    <span class="glyphicon glyphicon-star"></span>*@
 
-                    @*}*@
+@*}*@
 @*\
-                </td>
+    </td>
 
-                <td>*@
+    <td>*@
 
-                    @*@if (item.Image != null)
-                    {*@
+@*@if (item.Image != null)
+    {*@
 
-                        @*<p>@item.Description</p>
-                        <p>
-                            @Html.ActionLink("Редактировать", "EditPhoto", new { id = item.Id })
-                        </p>*@
+@*<p>@item.Description</p>
+    <p>
+        @Html.ActionLink("Редактировать", "EditPhoto", new { id = item.Id })
+    </p>*@
 
-                    @*}*@
+@*}*@
 
-                @*</td>
+@*</td>
 
-            </tr>
+                </tr>
+            }
         }
-    }
-    
-</table>*@
+
+    </table>*@
 
 <div class="sortOrder">
     <span class="sortNewFirst">
-        @Resources.ResourceEN.NewFirst:     @Html.RadioButtonFor(m => m.Sorting, Model.ByCreationDate, new { Checked = "checked" })
+        @Resources.ResourceEN.NewFirst:     @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByCreationDate, new { Checked = "checked", Id = "SortingRB" })
     </span>
     <span class="sortPopularFirst">
-        @Resources.ResourceEN.PopularFirst: @Html.RadioButtonFor(m => m.Sorting, Model.ByRating)
+        @Resources.ResourceEN.PopularFirst: @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByRating, new { Id = "SortingRB" })
     </span>
 </div>
 
 @{
-    Model.Sorting = Model.ByCreationDate;
-} 
+    Model.SortPhoto.Sorting = Model.SortPhoto.ByCreationDate;
+}
 
-@*<p>
+<p>
     @Html.ActionLink(Resources.ResourceEN.AddPhoto, "CreatePhoto")
-</p>*@
+</p>
 
 <div id="sectionPhotos"></div>
 <input type="hidden" id="lastRowId" value="1" />
 
 <script>
     var userVotes = null;
-    var sorting = "@Model.Sorting";
+    var sorting = "@Model.SortPhoto.Sorting";
 
     // On radio button change
-    $("input[name=Sorting]:radio").change(function () {
+    $("input[id=SortingRB]:radio").change(function () {
         $('#sectionPhotos').empty();
         $("#lastRowId").val(1);
         GetAllCurrentUserVotes();
-        sorting = $('input[name=Sorting]:checked').val();
+        sorting = $('input[id=SortingRB]:checked').val();
         GetPhotosFromNextSection(false, sorting);
     });
 
@@ -138,7 +138,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/Photo/GetPhotos?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack + '&Sorting=' + sort,
+            url: '/Photo/GetUserPhotos?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack + '&Sorting=' + sort + '&userName=' + '@Model.UserName',
             dataType: 'json',
             success: function (jsonData) {
                 var rowid = lastRowId + 1;

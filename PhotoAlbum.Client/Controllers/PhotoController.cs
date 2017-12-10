@@ -38,14 +38,21 @@ namespace PhotoAlbum.Client.Controllers
         // GET: Photo
         public async Task<ActionResult> Index()
         {
-            var model = new PhotoIndexViewModel();
+            var model = new SortPhotoViewModel();
 
             return View(model);
         }
 
-        public async Task<ActionResult> User(string username)
+        public async Task<ActionResult> UserPage(string username)
         {
-            var model = new PhotoIndexViewModel();
+            var model = new UserPageViewModel(){ UserName = username};
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> UserPageManage(string username)
+        {
+            var model = new UserPageViewModel() { UserName = username };
 
             return View(model);
         }
@@ -140,6 +147,18 @@ namespace PhotoAlbum.Client.Controllers
                 PageSize = 5,
                 Sorting = sorting
             });
+            return Json(photos, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetUserPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting, string userName)
+        {
+            var photos = await _photoAlbumService.GetUserPhotosAsync(new PagingParametersDto
+            {
+                PageNumber = lastRowId,
+                PageSize = 5,
+                Sorting = sorting
+            },
+            userName);
             return Json(photos, JsonRequestBehavior.AllowGet);
         }
 

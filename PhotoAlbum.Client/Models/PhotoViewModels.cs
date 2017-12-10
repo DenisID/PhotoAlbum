@@ -51,10 +51,16 @@ namespace PhotoAlbum.Client.Models
         }
     }
 
-    public class PhotoIndexViewModel
+    public class SortPhotoViewModel
     {
         public string Sorting { get; set; }
         public string ByCreationDate { get; } = SortOrder.ByCreationDate.ToString();
         public string ByRating { get; } = SortOrder.ByRating.ToString();
+    }
+
+    public class UserPageViewModel
+    {
+        public SortPhotoViewModel SortPhoto { get; set; } = new SortPhotoViewModel();
+        public string UserName { get; set; }
     }
 }

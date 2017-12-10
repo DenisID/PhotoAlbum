@@ -97,12 +97,33 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var queryString = query.ToString();
 
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo?" + queryString);
+            
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
 
-            //if (apiResponse.IsSuccessStatusCode)
-            //{
-            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
-            //    photos = responseContent.Result;
-            //}
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            photos = responseContent.Result;
+
+            return photos;
+        }
+
+        public async Task<List<PhotoDto>> GetUserPhotosAsync(PagingParametersDto paginParametersDto, string userName)
+        {
+            List<PhotoDto> photos = null;
+
+            var query = HttpUtility.ParseQueryString(string.Empty);
+
+            query["PageNumber"] = paginParametersDto.PageNumber.ToString();
+            query["PageSize"] = paginParametersDto.PageSize.ToString();
+            query["Sorting"] = paginParametersDto.Sorting.ToString();
+            query["userName"] = userName;
+
+            var queryString = query.ToString();
+            
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/userphotos?" + queryString);
+
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
 
             // Exceptions check

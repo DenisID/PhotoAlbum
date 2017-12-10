@@ -18,7 +18,7 @@ namespace PhotoAlbum.Client
             routes.MapRoute(
                 name: "User",
                 url: "{username}",
-                defaults: new { controller = "Photo", action = "User" },
+                defaults: new { controller = "Photo", action = "UserPage" },
                 constraints: new { username = new UserNameConstraint(new UserService()) }
             );
 

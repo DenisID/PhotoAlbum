@@ -13,6 +13,7 @@ namespace PhotoAlbum.Server.Model.Interfaces
         int CreatePhoto(CreatePhotoDto createPhotoDto);
         List<PhotoDto> GetAllPhotos();
         List<PhotoDto> GetPhotos(PagingParametersDto pagingParameter);
+        List<PhotoDto> GetUserPhotos(PagingParametersDto pagingParameter, string userName);
         ImageDto GetImageById(int imageId);
         void DeletePhotoById(int photoId);
         void EditPhoto(EditPhotoDto editPhotoDto);

@@ -54,6 +54,13 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpGet]
+        [Route("api/userphotos")]
+        public HttpResponseMessage GetUserPhotos([FromUri]PagingParametersDto pagingParameters, [FromUri] string userName)
+        {
+            return Success(_photoAlbumService.GetUserPhotos(pagingParameters, userName));
+        }
+
+        [HttpGet]
         [Route("api/photo/count")]
         public HttpResponseMessage GetPhotosCount()
         {
