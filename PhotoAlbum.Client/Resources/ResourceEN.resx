@@ -129,6 +129,9 @@
   <data name="AllPhotos" xml:space="preserve">
     <value>All photos</value>
   </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
   <data name="DeletePhoto" xml:space="preserve">
     <value>Delete photo</value>
   </data>
@@ -138,6 +141,15 @@
   <data name="EditPhoto" xml:space="preserve">
     <value>Edit photo</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
   <data name="MyPhotos" xml:space="preserve">
     <value>My photos</value>
   </data>
@@ -146,6 +158,12 @@
   </data>
   <data name="NewFirst" xml:space="preserve">
     <value>New first</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old password</value>
   </data>
   <data name="PhotoAlbum" xml:space="preserve">
     <value>Photo album</value>

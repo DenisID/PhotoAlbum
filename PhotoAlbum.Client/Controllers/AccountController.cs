@@ -148,7 +148,7 @@ namespace PhotoAlbum.Client.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
             return View();
         }
@@ -172,6 +172,39 @@ namespace PhotoAlbum.Client.Controllers
             await Login(loginModel, null);
              
             return RedirectToAction("Index", "Photo");
+        }
+        
+        public async Task<ActionResult> EditUserProfile()
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var dto = await _userService.GetUserProfileAsync(token);
+
+            return View(Mapper.Map<EditUserProfileViewModel>(dto));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditUserProfile(EditUserProfileViewModel model)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var dto = Mapper.Map<EditUserProfileDto>(model);
+
+            await _userService.EditUserProfileAsync(dto, token);
+
+            return RedirectToAction("EditUserProfile");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(EditUserProfileViewModel model)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var dto = Mapper.Map<ChangePasswordDto>(model);
+
+            await _userService.ChangePasswordAsync(dto, token);
+
+            return RedirectToAction("EditUserProfile");
         }
 
         //
@@ -394,7 +427,7 @@ namespace PhotoAlbum.Client.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Photo");
         }
 
         //

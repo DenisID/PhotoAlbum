@@ -5,6 +5,8 @@ using PhotoAlbum.Client.Dto;
 //using PhotoAlbum.Client.Model.Services;
 using PhotoAlbum.Client.Models;
 using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,7 +54,11 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> UserPageManage(string username)
         {
-            //var model = new UserPageViewModel() { UserName = username };
+            if(username != User.Identity.Name)
+            {
+                throw new UserIsNotAuthorizedException(ErrorCodes.UserIsNotAuthorized);
+            }
+
             var model = new UserPageViewModel() { UserName = User.Identity.Name };
 
             return View(model);

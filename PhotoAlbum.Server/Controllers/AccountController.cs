@@ -81,7 +81,7 @@ namespace PhotoAlbum.Server.Controllers
 
             return userNamesDto;
         }
-
+        
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -368,7 +368,7 @@ namespace PhotoAlbum.Server.Controllers
 
         // POST api/Account/ChangeUserProfile
         [Route("ChangeUserProfile")]
-        public async Task<IHttpActionResult> ChangeUserProfile(ChangeUserProfileBindingModel model)
+        public async Task<IHttpActionResult> ChangeUserProfile([FromBody] ChangeUserProfileBindingModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -379,11 +379,22 @@ namespace PhotoAlbum.Server.Controllers
             var userId = User.Identity.GetUserId();
 
             var dto = Mapper.Map<ChangeUserProfileBindingModel, ChangeUserProfileDto>(model);
-            dto.UserId = userId;
 
-            _photoAlbumService.ChangeUserProfile(dto);
+            UserManager.ChangeUserProfile(dto, userId);
 
             return Ok();
+        }
+
+        // POST api/Account/GetUserProfile
+        [Route("GetUserProfile")]
+        public async Task<ChangeUserProfileBindingModel> GetUserProfile()
+        {
+            var user = RequestContext.Principal.Identity.Name;
+            var userId = User.Identity.GetUserId();
+
+            var userProfileDto = UserManager.GetUserProfile(userId);
+
+            return Mapper.Map<ChangeUserProfileBindingModel>(userProfileDto);
         }
 
         // POST api/Account/RegisterExternal

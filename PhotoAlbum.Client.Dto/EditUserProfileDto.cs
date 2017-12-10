@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhotoAlbum.Server.Dto
+namespace PhotoAlbum.Client.Dto
 {
-    public class ChangeUserProfileDto
+    public class EditUserProfileDto
     {
         public string Email { get; set; }
         public string FirstName { get; set; }

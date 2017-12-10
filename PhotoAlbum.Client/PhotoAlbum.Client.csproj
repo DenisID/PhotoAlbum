@@ -442,6 +442,7 @@
     <Content Include="Scripts\rateyo\jquery.rateyo.min.js.map" />
     <Content Include="Views\Photo\UserPage.cshtml" />
     <Content Include="Views\Photo\UserPageManage.cshtml" />
+    <Content Include="Views\Account\EditUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

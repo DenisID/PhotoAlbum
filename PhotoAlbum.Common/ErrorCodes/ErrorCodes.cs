@@ -13,5 +13,6 @@ namespace PhotoAlbum.Common.ErrorCodes
         public const string UserNotFound = "User Not Found";
         public const string NotEnoughRights = "Not Enough Rights";
         public const string UserInfoNotFound = "User Info Not Found";
+        public const string UserIsNotAuthorized = "User Is Not Authorized";
     }
 }

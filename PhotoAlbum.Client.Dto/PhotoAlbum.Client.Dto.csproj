@@ -46,8 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddPhotoDto.cs" />
+    <Compile Include="ChangePasswordDto.cs" />
     <Compile Include="CreatePhotoDto.cs" />
     <Compile Include="EditPhotoDto.cs" />
+    <Compile Include="EditUserProfileDto.cs" />
     <Compile Include="GetTokenDto.cs" />
     <Compile Include="ImageDto.cs" />
     <Compile Include="PagingParametersDto.cs" />
