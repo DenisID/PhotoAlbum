@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Server.App_Start;
+﻿using CacheCow.Server;
+using PhotoAlbum.Server.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
