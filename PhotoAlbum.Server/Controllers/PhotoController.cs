@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using PhotoAlbum.Common.Enums;
 using PhotoAlbum.Common.ErrorCodes;
 using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Server.Attributes;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Interfaces;
 using PhotoAlbum.Server.Model.Managers;
@@ -68,6 +69,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpGet]
+        //[EntityTagContentHashAttribute]
         [Route("api/photo/image/{id}")]
         public HttpResponseMessage GetImageById([FromUri] int id)
         {

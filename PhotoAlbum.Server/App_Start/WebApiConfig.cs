@@ -33,9 +33,9 @@ namespace PhotoAlbum.Server
 
             config.Services.Add(typeof(IExceptionLogger), new ExceptionManagerApi());
 
-            // CacheCow
-            var objCacheCow = new CacheCow.Server.CachingHandler(config, "");
-            config.MessageHandlers.Add(objCacheCow);
+            //// CacheCow
+            //var objCacheCow = new CacheCow.Server.CachingHandler(config, "");
+            //config.MessageHandlers.Add(objCacheCow);
         }
     }
 }
