@@ -142,6 +142,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops, there was an error..
+        /// </summary>
+        public static string ErrorOops {
+            get {
+                return ResourceManager.GetString("ErrorOops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First name.
         /// </summary>
         public static string FirstName {

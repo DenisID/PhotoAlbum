@@ -112,7 +112,8 @@
             userVotes = jsonData;
         },
         error: function (jsonData) {
-            window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+            //window.location.href = '/Home/Error?message=' + 'Resources.ResourceEN.ErrorOops';
+            userVotes = null;
         }
         });
     }

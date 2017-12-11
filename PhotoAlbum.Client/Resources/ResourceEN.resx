@@ -144,6 +144,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="ErrorOops" xml:space="preserve">
+    <value>Oops, there was an error.</value>
+  </data>
   <data name="FirstName" xml:space="preserve">
     <value>First name</value>
   </data>
