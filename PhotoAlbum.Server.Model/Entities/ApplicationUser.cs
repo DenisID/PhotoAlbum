@@ -10,6 +10,7 @@ namespace PhotoAlbum.Server.Model.Entities
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public virtual UserInfo UserInfo { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
         public virtual ICollection<PhotoVote> PhotoVotes { get; set; }
 

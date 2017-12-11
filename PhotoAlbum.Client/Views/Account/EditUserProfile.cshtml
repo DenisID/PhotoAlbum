@@ -1,0 +1,61 @@
+﻿@model PhotoAlbum.Client.Models.EditUserProfileViewModel
+
+@{
+    Layout = null;
+}
+
+@{
+    ViewBag.Title = "EditUserProfile";
+}
+
+@using (Html.BeginForm("EditUserProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+        <div class="editor-label">@Resources.ResourceEN.Email</div>
+        <div class="editor-field">
+            <input type="text" name="Email" value="@Model.Email" />
+        </div>
+
+        <div class="editor-label">@Resources.ResourceEN.FirstName</div>
+        <div class="editor-field">
+            <input type="text" name="FirstName" value="@Model.FirstName" />
+        </div>
+
+        <div class="editor-label">@Resources.ResourceEN.LastName</div>
+        <div class="editor-field">
+            <input type="text" name="LastName" value="@Model.LastName" />
+        </div>
+
+        <p>
+            <input type="submit" value="@Resources.ResourceEN.Save" />
+        </p>
+    </fieldset>
+}
+
+@using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+        <div class="editor-label">@Resources.ResourceEN.OldPassword</div>
+        <div class="editor-field">
+            <input type="text" name="OldPassword" value="@Model.OldPassword" />
+        </div>
+
+        <div class="editor-label">@Resources.ResourceEN.NewPassword</div>
+        <div class="editor-field">
+            <input type="text" name="NewPassword" value="@Model.NewPassword" />
+        </div>
+
+        <div class="editor-label">@Resources.ResourceEN.ConfirmPassword</div>
+        <div class="editor-field">
+            <input type="text" name="ConfirmPassword" value="@Model.ConfirmPassword" />
+        </div>
+
+        <p>
+            <input type="submit" value="@Resources.ResourceEN.Save" />
+        </p>
+    </fieldset>
+}

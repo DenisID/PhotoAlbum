@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PhotoAlbum.Client.BusinessServices.Helpers;
 using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.Dto;
 using System;
@@ -34,7 +35,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public async Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto)
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("userName", getTokenDto.Email);
+            dict.Add("userName", getTokenDto.Login);
             dict.Add("password", getTokenDto.Password);
             dict.Add("grant_type", "password");
             var req = new HttpRequestMessage(HttpMethod.Post, "Token") { Content = new FormUrlEncodedContent(dict) };
@@ -42,6 +43,71 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var token = await res.Content.ReadAsAsync<TokenDto>();
 
             return token;
+        }
+
+        public List<UserNameDto> GetAllUserNamesAsync()
+        {
+            List<UserNameDto> userNames = null;
+            HttpResponseMessage apiResponse = _httpClient.GetAsync("api/Account/GetAllUserNames").Result;
+            
+            var responseContent = apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<UserNameDto>>>().Result;
+            
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            userNames = responseContent.Result;
+
+            return userNames;
+        }
+
+        public async Task<EditUserProfileDto> GetUserProfileAsync(string token)
+        {
+            EditUserProfileDto dto = null;
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/Account/GetUserProfile");
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditUserProfileDto>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            dto = responseContent.Result;
+
+            return dto;
+        }
+
+        public async Task<HttpStatusCode> EditUserProfileAsync(EditUserProfileDto dto, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync($"api/Account/ChangeUserProfile", dto);
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            return apiResponse.StatusCode;
+        }
+
+        public async Task<HttpStatusCode> ChangePasswordAsync(ChangePasswordDto dto, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync($"api/Account/ChangePassword", dto);
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+            
+            return apiResponse.StatusCode;
         }
     }
 }

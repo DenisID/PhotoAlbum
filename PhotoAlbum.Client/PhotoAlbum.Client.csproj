@@ -236,20 +236,22 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Filters\HandleExceptionsAttribute.cs" />
+    <Compile Include="Filters\UserNameConstraint.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mappings\DtoToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDtoMappingProfile.cs" />
+    <Compile Include="Mappings\ViewModelToViewModelMappingProfile.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PhotoViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Resources.Designer.cs">
+    <Compile Include="Resources\ResourceEN.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>ResourceEN.resx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -259,6 +261,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\jqueryui\jquery-ui.css" />
+    <Content Include="Content\jqueryui\jquery-ui.min.css" />
+    <Content Include="Content\jqueryui\jquery-ui.structure.css" />
+    <Content Include="Content\jqueryui\jquery-ui.structure.min.css" />
+    <Content Include="Content\jqueryui\jquery-ui.theme.css" />
+    <Content Include="Content\jqueryui\jquery-ui.theme.min.css" />
+    <Content Include="Content\rateyo\jquery.rateyo.css" />
+    <Content Include="Content\rateyo\jquery.rateyo.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -353,6 +363,8 @@
     <Content Include="Content\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\glyphicons-halflings-regular.woff" />
     <Content Include="Content\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\rateyo\jquery.rateyo.less" />
+    <Content Include="Content\rateyo\jquery.rateyo.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\affix.js" />
     <Content Include="Scripts\bootstrap\alert.js" />
@@ -369,11 +381,19 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.2.1.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jqueryui\jquery-ui.js" />
+    <Content Include="Scripts\jqueryui\jquery-ui.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\rateyo\jquery.min.js" />
+    <Content Include="Scripts\rateyo\jquery.rateyo.js" />
+    <Content Include="Scripts\rateyo\jquery.rateyo.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -419,6 +439,10 @@
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\CreatePhoto.cshtml" />
     <Content Include="Views\Photo\EditPhoto.cshtml" />
+    <Content Include="Scripts\rateyo\jquery.rateyo.min.js.map" />
+    <Content Include="Views\Photo\UserPage.cshtml" />
+    <Content Include="Views\Photo\UserPageManage.cshtml" />
+    <Content Include="Views\Account\EditUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -444,9 +468,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Resources\ResourceEN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceEN.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

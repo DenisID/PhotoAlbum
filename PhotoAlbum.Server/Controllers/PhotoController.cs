@@ -50,8 +50,14 @@ namespace PhotoAlbum.Server.Controllers
         [Route("api/photo")]
         public HttpResponseMessage GetPhotos([FromUri]PagingParametersDto pagingParameters)
         {
-            throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             return Success(_photoAlbumService.GetPhotos(pagingParameters));
+        }
+
+        [HttpGet]
+        [Route("api/userphotos")]
+        public HttpResponseMessage GetUserPhotos([FromUri]PagingParametersDto pagingParameters, [FromUri] string userName)
+        {
+            return Success(_photoAlbumService.GetUserPhotos(pagingParameters, userName));
         }
 
         [HttpGet]
@@ -122,7 +128,7 @@ namespace PhotoAlbum.Server.Controllers
         [HttpPost]
         [Route("api/photo/vote")]
         [Authorize]
-        public HttpResponseMessage CastVote([FromBody]CastPhotoVoteDto photoVoteDto)
+        public HttpResponseMessage CastPhotoVote([FromBody]CastPhotoVoteDto photoVoteDto)
         {
             var castPhotoVoteDto = new PhotoVoteDto
             {
@@ -138,11 +144,28 @@ namespace PhotoAlbum.Server.Controllers
         [HttpGet]
         [Route("api/photo/vote")]
         [Authorize]
-        public HttpResponseMessage GetUserVotes()
+        public HttpResponseMessage GetAllUserVotes()
         {
             var userId = User.Identity.GetUserId();
 
             return Success(_photoAlbumService.GetUserVotes(userId));
+        }
+
+        [HttpGet]
+        [Route("api/photo/vote/{id}")]
+        [Authorize]
+        public HttpResponseMessage GetUserVote(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            return Success(_photoAlbumService.GetUserVotes(userId, id));
+        }
+
+        [HttpGet]
+        [Route("api/photo/rating/{id}")]
+        public HttpResponseMessage GetPhotoRating(int id)
+        {
+            return Success(_photoAlbumService.GetPhotoRating(id));
         }
     }
 }

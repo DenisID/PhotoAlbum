@@ -22,10 +22,10 @@ namespace PhotoAlbum.Server.Model.Mappings
                 .ForMember(d => d.OwnerName, opt => opt.MapFrom(src => src.User.UserName));
 
             CreateMap<Photo, EditPhotoDto>();
-
             CreateMap<PhotoContent, ImageDto>();
-
             CreateMap<PhotoVote, PhotoVoteDto>();
+            CreateMap<Photo, PhotoRatingDto>();
+            CreateMap<ApplicationUser, UserNameDto>();
         }
     }
 }

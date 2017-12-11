@@ -5,6 +5,8 @@ using PhotoAlbum.Client.Dto;
 //using PhotoAlbum.Client.Model.Services;
 using PhotoAlbum.Client.Models;
 using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,12 +28,11 @@ namespace PhotoAlbum.Client.Controllers
             _photoAlbumService = photoAlbumService;
         }
 
+        
 
-
-        public async Task Test()
+        public async Task Test(string username)
         {
-            await GetPhotos(1, false);
-            //await _photoAlbumService.Test();
+            
         }
 
 
@@ -39,37 +40,33 @@ namespace PhotoAlbum.Client.Controllers
         // GET: Photo
         public async Task<ActionResult> Index()
         {
-            //List<PhotoViewModel> photos = new List<PhotoViewModel>();
-            ////List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotosAsync();
-            //List<PhotoDto> photosDto = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
-            //{
-            //    PageNumber = 1,
-            //    PageSize = 3
-            //});
+            var model = new SortPhotoViewModel();
 
-            //// Mapping
-            //if (photosDto != null)
-            //{
-            //    foreach(var photoDto in photosDto)
-            //    {
-            //        photos.Add(new PhotoViewModel
-            //        {
-            //            Id = photoDto.Id,
-            //            Title = photoDto.Title,
-            //            Description = photoDto.Description,
-            //            CreationDate = photoDto.CreationDate,
-            //            OwnerName = photoDto.OwnerName,
-            //            Rating = photoDto.Rating
-            //        });
-            //    }
-            //}
+            return View(model);
+        }
 
-            return View(/*photos*/);
+        public async Task<ActionResult> UserPage(string username)
+        {
+            var model = new UserPageViewModel(){ UserName = username};
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> UserPageManage(string username)
+        {
+            if(username != User.Identity.Name)
+            {
+                throw new UserIsNotAuthorizedException(ErrorCodes.UserIsNotAuthorized);
+            }
+
+            var model = new UserPageViewModel() { UserName = User.Identity.Name };
+
+            return View(model);
         }
 
         public ActionResult CreatePhoto()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
@@ -93,8 +90,8 @@ namespace PhotoAlbum.Client.Controllers
                 createPhotoDto.Description = createPhotoViewModel.Description;
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
-
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
             }
             return View();
         }
@@ -109,7 +106,7 @@ namespace PhotoAlbum.Client.Controllers
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
             await _photoAlbumService.DeletePhotoByIdAsync(id, token);
-            return RedirectToAction("Index");
+            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
         }
 
         [HttpGet]
@@ -123,10 +120,9 @@ namespace PhotoAlbum.Client.Controllers
             {
                 editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
             }
-            return View(editPhotoViewModel);
+            return PartialView(editPhotoViewModel);
         }
-
-        //[HttpPut]
+        
         [HttpPost]
         public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
         {
@@ -140,24 +136,63 @@ namespace PhotoAlbum.Client.Controllers
             };
 
             await _photoAlbumService.EditPhotoAsync(editPhotoDto, token);
-            return RedirectToAction("Index");
+            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
         }
 
         public async Task<ActionResult> GetPhotoRating(int id)
         {
             var rating = await _photoAlbumService.GetPhotoRatingAsync(id);
-            return Json(rating.Rating);
+            return Json(rating, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack)
+        public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting)
         {
-            //throw new Exception("TestEx");
             var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
             {
                 PageNumber = lastRowId,
-                PageSize = 4
+                PageSize = 5,
+                Sorting = sorting
             });
             return Json(photos, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetUserPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting, string userName)
+        {
+            var photos = await _photoAlbumService.GetUserPhotosAsync(new PagingParametersDto
+            {
+                PageNumber = lastRowId,
+                PageSize = 5,
+                Sorting = sorting
+            },
+            userName);
+            return Json(photos, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetAllUserVotes()
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var userVotes = await _photoAlbumService.GetUserVotesAsync(token);
+            return Json(userVotes, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetUserVotes(int id)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var userVotes = await _photoAlbumService.GetUserVotesAsync(token, id);
+            return Json(userVotes, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CastPhotoVote(PhotoVoteViewModel model)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var photoVoteDto = Mapper.Map<PhotoVoteDto>(model);
+
+            var result = await _photoAlbumService.CastPhotoVoteAsync(photoVoteDto, token);
+            return null;
         }
 
         //[HttpPost]

@@ -97,12 +97,33 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var queryString = query.ToString();
 
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo?" + queryString);
+            
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
 
-            //if (apiResponse.IsSuccessStatusCode)
-            //{
-            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
-            //    photos = responseContent.Result;
-            //}
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            photos = responseContent.Result;
+
+            return photos;
+        }
+
+        public async Task<List<PhotoDto>> GetUserPhotosAsync(PagingParametersDto paginParametersDto, string userName)
+        {
+            List<PhotoDto> photos = null;
+
+            var query = HttpUtility.ParseQueryString(string.Empty);
+
+            query["PageNumber"] = paginParametersDto.PageNumber.ToString();
+            query["PageSize"] = paginParametersDto.PageSize.ToString();
+            query["Sorting"] = paginParametersDto.Sorting.ToString();
+            query["userName"] = userName;
+
+            var queryString = query.ToString();
+            
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/userphotos?" + queryString);
+
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
 
             // Exceptions check
@@ -195,12 +216,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         {
             PhotoRatingDto photoRatingDto = null;
 
-            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/vote/{photoId}");
-            //if(apiResponse.IsSuccessStatusCode)
-            //{
-            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<PhotoRatingDto>>();
-            //    photoRatingDto = responseContent.Result;
-            //}
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/rating/{photoId}");
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<PhotoRatingDto>>();
 
@@ -213,10 +229,48 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return photoRatingDto;
         }
 
-        //public async Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto)
-        //{
-        //    HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Account/Register", registerUserDto);
-        //    return response.StatusCode;
-        //}
+        public async Task<List<UserVoteDto>> GetUserVotesAsync(string token, int? photoId = null)
+        {
+            List<UserVoteDto> userVotesDto = null;
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage apiResponse = null;
+            if (photoId == null)
+            {
+                apiResponse = await _httpClient.GetAsync($"api/photo/vote");
+            }
+            else
+            {
+                apiResponse = await _httpClient.GetAsync($"api/photo/vote/{photoId}");
+            }
+            
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+            
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<UserVoteDto>>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            userVotesDto = responseContent.Result;
+
+            return userVotesDto;
+        }
+
+        public async Task<HttpStatusCode> CastPhotoVoteAsync(PhotoVoteDto photoVoteDto, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync($"api/photo/vote", photoVoteDto);
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+
+            // Exceptions check
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            return apiResponse.StatusCode;
+        }
     }
 }

@@ -79,23 +79,6 @@ namespace PhotoAlbum.Client.Controllers
                 return View(model);
             }
 
-            //// This doesn't count login failures towards account lockout
-            //// To enable password failures to trigger account lockout, change to shouldLockout: true
-            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid login attempt.");
-            //        return View(model);
-            //}
-
             var getTokenDto = Mapper.Map<GetTokenDto>(model);
 
             var token = await _userService.GetTokenAsync(getTokenDto);
@@ -108,15 +91,15 @@ namespace PhotoAlbum.Client.Controllers
 
             var claims = new[]
             {
-                    new Claim(ClaimTypes.Name, model.Email),
-                    new Claim("AcessToken", string.Format(/*"Bearer {0}",*/ token.AccessToken)),
+                    new Claim(ClaimTypes.Name, model.Login),
+                    new Claim("AcessToken", string.Format(token.AccessToken)),
                 };
 
             var identity = new ClaimsIdentity(claims, "ApplicationCookie");
 
             Request.GetOwinContext().Authentication.SignIn(options, identity);
             
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Photo");
         }
 
         //
@@ -165,7 +148,7 @@ namespace PhotoAlbum.Client.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
             return View();
         }
@@ -184,32 +167,44 @@ namespace PhotoAlbum.Client.Controllers
 
             var registerUserDto = Mapper.Map<RegisterUserDto>(model);
             var result = await _userService.RegisterUser(registerUserDto);
+
+            var loginModel = Mapper.Map<LoginViewModel>(model);
+            await Login(loginModel, null);
              
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Photo");
+        }
+        
+        public async Task<ActionResult> EditUserProfile()
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
-            //if (ModelState.IsValid)
-            //{
-            //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-            //    var result = await UserManager.CreateAsync(user, model.Password);
+            var dto = await _userService.GetUserProfileAsync(token);
 
+            return View(Mapper.Map<EditUserProfileViewModel>(dto));
+        }
 
-            //    if (result.Succeeded)
-            //    {
-            //        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-            //        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-            //        // Send an email with this link
-            //        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            //        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            //        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+        [HttpPost]
+        public async Task<ActionResult> EditUserProfile(EditUserProfileViewModel model)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    AddErrors(result);
-            //}
+            var dto = Mapper.Map<EditUserProfileDto>(model);
 
-            //// If we got this far, something failed, redisplay form
-            //return View(model);
+            await _userService.EditUserProfileAsync(dto, token);
+
+            return RedirectToAction("EditUserProfile");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(EditUserProfileViewModel model)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var dto = Mapper.Map<ChangePasswordDto>(model);
+
+            await _userService.ChangePasswordAsync(dto, token);
+
+            return RedirectToAction("EditUserProfile");
         }
 
         //
@@ -432,7 +427,7 @@ namespace PhotoAlbum.Client.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Photo");
         }
 
         //

@@ -49,6 +49,8 @@
     <Compile Include="Exceptions\NotEnoughRightsException.cs" />
     <Compile Include="Exceptions\PhotoAlbumException.cs" />
     <Compile Include="Exceptions\PhotoNotFoundException.cs" />
+    <Compile Include="Exceptions\UserInfoNotFoundException.cs" />
+    <Compile Include="Exceptions\UserIsNotAuthorizedException.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

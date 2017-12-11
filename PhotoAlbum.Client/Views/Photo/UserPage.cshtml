@@ -1,0 +1,246 @@
+﻿@model PhotoAlbum.Client.Models.UserPageViewModel
+
+@{
+    ViewBag.Title = "UserPage";
+}
+
+@Scripts.Render("~/bundles/rateyo")
+@Styles.Render("~/Content/rateyo")
+
+@*<h2>Мои изображения</h2>
+
+    <p>
+        @Html.ActionLink("Добавить изображение", "CreatePhoto")
+    </p>
+    <table>
+        <tr>
+            <th>Название</th>
+            <th>Картинка</th>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>*@
+
+@*@if (item.Image != null)
+    {*@
+
+@*<p>@item.Title</p>
+    <p>@item.OwnerName</p>
+    <p>Rating: @item.Rating</p>*@
+
+@*@Html.Raw("<img style='width:300px; height:400px;' src=\"data:image/jpeg;base64,"
+    + Convert.ToBase64String(item.Image) + "\" />")*@
+
+@*<img src="@Url.Action("GetImageById", "Photo", new { id = item.Id })" />
+    <br />
+    <button class="btn" type="button" id="deletePhotoButton"
+            onclick="location.href='@Url.Action("DeletePhotoById", "Photo", new { id = item.Id })'">
+        Delete
+    </button>
+    <span class="glyphicon glyphicon-star"></span>*@
+
+@*}*@
+@*\
+    </td>
+
+    <td>*@
+
+@*@if (item.Image != null)
+    {*@
+
+@*<p>@item.Description</p>
+    <p>
+        @Html.ActionLink("Редактировать", "EditPhoto", new { id = item.Id })
+    </p>*@
+
+@*}*@
+
+@*</td>
+
+                </tr>
+            }
+        }
+
+    </table>*@
+
+<div class="sortOrder">
+    <span class="sortNewFirst">
+        @Resources.ResourceEN.NewFirst:     @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByCreationDate, new { Checked = "checked", Id = "SortingRB" })
+    </span>
+    <span class="sortPopularFirst">
+        @Resources.ResourceEN.PopularFirst: @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByRating, new { Id = "SortingRB" })
+    </span>
+</div>
+
+@{
+    Model.SortPhoto.Sorting = Model.SortPhoto.ByCreationDate;
+}
+
+@*<p>
+    @Html.ActionLink(Resources.ResourceEN.AddPhoto, "CreatePhoto")
+</p>*@
+
+<div id="sectionPhotos"></div>
+<input type="hidden" id="lastRowId" value="1" />
+
+<script>
+    var userVotes = null;
+    var sorting = "@Model.SortPhoto.Sorting";
+
+    // On radio button change
+    $("input[id=SortingRB]:radio").change(function () {
+        $('#sectionPhotos').empty();
+        $("#lastRowId").val(1);
+        GetAllCurrentUserVotes();
+        sorting = $('input[id=SortingRB]:checked').val();
+        GetPhotosFromNextSection(false, sorting);
+    });
+
+    // Get all current user votes
+    function GetAllCurrentUserVotes() {
+        $.ajax({
+        type: 'GET',
+        url: '/Photo/GetAllUserVotes',
+        dataType: 'json',
+        success: function (jsonData) {
+            if (jsonData == null) {
+                return;
+            }
+            userVotes = jsonData;
+        },
+        error: function (jsonData) {
+            window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+        }
+        });
+    }
+
+    GetAllCurrentUserVotes();
+
+    // Get default photo data
+    $(document).ready(function () {
+        GetPhotosFromNextSection(false, sorting);
+    });
+
+    // Get next photo data automatic
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            GetPhotosFromNextSection(true, sorting);
+        }
+    });
+
+    // Common handler
+    function GetPhotosFromNextSection(scrollPage, sort) {
+        var lastRowId = ($("#lastRowId").val() * 1);
+        var isHistoryBack = (lastRowId > 1 && !scrollPage);
+
+        $.ajax({
+            type: 'GET',
+            url: '/Photo/GetUserPhotos?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack + '&Sorting=' + sort + '&userName=' + '@Model.UserName',
+            dataType: 'json',
+            success: function (jsonData) {
+                var rowid = lastRowId + 1;
+
+                if (jsonData == null) {
+                    return;
+                }
+
+                $.each(jsonData, function (index, item) {
+                    var sectionIndex = (isHistoryBack ? index + 1 : rowid);
+                    var articleData = "";
+                    articleData += '<div>' +
+                                        '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
+                                        '<div class="photoTitile"><H3>' + item.Title + '</H3></div>' +
+                                        '<div class="photoDescription">' + item.Description + '</div>' +
+                                        '<div class="photoOwnerAndDate">' +
+                                            '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
+                                            '<span class="photoDate">' + Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))) + '</span>' +
+                                        '</div>' +
+                                        '<div class="photoRatings"' +
+                                            '<div class="photoRating">' +
+                                                '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                '<div class="starRating">' +
+                                                    '<div id="photoRatingId_' + item.Id + '"></div>' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="photoUserRating">' +
+                                                '<div class="maRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
+                                                '<div class="starRating">' +
+                                                    '<div id="photoMyRatingId_' + item.Id + '"></div>' +
+                                                '</div>' +
+                                            "</div>" +
+                                        '</div>' +
+                                   '</div>';
+                    $('#sectionPhotos').append(articleData);
+
+                    $(function BuildRatingStar() {
+                        $('#photoRatingId_' + item.Id).rateYo({
+                            rating: Math.round(item.Rating),
+                            fullStar: true,
+                            readOnly: true
+                        });
+                    });
+
+                    $(function BuildUserRatingStar() {
+                        let photoRating = 0;
+                        if (userVotes != null) {
+                            $.each(userVotes, function (index, voteItem) {
+                                if (voteItem.PhotoId === item.Id) {
+                                    photoRating = voteItem.Rating;
+                                };
+                            });
+                        };
+
+                        $('#photoMyRatingId_' + item.Id).rateYo({
+                            rating: Math.round(photoRating),
+                            fullStar: true,
+                        })
+                        // On user rating change
+                        .on("rateyo.set", function (e, data) {
+                            $.post(
+                                "/Photo/CastPhotoVote",
+                                {
+                                    PhotoId: item.Id,
+                                    Rating: data.rating
+                                },
+                                function onSuccess() {
+                                    // Change rating star
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '/Photo/GetPhotoRating/' + item.Id,
+                                        dataType: 'json',
+                                        success: function (jsonData) {
+                                            if (jsonData == null) {
+                                                return;
+                                            }
+
+                                            let photoRating = jsonData.Rating;
+
+                                            $('#photoRatingId_' + item.Id).rateYo("rating", Math.round(photoRating));
+                                        },
+                                        error: function (jsonData) {
+                                            window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+                                        }
+                                    });
+                                }
+                            );
+                        });
+                    });
+                });
+
+                if (!isHistoryBack) {
+                    $("#lastRowId").val(rowid);
+                }
+            },
+            error: function (jsonData) {
+                window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+            }
+        });
+
+        return false;
+    }
+
+
+</script>

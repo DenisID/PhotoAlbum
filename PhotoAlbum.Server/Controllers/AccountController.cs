@@ -17,6 +17,9 @@ using PhotoAlbum.Server.Models;
 using PhotoAlbum.Server.Providers;
 using PhotoAlbum.Server.Results;
 using PhotoAlbum.Server.Model.Entities;
+using PhotoAlbum.Server.Model.Interfaces;
+using AutoMapper;
+using PhotoAlbum.Server.Dto;
 
 namespace PhotoAlbum.Server.Controllers
 {
@@ -26,9 +29,11 @@ namespace PhotoAlbum.Server.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private readonly IPhotoAlbumService _photoAlbumService;
 
-        public AccountController()
+        public AccountController(IPhotoAlbumService photoAlbumService)
         {
+            _photoAlbumService = photoAlbumService;
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -67,6 +72,16 @@ namespace PhotoAlbum.Server.Controllers
             };
         }
 
+        // POST api/Account/GetAllUserNames
+        [AllowAnonymous]
+        [Route("GetAllUserNames")]
+        public async Task<List<UserNameDto>> GetAllUserNames()
+        {
+            var userNamesDto = UserManager.GetAllUserNames();
+
+            return userNamesDto;
+        }
+        
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -329,8 +344,12 @@ namespace PhotoAlbum.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
+            var user = new ApplicationUser()
+            {
+                UserName = model.Login,
+                Email = model.Email
+            };
+            
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
@@ -338,8 +357,44 @@ namespace PhotoAlbum.Server.Controllers
                 var errorResult = GetErrorResult(result);
                 return errorResult;
             }
+            
+            var createUserInfoDto = Mapper.Map<RegisterBindingModel, CreateUserInfoDto>(model);
+            createUserInfoDto.UserId = user.Id;
+
+            _photoAlbumService.CreateUserInfo(createUserInfoDto);            
 
             return Ok();
+        }
+
+        // POST api/Account/ChangeUserProfile
+        [Route("ChangeUserProfile")]
+        public async Task<IHttpActionResult> ChangeUserProfile([FromBody] ChangeUserProfileBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = RequestContext.Principal.Identity.Name;
+            var userId = User.Identity.GetUserId();
+
+            var dto = Mapper.Map<ChangeUserProfileBindingModel, ChangeUserProfileDto>(model);
+
+            UserManager.ChangeUserProfile(dto, userId);
+
+            return Ok();
+        }
+
+        // POST api/Account/GetUserProfile
+        [Route("GetUserProfile")]
+        public async Task<ChangeUserProfileBindingModel> GetUserProfile()
+        {
+            var user = RequestContext.Principal.Identity.Name;
+            var userId = User.Identity.GetUserId();
+
+            var userProfileDto = UserManager.GetUserProfile(userId);
+
+            return Mapper.Map<ChangeUserProfileBindingModel>(userProfileDto);
         }
 
         // POST api/Account/RegisterExternal
