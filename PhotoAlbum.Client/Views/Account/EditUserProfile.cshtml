@@ -1,10 +1,6 @@
 ﻿@model PhotoAlbum.Client.Models.EditUserProfileViewModel
 
 @{
-    Layout = null;
-}
-
-@{
     ViewBag.Title = "EditUserProfile";
 }
 
@@ -28,9 +24,13 @@
             <input type="text" name="LastName" value="@Model.LastName" />
         </div>
 
-        <p>
+        <span>
             <input type="submit" value="@Resources.ResourceEN.Save" />
-        </p>
+        </span>
+        <span>
+            @ViewBag.ProfileResult
+        </span>
+        
     </fieldset>
 }
 
@@ -54,8 +54,11 @@
             <input type="text" name="ConfirmPassword" value="@Model.ConfirmPassword" />
         </div>
 
-        <p>
+        <span>
             <input type="submit" value="@Resources.ResourceEN.Save" />
-        </p>
+        </span>
+        <span>
+            @ViewBag.PasswordResult
+        </span>
     </fieldset>
 }
