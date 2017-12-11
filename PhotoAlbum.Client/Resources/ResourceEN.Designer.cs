@@ -266,5 +266,14 @@ namespace Resources {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only (A-Z a-z _-) characters can be used..
+        /// </summary>
+        public static string ValErrLoginRegExp {
+            get {
+                return ResourceManager.GetString("ValErrLoginRegExp", resourceCulture);
+            }
+        }
     }
 }

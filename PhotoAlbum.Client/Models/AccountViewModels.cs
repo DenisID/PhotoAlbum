@@ -49,6 +49,8 @@ namespace PhotoAlbum.Client.Models
     public class LoginViewModel
     {
         [Required]
+        [StringLength(50)]
+        [RegularExpression(@"[A-Za-z0-9_-]*", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.ValErrLoginRegExp))]
         [Display(Name = "Login")]
         public string Login { get; set; }
 
