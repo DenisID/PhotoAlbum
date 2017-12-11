@@ -86,31 +86,53 @@
                 }
 
                 $.each(jsonData, function (index, item) {
+                    var isUserAuth = ('@User.Identity.IsAuthenticated' == 'True');
                     var sectionIndex = (isHistoryBack ? index + 1 : rowid);
                     var articleData = "";
-                    articleData += '<div>' +
-                                        '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
-                                        '<div class="photoTitile"><H3>' + item.Title + '</H3></div>' +
-                                        '<div class="photoDescription">' + item.Description + '</div>' +
-                                        '<div class="photoOwnerAndDate">' +
-                                            '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
-                                            '<span class="photoDate">' + Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))) + '</span>' +
-                                        '</div>' +
-                                        '<div class="photoRatings"' +
-                                            '<div class="photoRating">' +
-                                                '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
-                                                '<div class="starRating">' +
-                                                    '<div id="photoRatingId_' + item.Id + '"></div>' +
+                    if(isUserAuth){
+                        articleData += '<div>' +
+                                            '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
+                                            '<div class="photoTitile"><H3>' + item.Title + '</H3></div>' +
+                                            '<div class="photoDescription">' + item.Description + '</div>' +
+                                            '<div class="photoOwnerAndDate">' +
+                                                '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
+                                                '<span class="photoDate">' + Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))) + '</span>' +
+                                            '</div>' +
+                                            '<div class="photoRatings"' +
+                                                '<div class="photoRating">' +
+                                                    '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                    '<div class="starRating">' +
+                                                        '<div id="photoRatingId_' + item.Id + '"></div>' +
+                                                    '</div>' +
+                                                '</div>' +
+                                                '<div class="photoUserRating">' +
+                                                    '<div class="maRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
+                                                    '<div class="starRating">' +
+                                                        '<div id="photoMyRatingId_' + item.Id + '"></div>' +
+                                                    '</div>' +
+                                                "</div>" +
+                                            '</div>' +
+                                       '</div>';
+                    }
+                    else {
+                        articleData += '<div>' +
+                                            '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
+                                            '<div class="photoTitile"><H3>' + item.Title + '</H3></div>' +
+                                            '<div class="photoDescription">' + item.Description + '</div>' +
+                                            '<div class="photoOwnerAndDate">' +
+                                                '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
+                                                '<span class="photoDate">' + Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))) + '</span>' +
+                                            '</div>' +
+                                            '<div class="photoRatings"' +
+                                                '<div class="photoRating">' +
+                                                    '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                    '<div class="starRating">' +
+                                                        '<div id="photoRatingId_' + item.Id + '"></div>' +
+                                                    '</div>' +
                                                 '</div>' +
                                             '</div>' +
-                                            '<div class="photoUserRating">' +
-                                                '<div class="maRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
-                                                '<div class="starRating">' +
-                                                    '<div id="photoMyRatingId_' + item.Id + '"></div>' +
-                                                '</div>' +
-                                            "</div>" +
-                                        '</div>' +
-                                   '</div>';
+                                       '</div>';
+                    }
                     $('#sectionPhotos').append(articleData);
 
                     $(function BuildRatingStar() {
@@ -121,51 +143,53 @@
                         });
                     });
 
-                    $(function BuildUserRatingStar() {
-                        let photoRating = 0;
-                        if (userVotes != null) {
-                            $.each(userVotes, function (index, voteItem) {
-                                if (voteItem.PhotoId === item.Id) {
-                                    photoRating = voteItem.Rating;
-                                };
-                            });
-                        };
+                    if(isUserAuth){
+                        $(function BuildUserRatingStar() {
+                            let photoRating = 0;
+                            if (userVotes != null) {
+                                $.each(userVotes, function (index, voteItem) {
+                                    if (voteItem.PhotoId === item.Id) {
+                                        photoRating = voteItem.Rating;
+                                    };
+                                });
+                            };
 
-                        $('#photoMyRatingId_' + item.Id).rateYo({
-                            rating: Math.round(photoRating),
-                            fullStar: true,
-                        })
-                        // On user rating change
-                        .on("rateyo.set", function (e, data) {
-                            $.post(
-                                "/Photo/CastPhotoVote",
-                                {
-                                    PhotoId: item.Id,
-                                    Rating: data.rating
-                                },
-                                function onSuccess() {
-                                    // Change rating star
-                                    $.ajax({
-                                        type: 'GET',
-                                        url: '/Photo/GetPhotoRating/' + item.Id,
-                                        dataType: 'json',
-                                        success: function (jsonData) {
-                                            if (jsonData == null) {
-                                                return;
+                            $('#photoMyRatingId_' + item.Id).rateYo({
+                                rating: Math.round(photoRating),
+                                fullStar: true,
+                            })
+                            // On user rating change
+                            .on("rateyo.set", function (e, data) {
+                                $.post(
+                                    "/Photo/CastPhotoVote",
+                                    {
+                                        PhotoId: item.Id,
+                                        Rating: data.rating
+                                    },
+                                    function onSuccess() {
+                                        // Change rating star
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '/Photo/GetPhotoRating/' + item.Id,
+                                            dataType: 'json',
+                                            success: function (jsonData) {
+                                                if (jsonData == null) {
+                                                    return;
+                                                }
+
+                                                let photoRating = jsonData.Rating;
+
+                                                $('#photoRatingId_' + item.Id).rateYo("rating", Math.round(photoRating));
+                                            },
+                                            error: function (jsonData) {
+                                                window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
                                             }
-
-                                            let photoRating = jsonData.Rating;
-
-                                            $('#photoRatingId_' + item.Id).rateYo("rating", Math.round(photoRating));
-                                        },
-                                        error: function (jsonData) {
-                                            window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
-                                        }
-                                    });
-                                }
-                            );
+                                        });
+                                    }
+                                );
+                            });
                         });
-                    });
+                    }
                 });
 
                 if (!isHistoryBack) {
