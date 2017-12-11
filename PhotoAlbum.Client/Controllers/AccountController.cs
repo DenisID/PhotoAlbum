@@ -12,6 +12,7 @@ using PhotoAlbum.Client.Models;
 using PhotoAlbum.Client.BusinessServices.Interfaces;
 using AutoMapper;
 using PhotoAlbum.Client.Dto;
+using System.Net;
 
 namespace PhotoAlbum.Client.Controllers
 {
@@ -176,6 +177,8 @@ namespace PhotoAlbum.Client.Controllers
         
         public async Task<ActionResult> EditUserProfile()
         {
+            ViewBag.Result = "";
+
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             var dto = await _userService.GetUserProfileAsync(token);
@@ -190,9 +193,19 @@ namespace PhotoAlbum.Client.Controllers
 
             var dto = Mapper.Map<EditUserProfileDto>(model);
 
-            await _userService.EditUserProfileAsync(dto, token);
+            var result = await _userService.EditUserProfileAsync(dto, token);
+            if(result == HttpStatusCode.OK)
+            {
+                ViewBag.ProfileResult = Resources.ResourceEN.Ok;
+            }
+            else
+            {
+                ViewBag.ProfileResult = Resources.ResourceEN.Error;
+            }
 
-            return RedirectToAction("EditUserProfile");
+            dto = await _userService.GetUserProfileAsync(token);
+
+            return View(Mapper.Map<EditUserProfileViewModel>(dto));
         }
 
         [HttpPost]
@@ -202,9 +215,21 @@ namespace PhotoAlbum.Client.Controllers
 
             var dto = Mapper.Map<ChangePasswordDto>(model);
 
-            await _userService.ChangePasswordAsync(dto, token);
+            var result = await _userService.ChangePasswordAsync(dto, token);
+            if (result == HttpStatusCode.OK)
+            {
+                ViewBag.PasswordResult = Resources.ResourceEN.Ok;
+            }
+            else
+            {
+                ViewBag.PasswordResult = Resources.ResourceEN.Error;
+            }
 
-            return RedirectToAction("EditUserProfile");
+            var editUserProfileDto = await _userService.GetUserProfileAsync(token);
+
+            return View("EditUserProfile", Mapper.Map<EditUserProfileViewModel>(editUserProfileDto));
+
+            //return RedirectToAction("EditUserProfile");
         }
 
         //

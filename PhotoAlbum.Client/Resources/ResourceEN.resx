@@ -144,6 +144,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ErrorOops" xml:space="preserve">
     <value>Oops, there was an error.</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
   </data>
   <data name="OldPassword" xml:space="preserve">
     <value>Old password</value>
