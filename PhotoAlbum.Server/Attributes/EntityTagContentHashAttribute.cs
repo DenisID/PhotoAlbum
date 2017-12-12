@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PhotoAlbum.Common.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,7 +45,8 @@ namespace PhotoAlbum.Server.Attributes
 
             if (objectContent == null) return;
 
-            var computedEntityTag = ComputeHash(objectContent.Value);
+            var unifiedData = JsonConvert.SerializeObject(objectContent.Value);
+            var computedEntityTag = ETagHashCreator.ComputeHash(unifiedData);
 
             if (_receivedEntityTags.Contains(computedEntityTag))
             {
@@ -54,18 +57,18 @@ namespace PhotoAlbum.Server.Attributes
             context.Response.Headers.ETag = new EntityTagHeaderValue("\"" + computedEntityTag + "\"", true);
         }
 
-        private static string ComputeHash(object instance)
-        {
-            var cryptoServiceProvider = new MD5CryptoServiceProvider();
-            var serializer = new DataContractSerializer(instance.GetType());
+        //private static string ComputeHash(object instance)
+        //{
+        //    var cryptoServiceProvider = new MD5CryptoServiceProvider();
+        //    var serializer = new DataContractSerializer(instance.GetType());
 
-            using (var memoryStream = new MemoryStream())
-            {
-                serializer.WriteObject(memoryStream, instance);
-                cryptoServiceProvider.ComputeHash(memoryStream.ToArray());
+        //    using (var memoryStream = new MemoryStream())
+        //    {
+        //        serializer.WriteObject(memoryStream, instance);
+        //        cryptoServiceProvider.ComputeHash(memoryStream.ToArray());
 
-                return String.Join("", cryptoServiceProvider.Hash.Select(c => c.ToString("x2")));
-            }
-        }
+        //        return String.Join("", cryptoServiceProvider.Hash.Select(c => c.ToString("x2")));
+        //    }
+        //}
     }
 }

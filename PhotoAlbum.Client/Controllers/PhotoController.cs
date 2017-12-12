@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Dto;
@@ -7,10 +8,12 @@ using PhotoAlbum.Client.Models;
 using PhotoAlbum.Common.Enums;
 using PhotoAlbum.Common.ErrorCodes;
 using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -96,9 +99,23 @@ namespace PhotoAlbum.Client.Controllers
             return View();
         }
 
+        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public async Task<ActionResult> GetImageById(int id)
         {
             var image = await _photoAlbumService.GetImageByIdAsync(id);
+
+            var requestedETag = Request.Headers["If-None-Match"];
+
+            string unifiedData = JsonConvert.SerializeObject(image);
+            var responseETag = ETagHashCreator.ComputeHash(unifiedData);
+            if (requestedETag == responseETag)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            }
+                
+            Response.Cache.SetCacheability(HttpCacheability.ServerAndPrivate);
+            Response.Cache.SetETag(responseETag);
+
             return File(image.Image, image.ImageMimeType);
         }
 

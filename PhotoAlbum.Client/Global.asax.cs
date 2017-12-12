@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Helpers;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -24,6 +25,9 @@ namespace PhotoAlbum.Client
             Bootstrapper.Run();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;
+
+            // CacheCow
+            //GlobalConfiguration.Configuration.MessageHandlers.Add(new CacheCow.Server.CachingHandler(GlobalConfiguration.Configuration));
         }
     }
 }

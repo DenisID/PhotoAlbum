@@ -69,7 +69,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpGet]
-        //[EntityTagContentHashAttribute]
+        [EntityTagContentHashAttribute]
         [Route("api/photo/image/{id}")]
         public HttpResponseMessage GetImageById([FromUri] int id)
         {
