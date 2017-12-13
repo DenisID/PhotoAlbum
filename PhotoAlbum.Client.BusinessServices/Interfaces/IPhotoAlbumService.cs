@@ -15,7 +15,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 
         Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token);
         Task<List<PhotoDto>> GetAllPhotosAsync();
-        Task<ImageDto> GetImageByIdAsync(int imageId);
+        Task<ImageDto> GetImageByIdAsync(int imageId, string eTag);
         Task<HttpStatusCode> DeletePhotoByIdAsync(int photoId, string token);
         Task<HttpStatusCode> EditPhotoAsync(EditPhotoDto editPhotoDto, string token);
         Task<EditPhotoDto> GetEditPhotoByIdAsync(int editPhotoId, string token);

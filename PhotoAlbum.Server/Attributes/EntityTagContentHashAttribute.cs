@@ -56,19 +56,5 @@ namespace PhotoAlbum.Server.Attributes
 
             context.Response.Headers.ETag = new EntityTagHeaderValue("\"" + computedEntityTag + "\"", true);
         }
-
-        //private static string ComputeHash(object instance)
-        //{
-        //    var cryptoServiceProvider = new MD5CryptoServiceProvider();
-        //    var serializer = new DataContractSerializer(instance.GetType());
-
-        //    using (var memoryStream = new MemoryStream())
-        //    {
-        //        serializer.WriteObject(memoryStream, instance);
-        //        cryptoServiceProvider.ComputeHash(memoryStream.ToArray());
-
-        //        return String.Join("", cryptoServiceProvider.Hash.Select(c => c.ToString("x2")));
-        //    }
-        //}
     }
 }

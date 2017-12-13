@@ -247,7 +247,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
-    <Compile Include="Filters\ETagFilter.cs" />
     <Compile Include="Filters\HandleExceptionsAttribute.cs" />
     <Compile Include="Filters\UserNameConstraint.cs" />
     <Compile Include="Global.asax.cs">

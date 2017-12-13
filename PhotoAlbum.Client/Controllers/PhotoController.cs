@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Dto;
+using PhotoAlbum.Client.Filters;
 //using PhotoAlbum.Client.Model.Services;
 using PhotoAlbum.Client.Models;
 using PhotoAlbum.Common.Enums;
@@ -15,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -98,21 +100,35 @@ namespace PhotoAlbum.Client.Controllers
             }
             return View();
         }
-
-        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        
         public async Task<ActionResult> GetImageById(int id)
         {
-            var image = await _photoAlbumService.GetImageByIdAsync(id);
-
             var requestedETag = Request.Headers["If-None-Match"];
 
-            string unifiedData = JsonConvert.SerializeObject(image);
-            var responseETag = ETagHashCreator.ComputeHash(unifiedData);
-            if (requestedETag == responseETag)
+            //var image = await _photoAlbumService.GetImageByIdAsync(id, requestedETag);
+
+            string requestETagValue = null;
+            if (requestedETag != null)
+            {
+                requestETagValue = requestedETag.Trim('W', '/', '"');
+            }
+
+            var image = await _photoAlbumService.GetImageByIdAsync(id, requestETagValue);
+
+            if (image.IsNotModified)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotModified);
             }
-                
+
+            string unifiedData = JsonConvert.SerializeObject(image);
+            var responseETagValue = ETagHashCreator.ComputeHash(unifiedData);
+            if (requestETagValue == responseETagValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            }
+            
+            var responseETag = new EntityTagHeaderValue("\"" + responseETagValue + "\"", true).ToString();
+
             Response.Cache.SetCacheability(HttpCacheability.ServerAndPrivate);
             Response.Cache.SetETag(responseETag);
 

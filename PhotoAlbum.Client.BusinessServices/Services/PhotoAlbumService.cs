@@ -135,11 +135,20 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return photos;
         }
 
-        public async Task<ImageDto> GetImageByIdAsync(int imageId)
+        public async Task<ImageDto> GetImageByIdAsync(int imageId, string eTag)
         {
             ImageDto image = null;
 
+            _httpClient.DefaultRequestHeaders.IfNoneMatch.Add(new EntityTagHeaderValue("\"" + eTag + "\"", true));
+
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/image/{imageId}");
+            _httpClient.DefaultRequestHeaders.IfNoneMatch.Clear();
+
+            if(apiResponse.StatusCode == HttpStatusCode.NotModified)
+            {
+                return new ImageDto() { IsNotModified = true };
+            }
+
             //if (apiResponse.IsSuccessStatusCode)
             //{
             //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<ImageDto>>();
