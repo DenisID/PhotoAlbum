@@ -21,6 +21,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace PhotoAlbum.Client.Controllers
 {
@@ -104,8 +105,6 @@ namespace PhotoAlbum.Client.Controllers
         public async Task<ActionResult> GetImageById(int id)
         {
             var requestedETag = Request.Headers["If-None-Match"];
-
-            //var image = await _photoAlbumService.GetImageByIdAsync(id, requestedETag);
 
             string requestETagValue = null;
             if (requestedETag != null)
