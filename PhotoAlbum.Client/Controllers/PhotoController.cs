@@ -182,7 +182,7 @@ namespace PhotoAlbum.Client.Controllers
             var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
             {
                 PageNumber = lastRowId,
-                PageSize = 5,
+                PageSize = 3,
                 Sorting = sorting
             });
             return Json(photos, JsonRequestBehavior.AllowGet);

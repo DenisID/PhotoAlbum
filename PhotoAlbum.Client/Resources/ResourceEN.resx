@@ -132,6 +132,9 @@
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Confirm password</value>
   </data>
+  <data name="CreateANewAccount" xml:space="preserve">
+    <value>Create a new account.</value>
+  </data>
   <data name="DeletePhoto" xml:space="preserve">
     <value>Delete photo</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="EditPhoto" xml:space="preserve">
     <value>Edit photo</value>
+  </data>
+  <data name="EditUserProfileAndPassword" xml:space="preserve">
+    <value>Edit user profile and password.</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -153,8 +159,17 @@
   <data name="FirstName" xml:space="preserve">
     <value>First name</value>
   </data>
+  <data name="Hallo" xml:space="preserve">
+    <value>Hallo</value>
+  </data>
   <data name="LastName" xml:space="preserve">
     <value>Last name</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Log_In" xml:space="preserve">
+    <value>Log in</value>
   </data>
   <data name="MyPhotos" xml:space="preserve">
     <value>My photos</value>
@@ -183,6 +198,12 @@
   <data name="Rating" xml:space="preserve">
     <value>Rating</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegisterAsANewUser" xml:space="preserve">
+    <value>Register as a new user</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -191,6 +212,12 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="UseALocalAccountToLogIn" xml:space="preserve">
+    <value>Use a local account to log in.</value>
+  </data>
+  <data name="UserProfile" xml:space="preserve">
+    <value>User profile</value>
   </data>
   <data name="ValErrLoginRegExp" xml:space="preserve">
     <value>Only (A-Z a-z _-) characters can be used.</value>

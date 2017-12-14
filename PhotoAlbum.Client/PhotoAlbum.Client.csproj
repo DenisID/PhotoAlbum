@@ -274,6 +274,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\ajax-loader.gif" />
+    <Content Include="Content\img\img-loader.gif" />
     <Content Include="Content\jqueryui\jquery-ui.css" />
     <Content Include="Content\jqueryui\jquery-ui.min.css" />
     <Content Include="Content\jqueryui\jquery-ui.structure.css" />
@@ -448,7 +449,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\Create.cshtml" />
-    <Content Include="Views\Photo\AddPhoto.cshtml" />
     <Content Include="Views\Photo\Index.cshtml" />
     <Content Include="Views\Photo\CreatePhoto.cshtml" />
     <Content Include="Views\Photo\EditPhoto.cshtml" />

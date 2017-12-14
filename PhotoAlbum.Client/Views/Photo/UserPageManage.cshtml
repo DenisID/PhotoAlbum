@@ -4,16 +4,17 @@
     ViewBag.Title = "UserPageManage";
 }
 
+@*Bundles for rating stars*@
 @Scripts.Render("~/bundles/rateyo")
 @Styles.Render("~/Content/rateyo")
 
 @*Sort order*@
 <div class="sortOrder">
     <span class="sortNewFirst">
-        @Resources.ResourceEN.NewFirst:     @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByCreationDate, new { Checked = "checked", Id = "SortingRB" })
+        @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByCreationDate, new { Checked = "checked" }) @Resources.ResourceEN.NewFirst
     </span>
     <span class="sortPopularFirst">
-        @Resources.ResourceEN.PopularFirst: @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByRating, new { Id = "SortingRB" })
+        @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByRating) @Resources.ResourceEN.PopularFirst
     </span>
 </div>
 
@@ -33,7 +34,7 @@
             </div>
             <div class="modal-body"><div class="te">Please wait...</div></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="dialog-window btn btn-primary btn-large" data-dismiss="modal">Close</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -41,21 +42,25 @@
     <!-- /.modal-dialog -->
 </div>
 
-@Html.ActionLink(Resources.ResourceEN.AddNewPhoto, "CreatePhoto", "Photo", new { @class = "dialog-window btn btn-primary btn-large" })
+@Html.ActionLink(Resources.ResourceEN.AddNewPhoto, "CreatePhoto", "Photo", new { @class = "addNewPhotoButton dialog-window btn btn-primary btn-large" })
 
-@*Suppotr section*@ 
+@*Main photo content section*@
 <div id="sectionPhotos"></div>
+
+@*Load indicator*@
+<div class="loadingContainer">
+    <img id="loading" src="~/Content/img/ajax-loader.gif" alt="" />
+</div>
+
+@*Suppotr section*@
 <input type="hidden" id="lastRowId" value="1" />
-<img id="loading" src="~/Content/img/ajax-loader.gif" alt="" />
 
 <script>
     $.ajaxSetup({
         beforeSend: function () {
-            // show gif here, eg:
             $("#loading").show();
         },
         complete: function () {
-            // hide gif here, eg:
             $("#loading").hide();
         }
     });
@@ -88,11 +93,11 @@
     var sorting = "@Model.SortPhoto.Sorting";
 
     // On radio button change
-    $("input[id=SortingRB]:radio").change(function () {
+    $('input[name="SortPhoto.Sorting"]:radio').change(function () {
         $('#sectionPhotos').empty();
         $("#lastRowId").val(1);
         GetAllCurrentUserVotes();
-        sorting = $('input[id=SortingRB]:checked').val();
+        sorting = $('input[name="SortPhoto.Sorting"]:checked').val();
         GetPhotosFromNextSection(false, sorting);
     });
 
@@ -154,11 +159,11 @@
                     $.each(jsonData, function (index, item) {
                         var sectionIndex = (isHistoryBack ? index + 1 : rowid);
                         var articleData = "";
-                        articleData += '<div>' +
-                                            '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
-                                            '<div class="photoTitile">' +
+                        articleData += '<div class="mainContainer">' +
+                                            '<div class="photoContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
+                                            '<div class="photoHeader">' +
                                                 '<span class ="photoTitle">' +
-                                                    '<H3>' + item.Title + '</H3>' +
+                                                    item.Title +
                                                 '</span>' +
                                                 '<span class ="photoEditButton">' +
                                                     '<a href="/Photo/EditPhoto/' + item.Id + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.ResourceEN.EditPhoto' + '</a>' +
@@ -170,9 +175,11 @@
                                             '<div class="photoDescription">' + item.Description + '</div>' +
                                             '<div class="photoOwnerAndDate">' +
                                                 '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
-                                                '<span class="photoDate">' + Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))) + '</span>' +
+                                                '<span class="photoDate">' +
+                                                    Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
+                                                '</span>' +
                                             '</div>' +
-                                            '<div class="photoRatings"' +
+                                            '<div class="photoRatings">' +
                                                 '<div class="photoRating">' +
                                                     '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
                                                     '<div class="starRating">' +
@@ -180,11 +187,11 @@
                                                     '</div>' +
                                                 '</div>' +
                                                 '<div class="photoUserRating">' +
-                                                    '<div class="maRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
+                                                    '<div class="myRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
                                                     '<div class="starRating">' +
                                                         '<div id="photoMyRatingId_' + item.Id + '"></div>' +
                                                     '</div>' +
-                                                "</div>" +
+                                                '</div>' +
                                             '</div>' +
                                        '</div>';
                         $('#sectionPhotos').append(articleData);

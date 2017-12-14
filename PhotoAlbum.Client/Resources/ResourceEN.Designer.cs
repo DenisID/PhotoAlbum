@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create a new account..
+        /// </summary>
+        public static string CreateANewAccount {
+            get {
+                return ResourceManager.GetString("CreateANewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete photo.
         /// </summary>
         public static string DeletePhoto {
@@ -129,6 +138,15 @@ namespace Resources {
         public static string EditPhoto {
             get {
                 return ResourceManager.GetString("EditPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit user profile and password..
+        /// </summary>
+        public static string EditUserProfileAndPassword {
+            get {
+                return ResourceManager.GetString("EditUserProfileAndPassword", resourceCulture);
             }
         }
         
@@ -169,11 +187,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hallo.
+        /// </summary>
+        public static string Hallo {
+            get {
+                return ResourceManager.GetString("Hallo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last name.
         /// </summary>
         public static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        public static string Log_In {
+            get {
+                return ResourceManager.GetString("Log_In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
@@ -259,6 +304,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register as a new user.
+        /// </summary>
+        public static string RegisterAsANewUser {
+            get {
+                return ResourceManager.GetString("RegisterAsANewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -282,6 +345,24 @@ namespace Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use a local account to log in..
+        /// </summary>
+        public static string UseALocalAccountToLogIn {
+            get {
+                return ResourceManager.GetString("UseALocalAccountToLogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User profile.
+        /// </summary>
+        public static string UserProfile {
+            get {
+                return ResourceManager.GetString("UserProfile", resourceCulture);
             }
         }
         
