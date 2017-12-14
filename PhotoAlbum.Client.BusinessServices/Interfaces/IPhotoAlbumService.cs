@@ -11,8 +11,6 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 {
     public interface IPhotoAlbumService
     {
-        Task Test();
-
         Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token);
         Task<List<PhotoDto>> GetAllPhotosAsync();
         Task<ImageDto> GetImageByIdAsync(int imageId, string eTag);
@@ -24,6 +22,5 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
         Task<List<PhotoDto>> GetUserPhotosAsync(PagingParametersDto paginParametersDto, string userName);
         Task<List<UserVoteDto>> GetUserVotesAsync(string token, int? photoId = null);
         Task<HttpStatusCode> CastPhotoVoteAsync(PhotoVoteDto photoVoteDto, string token);
-        //Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
     }
 }

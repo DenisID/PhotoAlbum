@@ -25,9 +25,6 @@ namespace PhotoAlbum.Client
             Bootstrapper.Run();
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;
-
-            // CacheCow
-            //GlobalConfiguration.Configuration.MessageHandlers.Add(new CacheCow.Server.CachingHandler(GlobalConfiguration.Configuration));
         }
     }
 }

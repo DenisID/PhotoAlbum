@@ -1,6 +1,8 @@
-﻿using PhotoAlbum.Common.Enums;
+﻿using PhotoAlbum.Client.Filters;
+using PhotoAlbum.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -14,41 +16,44 @@ namespace PhotoAlbum.Client.Models
         public DateTime CreationDate { get; set; }
         public string OwnerName { get; set; }
         public double Rating { get; set; }
-        //public byte[] Image { get; set; }
-        //public string ImageMimeType { get; set; }
     }
 
     public class CreatePhotoViewModel
     {
+        [Required]
+        [StringLength(50)]
         public string Title { get; set; }
 
+        [Required]
+        [StringLength(500)]
         public string Description { get; set; }
 
+        [ValidateFile]
         public HttpPostedFileBase Image { get; set; }
     }
 
     public class EditPhotoViewModel
     {
+        [Required]
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string Title { get; set; }
+
+        [Required]
+        [StringLength(500)]
         public string Description { get; set; }
     }
 
     public class PhotoVoteViewModel
     {
+        [Required]
         public int PhotoId { get; set; }
-        public int Rating { get; set; }
-    }
 
-    public class PageInfo
-    {
-        public int PageNumber { get; set; } // номер текущей страницы
-        public int PageSize { get; set; } // кол-во объектов на странице
-        public int TotalItems { get; set; } // всего объектов
-        public int TotalPages  // всего страниц
-        {
-            get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
-        }
+        [Required]
+        [Range(0, 5)]
+        public int Rating { get; set; }
     }
 
     public class SortPhotoViewModel

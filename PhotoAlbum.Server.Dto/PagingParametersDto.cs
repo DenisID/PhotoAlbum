@@ -12,6 +12,5 @@ namespace PhotoAlbum.Server.Dto
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public SortOrder Sorting { get; set; } = SortOrder.ByCreationDate;
-        //public int TotalNumberOfPages { get; set; }
     }
 }

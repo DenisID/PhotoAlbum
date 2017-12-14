@@ -133,7 +133,7 @@
     <value>Confirm password</value>
   </data>
   <data name="CreateANewAccount" xml:space="preserve">
-    <value>Create a new account.</value>
+    <value>Create a new account</value>
   </data>
   <data name="DeletePhoto" xml:space="preserve">
     <value>Delete photo</value>
@@ -145,7 +145,7 @@
     <value>Edit photo</value>
   </data>
   <data name="EditUserProfileAndPassword" xml:space="preserve">
-    <value>Edit user profile and password.</value>
+    <value>Edit user profile and password</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -154,7 +154,7 @@
     <value>Error</value>
   </data>
   <data name="ErrorOops" xml:space="preserve">
-    <value>Oops, there was an error.</value>
+    <value>Oops, there was an error</value>
   </data>
   <data name="FirstName" xml:space="preserve">
     <value>First name</value>
@@ -166,10 +166,13 @@
     <value>Last name</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value />
+    <value>Login</value>
   </data>
   <data name="Log_In" xml:space="preserve">
     <value>Log in</value>
+  </data>
+  <data name="MB" xml:space="preserve">
+    <value>MB</value>
   </data>
   <data name="MyPhotos" xml:space="preserve">
     <value>My photos</value>
@@ -189,8 +192,20 @@
   <data name="OldPassword" xml:space="preserve">
     <value>Old password</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve">
+    <value>The password and confirmation password do not match</value>
+  </data>
+  <data name="PasswordToShortOrToLong" xml:space="preserve">
+    <value>Password to short or to long</value>
+  </data>
   <data name="PhotoAlbum" xml:space="preserve">
     <value>Photo album</value>
+  </data>
+  <data name="PleaseUploadYourPhotoOfType" xml:space="preserve">
+    <value>Please upload Your Photo of type</value>
   </data>
   <data name="PopularFirst" xml:space="preserve">
     <value>Popular first</value>
@@ -210,16 +225,34 @@
   <data name="SelectFile" xml:space="preserve">
     <value>Select file</value>
   </data>
+  <data name="s_Page" xml:space="preserve">
+    <value>page</value>
+  </data>
+  <data name="s_Photos" xml:space="preserve">
+    <value>photos</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="UnacceptableEmail" xml:space="preserve">
+    <value>Unacceptable email</value>
+  </data>
+  <data name="UnacceptableFileFormat" xml:space="preserve">
+    <value>Unacceptable file format</value>
+  </data>
+  <data name="UnacceptableLogin" xml:space="preserve">
+    <value>Unacceptable login</value>
+  </data>
   <data name="UseALocalAccountToLogIn" xml:space="preserve">
-    <value>Use a local account to log in.</value>
+    <value>Use a local account to log in</value>
   </data>
   <data name="UserProfile" xml:space="preserve">
     <value>User profile</value>
   </data>
   <data name="ValErrLoginRegExp" xml:space="preserve">
-    <value>Only (A-Z a-z _-) characters can be used.</value>
+    <value>Only (A-Z a-z _-) characters can be used</value>
+  </data>
+  <data name="YourPhotoIsTooLargeMaximumAllowedSizeIs" xml:space="preserve">
+    <value>Your Photo is too large, maximum allowed size is</value>
   </data>
 </root>

@@ -26,20 +26,7 @@ namespace PhotoAlbum.Server.Controllers
         {
             _photoAlbumService = photoAlbumService;
         }
-
-
-
-        [HttpGet]
-        [Route("api/test")]
-        public HttpResponseMessage Test()
-        {
-            //throw new Exception("TestEx");
-            throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
-            return Success(_photoAlbumService.GetPhotosCount());
-        }
-
-
-
+        
         [HttpGet]
         [Route("api/allphotos")]
         public HttpResponseMessage GetAllPhotos()
@@ -93,7 +80,6 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage DeletePhotoById([FromUri] int id)
         {
-            //var user = User.Identity.Name;
             if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), id))
             {
                 throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);
@@ -110,7 +96,6 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage EditPhoto([FromBody] EditPhotoDto editPhotoDto)
         {
-            //var user = User.Identity.Name;
             if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), editPhotoDto.Id))
             {
                 throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);

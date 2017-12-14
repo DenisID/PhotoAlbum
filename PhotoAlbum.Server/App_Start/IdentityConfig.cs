@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using PhotoAlbum.Server.Model.Entities;
 using PhotoAlbum.Server.Model.Data;
 using PhotoAlbum.Server.Model.Managers;
-//using PhotoAlbum.Server.Models;
 
 namespace PhotoAlbum.Server
 {

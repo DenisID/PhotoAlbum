@@ -1,7 +1,7 @@
 ﻿@model PhotoAlbum.Client.Models.UserPageViewModel
 
 @{
-    ViewBag.Title = "UserPage";
+    ViewBag.Title = Model.UserName + " " + Resources.ResourceEN.s_Photos + ":";
 }
 
 @*Bundles for rating stars*@
@@ -21,6 +21,10 @@
 @{
     Model.SortPhoto.Sorting = Model.SortPhoto.ByCreationDate;
 }
+
+<div class="pageHeaderContainer">
+    <h2>@ViewBag.Title</h2>
+</div>
 
 @*Main photo content section*@
 <div id="sectionPhotos"></div>

@@ -30,8 +30,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Account/Register", registerUserDto);
             return response.StatusCode;
         }
-
-        // TODO : mb rework
+        
         public async Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto)
         {
             var dict = new Dictionary<string, string>();
