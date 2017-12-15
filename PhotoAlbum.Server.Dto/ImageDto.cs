@@ -9,10 +9,8 @@ namespace PhotoAlbum.Server.Dto
 {
     public class ImageDto
     {
-        [Required]
         public byte[] Image { get; set; }
-
-        [Required]
+        
         public string ImageMimeType { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace PhotoAlbum.Server.Dto
 {
     public class EditPhotoDto
     {
-        [Required]
         public int Id { get; set; }
 
         public string Title { get; set; }

@@ -9,7 +9,6 @@ namespace PhotoAlbum.Server.Dto
 {
     public class CreateUserInfoDto
     {
-        [Required]
         public string UserId { get; set; }
 
         public string FirstName { get; set; }

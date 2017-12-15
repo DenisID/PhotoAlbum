@@ -65,9 +65,11 @@ textarea {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    height:500px;
+    min-height: 500px;
+    height:auto;
+    max-height: 1000px;
     width:auto;
-    max-width: 500px;
+    max-width: 100%;
 }
 
 .photoHeader{

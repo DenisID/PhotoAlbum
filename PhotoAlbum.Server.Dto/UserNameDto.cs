@@ -9,7 +9,6 @@ namespace PhotoAlbum.Server.Dto
 {
     public class UserNameDto
     {
-        [Required]
         public string UserName { get; set; }
     }
 }
