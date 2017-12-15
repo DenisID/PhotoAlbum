@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,10 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangeUserProfileDto.cs" />
+    <Compile Include="PagingParametersDto.cs" />
+    <Compile Include="PhotoRatingDto.cs" />
+    <Compile Include="PhotoVoteDto.cs" />
     <Compile Include="CreatePhotoDto.cs" />
+    <Compile Include="EditPhotoDto.cs" />
     <Compile Include="ImageDto.cs" />
     <Compile Include="PhotoDto.cs" />
+    <Compile Include="CastPhotoVoteDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInfoDto.cs" />
+    <Compile Include="UserNameDto.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoAlbum.Common\PhotoAlbum.Common.csproj">
+      <Project>{ce2f1d0b-5a10-4b1d-9b88-97334cac2303}</Project>
+      <Name>PhotoAlbum.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

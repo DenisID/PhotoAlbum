@@ -1,0 +1,32 @@
+﻿@model PhotoAlbum.Client.Models.EditPhotoViewModel
+
+@{
+    Layout = null;
+}
+
+@{
+    ViewBag.Title = "EditPhoto";
+}
+
+@using (Html.BeginForm("EditPhoto", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+        <div class="editor-label">@Resources.ResourceEN.Title</div>
+        <div class="editor-field">
+            <input type="text" name="Title" value="@Model.Title" />
+        </div>
+        <br/>
+
+        <div class="editor-label">@Resources.ResourceEN.Description</div>
+        <div class="editor-field">
+            <textarea name="Description">@Model.Description</textarea>
+        </div>
+        <br />
+
+        <p>
+            <input type="submit" class="dialog-window btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
+        </p>
+    </fieldset>
+}

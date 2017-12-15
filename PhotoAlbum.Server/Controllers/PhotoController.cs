@@ -1,5 +1,12 @@
-﻿using PhotoAlbum.Server.Dto;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Server.Attributes;
+using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Interfaces;
+using PhotoAlbum.Server.Model.Managers;
 using PhotoAlbum.Server.Model.Services;
 using System;
 using System.Collections.Generic;
@@ -13,28 +20,43 @@ namespace PhotoAlbum.Server.Controllers
 {
     public class PhotoController : BaseController
     {
-        private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        private readonly IPhotoAlbumService _photoAlbumService;
 
-        //public class ResponseDTO
-        //{
-        //    public string value;
-        //}
-
-        //public ResponseDTO GetTest()
-        //{
-        //    var result = new ResponseDTO();
-        //    result.value = "Test OK";
-        //    return result;
-        //}
-
+        public PhotoController(IPhotoAlbumService photoAlbumService)
+        {
+            _photoAlbumService = photoAlbumService;
+        }
+        
         [HttpGet]
+        [Route("api/allphotos")]
         public HttpResponseMessage GetAllPhotos()
         {
-            //return Request.CreateResponse(HttpStatusCode.OK, _photoAlbumService.GetAllPhotos());
             return Success(_photoAlbumService.GetAllPhotos());
         }
 
         [HttpGet]
+        [Route("api/photo")]
+        public HttpResponseMessage GetPhotos([FromUri]PagingParametersDto pagingParameters)
+        {
+            return Success(_photoAlbumService.GetPhotos(pagingParameters));
+        }
+
+        [HttpGet]
+        [Route("api/userphotos")]
+        public HttpResponseMessage GetUserPhotos([FromUri]PagingParametersDto pagingParameters, [FromUri] string userName)
+        {
+            return Success(_photoAlbumService.GetUserPhotos(pagingParameters, userName));
+        }
+
+        [HttpGet]
+        [Route("api/photo/count")]
+        public HttpResponseMessage GetPhotosCount()
+        {
+            return Success(_photoAlbumService.GetPhotosCount());
+        }
+
+        [HttpGet]
+        [EntityTagContentHashAttribute]
         [Route("api/photo/image/{id}")]
         public HttpResponseMessage GetImageById([FromUri] int id)
         {
@@ -42,56 +64,95 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpPost]
+        [Route("api/photo")]
+        [Authorize]
         public HttpResponseMessage CreatePhoto([FromBody] CreatePhotoDto createPhotoDto)
         {
-            //return Ok(_photoAlbumService.CreatePhoto(createPhotoDto));
+            var user = RequestContext.Principal.Identity.Name;
+            var userId = User.Identity.GetUserId();
+            createPhotoDto.UserId = userId;
+
             return Success(_photoAlbumService.CreatePhoto(createPhotoDto));
         }
 
-        //// GET api/values
-        //public IEnumerable<string> GetAllPhoto()
-        //{         
-        //    return new string[] { "value1", "value2" };
-        //}
+        [HttpDelete]
+        [Route("api/photo/{id}")]
+        [Authorize]
+        public HttpResponseMessage DeletePhotoById([FromUri] int id)
+        {
+            if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), id))
+            {
+                throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);
+            }
 
-        //// GET api/values/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+            _photoAlbumService.DeletePhotoById(id);
 
-        //// POST api/photo
-        //public void PostPhoto([FromBody]AddPhotoDto addPhotoDto)
-        //{
-        //    if (ModelState.IsValid && addPhotoDto.Image != null)
-        //    {
-        //        byte[] imageData = null;
-        //        // считываем переданный файл в массив байтов
-        //        using (var binaryReader = new BinaryReader(addPhotoModel.Image.InputStream))
-        //        {
-        //            imageData = binaryReader.ReadBytes(addPhotoModel.Image.ContentLength);
-        //        }
-        //        // установка массива байтов
-        //        var addPhotoDto = new AddPhotoDto();
-        //        addPhotoDto.Image = imageData;
-        //        addPhotoDto.Title = addPhotoModel.Title;
-        //        addPhotoDto.Description = addPhotoModel.Description;
+            return Success();
+        }
 
-        //        _photoAlbumService.AddPhoto(addPhotoDto);
+        [HttpPut]
+        [HttpPost]
+        [Route("api/photo/editphoto")]
+        [Authorize]
+        public HttpResponseMessage EditPhoto([FromBody] EditPhotoDto editPhotoDto)
+        {
+            if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), editPhotoDto.Id))
+            {
+                throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);
+            }
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View();
-        //}
+            _photoAlbumService.EditPhoto(editPhotoDto);
+            return Success();
+        }
 
-        //// PUT api/values/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        [HttpGet]
+        [Route("api/photo/editphoto/{id}")]
+        public HttpResponseMessage GetEditPhotoById(int id)
+        {
+            return Success(_photoAlbumService.GetEditPhotoById(id));
+        }
+        
+        [HttpPost]
+        [Route("api/photo/vote")]
+        [Authorize]
+        public HttpResponseMessage CastPhotoVote([FromBody]CastPhotoVoteDto photoVoteDto)
+        {
+            var castPhotoVoteDto = new PhotoVoteDto
+            {
+                PhotoId = photoVoteDto.PhotoId,
+                UserId = User.Identity.GetUserId(),
+                Rating = photoVoteDto.Rating
+            };
+            _photoAlbumService.CastPhotoVote(castPhotoVoteDto);
 
-        //// DELETE api/values/5
-        //public void Delete(int id)
-        //{
-        //}
+            return Success();
+        }
+
+        [HttpGet]
+        [Route("api/photo/vote")]
+        [Authorize]
+        public HttpResponseMessage GetAllUserVotes()
+        {
+            var userId = User.Identity.GetUserId();
+
+            return Success(_photoAlbumService.GetUserVotes(userId));
+        }
+
+        [HttpGet]
+        [Route("api/photo/vote/{id}")]
+        [Authorize]
+        public HttpResponseMessage GetUserVote(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            return Success(_photoAlbumService.GetUserVotes(userId, id));
+        }
+
+        [HttpGet]
+        [Route("api/photo/rating/{id}")]
+        public HttpResponseMessage GetPhotoRating(int id)
+        {
+            return Success(_photoAlbumService.GetPhotoRating(id));
+        }
     }
 }

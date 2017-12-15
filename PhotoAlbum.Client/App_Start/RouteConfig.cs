@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PhotoAlbum.Client.BusinessServices.Services;
+using PhotoAlbum.Client.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,9 +16,23 @@ namespace PhotoAlbum.Client
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "UserManage",
+                url: "{username}/manage",
+                defaults: new { controller = "Photo", action = "UserPageManage" },
+                constraints: new { username = new UserNameConstraint(new UserService()) }
+            );
+
+            routes.MapRoute(
+                name: "User",
+                url: "{username}",
+                defaults: new { controller = "Photo", action = "UserPage" },
+                constraints: new { username = new UserNameConstraint(new UserService()) }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Photo", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

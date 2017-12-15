@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using PhotoAlbum.Client.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace PhotoAlbum.Client
@@ -7,7 +8,7 @@ namespace PhotoAlbum.Client
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new HandleExceptionsAttribute());
         }
     }
 }

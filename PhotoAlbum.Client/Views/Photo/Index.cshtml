@@ -1,43 +1,252 @@
-﻿@model IEnumerable<PhotoAlbum.Client.Models.PhotoModel>
+﻿@model PhotoAlbum.Client.Models.SortPhotoViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Мои изображения</h2>
+@*Bundles for rating stars*@
+@Scripts.Render("~/bundles/rateyo")
+@Styles.Render("~/Content/rateyo")
 
-<p>
-    @Html.ActionLink("Добавить изображение", "CreatePhoto")
-</p>
-<table>
-    <tr>
-        <th>Название</th>
-        <th>Картинка</th>
-    </tr>
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @if (item.Image != null)
-                    {
-                        <p>@item.Title</p>
-                        @*@Html.Raw("<img style='width:300px; height:400px;' src=\"data:image/jpeg;base64,"
-                                + Convert.ToBase64String(item.Image) + "\" />")*@
-                        <img src="@Url.Action("GetImageById", "Photo", new { id = item.Id })" />
-                    }
-                </td>
+@*Sort order*@
+<div class="sortOrder">
+    <span class="sortNewFirst">
+        @Html.RadioButtonFor(m => m.Sorting, Model.ByCreationDate, new { Checked = "checked" }) @Resources.ResourceEN.NewFirst
+    </span>
+    <span class="sortPopularFirst">
+        @Html.RadioButtonFor(m => m.Sorting, Model.ByRating) @Resources.ResourceEN.PopularFirst 
+    </span>
+</div>
 
-                <td>
-                    @if (item.Image != null)
-                    {
-                        <p>@item.Description</p>
-                    }
-                </td>
+@{
+    Model.Sorting = Model.ByCreationDate;
+} 
 
-            </tr>
+@*Main photo content section*@
+<div id="sectionPhotos"></div>
+
+@*Load indicator*@
+<div class="loadingContainer">
+    <img id="loading" src="~/Content/img/ajax-loader.gif" alt="" />
+</div>
+
+@*Suppotr section*@
+<input type="hidden" id="lastRowId" value="1" />
+
+<script>
+    $.ajaxSetup({
+        beforeSend: function () {
+            $("#loading").show();
+        },
+        complete: function () {
+            $("#loading").hide();
         }
+    });
+
+    var userVotes = null;
+    var sorting = "@Model.Sorting";
+
+    // On radio button change
+    $("input[name=Sorting]:radio").change(function () {
+        $('#sectionPhotos').empty();
+        $("#lastRowId").val(1);
+        GetAllCurrentUserVotes();
+        sorting = $('input[name=Sorting]:checked').val();
+        GetPhotosFromNextSection(false, sorting);
+    });
+
+    // Get all current user votes
+    function GetAllCurrentUserVotes() {
+        $.ajax({
+        type: 'GET',
+        url: '/Photo/GetAllUserVotes',
+        dataType: 'json',
+        success: function (jsonData) {
+            if (jsonData == null) {
+                return;
+            }
+            userVotes = jsonData;
+        },
+        error: function (jsonData) {
+            userVotes = null;
+        }
+        });
     }
-    
-</table>
+
+    GetAllCurrentUserVotes();
+
+    // Get default photo data
+    $(document).ready(function () {
+        GetPhotosFromNextSection(false, sorting);
+    });
+
+    // Get next photo data automatic
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            GetPhotosFromNextSection(true, sorting);
+        }
+    });
+
+    var isRequestPending = false;
+    var isPhotoAvaiable = true;
+
+    // Common handler
+    function GetPhotosFromNextSection(scrollPage, sort) {
+        var lastRowId = ($("#lastRowId").val() * 1);
+        var isHistoryBack = (lastRowId > 1 && !scrollPage);
+
+        if (!isRequestPending && isPhotoAvaiable)
+        {
+            isRequestPending = true;
+            $.ajax({
+                type: 'GET',
+                url: '/Photo/GetPhotos?lastRowId=' + lastRowId + '&isHistoryBack=' + isHistoryBack + '&Sorting=' + sort,
+                dataType: 'json',
+                success: function (jsonData) {
+                    isRequestPending = false;
+                    var rowid = lastRowId + 1;
+
+                    if (jsonData.length === 0) {
+                        isPhotoAvaiable = false;
+                        return;
+                    }
+
+                    $.each(jsonData, function (index, item) {
+                        var isUserAuth = ('@User.Identity.IsAuthenticated' == 'True');
+                        var sectionIndex = (isHistoryBack ? index + 1 : rowid);
+                        var articleData = "";
+                        if (isUserAuth) {
+                            articleData += '<div class="mainContainer">' +
+                                                '<div class="photoContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
+                                                '<div class="photoHeader">' +
+                                                    '<span class ="photoTitle">' +
+                                                        item.Title +
+                                                    '</span>' +
+                                                '</div>' +
+                                                '<div class="photoDescription">' + item.Description + '</div>' +
+                                                '<div class="photoOwnerAndDate">' +
+                                                    '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
+                                                    '<span class="photoDate">' +
+                                                        Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
+                                                    '</span>' +
+                                                '</div>' +
+                                                '<div class="photoRatings">' +
+                                                    '<div class="photoRating">' +
+                                                        '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                        '<div class="starRating">' +
+                                                            '<div id="photoRatingId_' + item.Id + '"></div>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                    '<div class="photoUserRating">' +
+                                                        '<div class="myRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
+                                                        '<div class="starRating">' +
+                                                            '<div id="photoMyRatingId_' + item.Id + '"></div>' +
+                                                        '</div>' +
+                                                    "</div>" +
+                                                '</div>' +
+                                           '</div>';
+                        }
+                        else {
+                            articleData += '<div>' +
+                                                '<div class="mainContainer"><img src="/Photo/GetImageById/' + item.Id + '" /></div>' +
+                                                '<div class="photoHeader">' +
+                                                    '<span class ="photoTitle">' +
+                                                        item.Title +
+                                                    '</span>' +
+                                                '</div>' +
+                                                '<div class="photoDescription">' + item.Description + '</div>' +
+                                                '<div class="photoOwnerAndDate">' +
+                                                    '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
+                                                    '<span class="photoDate">' +
+                                                        Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
+                                                    '</span>' +
+                                                '</div>' +
+                                                '<div class="photoRatings">' +
+                                                    '<div class="photoRating">' +
+                                                        '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                        '<div class="starRating">' +
+                                                            '<div id="photoRatingId_' + item.Id + '"></div>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                '</div>' +
+                                           '</div>';
+                        }
+                        $('#sectionPhotos').append(articleData);
+
+                        $(function BuildRatingStar() {
+                            $('#photoRatingId_' + item.Id).rateYo({
+                                rating: Math.round(item.Rating),
+                                fullStar: true,
+                                readOnly: true
+                            });
+                        });
+
+                        if (isUserAuth) {
+                            $(function BuildUserRatingStar() {
+                                let photoRating = 0;
+                                if (userVotes != null) {
+                                    $.each(userVotes, function (index, voteItem) {
+                                        if (voteItem.PhotoId === item.Id) {
+                                            photoRating = voteItem.Rating;
+                                        };
+                                    });
+                                };
+
+                                $('#photoMyRatingId_' + item.Id).rateYo({
+                                    rating: Math.round(photoRating),
+                                    fullStar: true,
+                                })
+                                // On user rating change
+                                .on("rateyo.set", function (e, data) {
+                                    $.post(
+                                        "/Photo/CastPhotoVote",
+                                        {
+                                            PhotoId: item.Id,
+                                            Rating: data.rating
+                                        },
+                                        function onSuccess() {
+                                            // Change rating star
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: '/Photo/GetPhotoRating/' + item.Id,
+                                                dataType: 'json',
+                                                success: function (jsonData) {
+                                                    if (jsonData == null) {
+                                                        return;
+                                                    }
+
+                                                    let photoRating = jsonData.Rating;
+
+                                                    $('#photoRatingId_' + item.Id).rateYo("rating", Math.round(photoRating));
+                                                },
+                                                error: function (jsonData) {
+                                                    window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+                                                }
+                                            });
+                                        }
+                                    );
+                                });
+                            });
+                        }
+                    });
+
+                    if (!isHistoryBack) {
+                        $("#lastRowId").val(rowid);
+                    }
+                },
+                error: function (jsonData) {
+                    isRequestPending = false;
+                    if (jsonData.responseJSON.ErrorMessage) {
+                        window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
+                    }
+                    else {
+                        window.location.href = '/Home/Error?message=' + '@Resources.ResourceEN.ErrorOops';
+                    }
+                }
+            });
+        }
+
+
+        return false;
+    }
+</script>

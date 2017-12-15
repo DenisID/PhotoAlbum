@@ -11,10 +11,19 @@ namespace PhotoAlbum.Server.Model.Interfaces
     public interface IPhotoAlbumService
     {
         int CreatePhoto(CreatePhotoDto createPhotoDto);
-        //void AddPhoto(AddPhotoDto addPhotoDto);
         List<PhotoDto> GetAllPhotos();
+        List<PhotoDto> GetPhotos(PagingParametersDto pagingParameter);
+        List<PhotoDto> GetUserPhotos(PagingParametersDto pagingParameter, string userName);
         ImageDto GetImageById(int imageId);
-        //Photo GetPhotoById(int photoId);
-        void DeletePhoto(int photoId);
+        void DeletePhotoById(int photoId);
+        void EditPhoto(EditPhotoDto editPhotoDto);
+        EditPhotoDto GetEditPhotoById(int editPhotoId);
+        void CastPhotoVote(PhotoVoteDto castPhotoVoteDto);
+        List<PhotoVoteDto> GetUserVotes(string userId, int? photoId = null);
+        int GetPhotosCount();
+        PhotoRatingDto GetPhotoRating(int photoId);
+
+        bool IsPhotoOwner(string userId, int photoId);
+        void CreateUserInfo(CreateUserInfoDto createUserInfoDto);
     }
 }

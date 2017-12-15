@@ -5,15 +5,14 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client", "PhotoAlbum.Client\PhotoAlbum.Client.csproj", "{E0F4FE74-4982-4CAF-A6F0-55341F8BAE53}"
 	ProjectSection(ProjectDependencies) = postProject
-		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F} = {ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}
 		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A} = {7295B3DF-6BA0-433B-970B-E9775A8C8D8A}
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.Model", "PhotoAlbum.Client.Model\PhotoAlbum.Client.Model.csproj", "{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.Dto", "PhotoAlbum.Client.Dto\PhotoAlbum.Client.Dto.csproj", "{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Client.BusinessServices", "PhotoAlbum.Client.BusinessServices\PhotoAlbum.Client.BusinessServices.csproj", "{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoAlbum.Common", "PhotoAlbum.Common\PhotoAlbum.Common.csproj", "{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +24,6 @@ Global
 		{E0F4FE74-4982-4CAF-A6F0-55341F8BAE53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0F4FE74-4982-4CAF-A6F0-55341F8BAE53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0F4FE74-4982-4CAF-A6F0-55341F8BAE53}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACE8D7C7-DC6E-42AC-ACDB-027C6695422F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7295B3DF-6BA0-433B-970B-E9775A8C8D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,6 +32,10 @@ Global
 		{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D90CDB09-7B1E-44D3-8503-5CFB6F8B9205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2F1D0B-5A10-4B1D-9B88-97334CAC2303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

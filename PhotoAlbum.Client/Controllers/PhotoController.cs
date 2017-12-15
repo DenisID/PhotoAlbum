@@ -1,122 +1,232 @@
-﻿using PhotoAlbum.Client.BusinessServices.Interfaces;
+﻿using AutoMapper;
+using Newtonsoft.Json;
+using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Dto;
+using PhotoAlbum.Client.Filters;
 //using PhotoAlbum.Client.Model.Services;
 using PhotoAlbum.Client.Models;
+using PhotoAlbum.Common.Enums;
+using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace PhotoAlbum.Client.Controllers
 {
     public class PhotoController : Controller
     {
-        //private PhotoAlbumService _photoAlbumService = new PhotoAlbumService();
-        private IPhotoAlbumService _photoAlbumService = new PhotoAlbumService();
+        private readonly IPhotoAlbumService _photoAlbumService;
 
-        //public async Task<HttpResponseMessage> Test()
-        //{
-        //    var response = await _photoAlbumService.Test();
-        //    var result = response.Content;
-            
-        //    return response;
-        //}
-
-        // GET: Photo
+        public PhotoController(IPhotoAlbumService photoAlbumService)
+        {
+            _photoAlbumService = photoAlbumService;
+        }
+        
         public async Task<ActionResult> Index()
         {
-            //var photos = _photoAlbumService.GetAllPhotos();
-            List<PhotoModel> photos = new List<PhotoModel>();
-            List<PhotoDto> photosDto = await _photoAlbumService.GetAllPhotos();
+            var model = new SortPhotoViewModel();
 
-            // Mapping
-            if(photosDto != null)
+            return View(model);
+        }
+
+        public async Task<ActionResult> UserPage(string username)
+        {
+            var model = new UserPageViewModel(){ UserName = username};
+
+            return View(model);
+        }
+
+        public async Task<ActionResult> UserPageManage(string username)
+        {
+            if(username != User.Identity.Name)
             {
-                foreach(var photoDto in photosDto)
-                {
-                    photos.Add(new PhotoModel
-                    {
-                        Id = photoDto.Id,
-                        Title = photoDto.Title,
-                        Description = photoDto.Description,
-                        CreationDate = photoDto.CreationDate,
-                        Image = photoDto.Image,
-                        ImageMimeType = photoDto.ImageMimeType
-                    });
-                }
+                throw new UserIsNotAuthorizedException(ErrorCodes.UserIsNotAuthorized);
             }
 
-            return View(photos);
+            var model = new UserPageViewModel() { UserName = User.Identity.Name };
+
+            return View(model);
         }
 
         public ActionResult CreatePhoto()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePhoto(CreatePhotoModel createPhotoModel)
+        public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel createPhotoViewModel)
         {
-            if (ModelState.IsValid && createPhotoModel.Image != null)
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            if (ModelState.IsValid && createPhotoViewModel.Image != null)
             {
                 byte[] imageData = null;
-                // считываем переданный файл в массив байтов
-                using (var binaryReader = new BinaryReader(createPhotoModel.Image.InputStream))
+
+                using (var binaryReader = new BinaryReader(createPhotoViewModel.Image.InputStream))
                 {
-                    imageData = binaryReader.ReadBytes(createPhotoModel.Image.ContentLength);
+                    imageData = binaryReader.ReadBytes(createPhotoViewModel.Image.ContentLength);
                 }
-                // установка массива байтов
-                var createPhotoDto = new CreatePhotoDto();
-                createPhotoDto.Image = imageData;
-                createPhotoDto.ImageMimeType = createPhotoModel.Image.ContentType;
-                createPhotoDto.Title = createPhotoModel.Title;
-                createPhotoDto.Description = createPhotoModel.Description;
+                
+                var createPhotoDto = new CreatePhotoDto()
+                {
+                    Image = imageData,
+                    ImageMimeType = createPhotoViewModel.Image.ContentType,
+                    Title = createPhotoViewModel.Title,
+                    Description = createPhotoViewModel.Description
+                };
 
-                await _photoAlbumService.CreatePhoto(createPhotoDto);
-
-                return RedirectToAction("Index");
+                await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
+                
+                return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
             }
             return View();
         }
-
+        
         public async Task<ActionResult> GetImageById(int id)
         {
-            var image = await _photoAlbumService.GetImageById(id);
+            var requestedETag = Request.Headers["If-None-Match"];
+
+            string requestETagValue = null;
+            if (requestedETag != null)
+            {
+                requestETagValue = requestedETag.Trim('W', '/', '"');
+            }
+
+            var image = await _photoAlbumService.GetImageByIdAsync(id, requestETagValue);
+
+            if (image.IsNotModified)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            }
+
+            string unifiedData = JsonConvert.SerializeObject(image);
+            var responseETagValue = ETagHashCreator.ComputeHash(unifiedData);
+            if (requestETagValue == responseETagValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotModified);
+            }
+            
+            var responseETag = new EntityTagHeaderValue("\"" + responseETagValue + "\"", true).ToString();
+
+            Response.Cache.SetCacheability(HttpCacheability.ServerAndPrivate);
+            Response.Cache.SetETag(responseETag);
+
             return File(image.Image, image.ImageMimeType);
         }
 
-        //[HttpPost]
-        //public ActionResult AddPhoto(AddPhotoModel addPhotoModel)
-        //{
-        //    if (ModelState.IsValid && addPhotoModel.Image != null)
-        //    {
-        //        byte[] imageData = null;
-        //        // считываем переданный файл в массив байтов
-        //        using (var binaryReader = new BinaryReader(addPhotoModel.Image.InputStream))
-        //        {
-        //            imageData = binaryReader.ReadBytes(addPhotoModel.Image.ContentLength);
-        //        }
-        //        // установка массива байтов
-        //        var addPhotoDto = new AddPhotoDto();
-        //        addPhotoDto.Image = imageData;
-        //        addPhotoDto.Title = addPhotoModel.Title;
-        //        addPhotoDto.Description = addPhotoModel.Description;
+        public async Task<ActionResult> DeletePhotoById(int id)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
-        //        _photoAlbumService.AddPhoto(addPhotoDto);
+            await _photoAlbumService.DeletePhotoByIdAsync(id, token);
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View();
-        //}
+            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+        }
 
-        //public void Delete(int photoId)
-        //{
-        //    _photoAlbumService.DeletePhoto(photoId);
-        //}
+        [HttpGet]
+        public async Task<ActionResult> EditPhoto(int id)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            EditPhotoViewModel editPhotoViewModel = null;
+            EditPhotoDto editPhotoDto = await _photoAlbumService.GetEditPhotoByIdAsync(id, token);
+            if(editPhotoDto != null)
+            {
+                editPhotoViewModel = Mapper.Map<EditPhotoViewModel>(editPhotoDto);
+            }
+
+            return PartialView(editPhotoViewModel);
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            EditPhotoDto editPhotoDto = new EditPhotoDto
+            {
+                Id = editPhotoViewModel.Id,
+                Title = editPhotoViewModel.Title,
+                Description = editPhotoViewModel.Description
+            };
+
+            await _photoAlbumService.EditPhotoAsync(editPhotoDto, token);
+
+            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+        }
+
+        public async Task<ActionResult> GetPhotoRating(int id)
+        {
+            var rating = await _photoAlbumService.GetPhotoRatingAsync(id);
+
+            return Json(rating, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting)
+        {
+            var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
+            {
+                PageNumber = lastRowId,
+                PageSize = 3,
+                Sorting = sorting
+            });
+
+            return Json(photos, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetUserPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting, string userName)
+        {
+            var photos = await _photoAlbumService.GetUserPhotosAsync(new PagingParametersDto
+            {
+                PageNumber = lastRowId,
+                PageSize = 3,
+                Sorting = sorting
+            },
+            userName);
+
+            return Json(photos, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetAllUserVotes()
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var userVotes = await _photoAlbumService.GetUserVotesAsync(token);
+
+            return Json(userVotes, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> GetUserVotes(int id)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var userVotes = await _photoAlbumService.GetUserVotesAsync(token, id);
+
+            return Json(userVotes, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CastPhotoVote(PhotoVoteViewModel model)
+        {
+            var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
+
+            var photoVoteDto = Mapper.Map<PhotoVoteDto>(model);
+
+            var result = await _photoAlbumService.CastPhotoVoteAsync(photoVoteDto, token);
+
+            return new HttpStatusCodeResult(result);
+        }
     }
 }
