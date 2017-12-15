@@ -187,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo.
+        ///   Looks up a localized string similar to Hello.
         /// </summary>
         public static string Hallo {
             get {

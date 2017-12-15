@@ -160,7 +160,7 @@
     <value>First name</value>
   </data>
   <data name="Hallo" xml:space="preserve">
-    <value>Hallo</value>
+    <value>Hello</value>
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Last name</value>
