@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create a new account.
+        /// </summary>
+        public static string CreateANewAccount {
+            get {
+                return ResourceManager.GetString("CreateANewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete photo.
         /// </summary>
         public static string DeletePhoto {
@@ -133,6 +142,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit user profile and password.
+        /// </summary>
+        public static string EditUserProfileAndPassword {
+            get {
+                return ResourceManager.GetString("EditUserProfileAndPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -151,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oops, there was an error..
+        ///   Looks up a localized string similar to Oops, there was an error.
         /// </summary>
         public static string ErrorOops {
             get {
@@ -169,11 +187,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hallo.
+        /// </summary>
+        public static string Hallo {
+            get {
+                return ResourceManager.GetString("Hallo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last name.
         /// </summary>
         public static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in.
+        /// </summary>
+        public static string Log_In {
+            get {
+                return ResourceManager.GetString("Log_In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MB.
+        /// </summary>
+        public static string MB {
+            get {
+                return ResourceManager.GetString("MB", resourceCulture);
             }
         }
         
@@ -232,11 +286,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password and confirmation password do not match.
+        /// </summary>
+        public static string PasswordsDoNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password to short or to long.
+        /// </summary>
+        public static string PasswordToShortOrToLong {
+            get {
+                return ResourceManager.GetString("PasswordToShortOrToLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Photo album.
         /// </summary>
         public static string PhotoAlbum {
             get {
                 return ResourceManager.GetString("PhotoAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please upload Your Photo of type.
+        /// </summary>
+        public static string PleaseUploadYourPhotoOfType {
+            get {
+                return ResourceManager.GetString("PleaseUploadYourPhotoOfType", resourceCulture);
             }
         }
         
@@ -255,6 +345,42 @@ namespace Resources {
         public static string Rating {
             get {
                 return ResourceManager.GetString("Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register as a new user.
+        /// </summary>
+        public static string RegisterAsANewUser {
+            get {
+                return ResourceManager.GetString("RegisterAsANewUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to page.
+        /// </summary>
+        public static string s_Page {
+            get {
+                return ResourceManager.GetString("s_Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to photos.
+        /// </summary>
+        public static string s_Photos {
+            get {
+                return ResourceManager.GetString("s_Photos", resourceCulture);
             }
         }
         
@@ -286,11 +412,65 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only (A-Z a-z _-) characters can be used..
+        ///   Looks up a localized string similar to Unacceptable email.
+        /// </summary>
+        public static string UnacceptableEmail {
+            get {
+                return ResourceManager.GetString("UnacceptableEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unacceptable file format.
+        /// </summary>
+        public static string UnacceptableFileFormat {
+            get {
+                return ResourceManager.GetString("UnacceptableFileFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unacceptable login.
+        /// </summary>
+        public static string UnacceptableLogin {
+            get {
+                return ResourceManager.GetString("UnacceptableLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use a local account to log in.
+        /// </summary>
+        public static string UseALocalAccountToLogIn {
+            get {
+                return ResourceManager.GetString("UseALocalAccountToLogIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User profile.
+        /// </summary>
+        public static string UserProfile {
+            get {
+                return ResourceManager.GetString("UserProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only (A-Z a-z _-) characters can be used.
         /// </summary>
         public static string ValErrLoginRegExp {
             get {
                 return ResourceManager.GetString("ValErrLoginRegExp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Photo is too large, maximum allowed size is.
+        /// </summary>
+        public static string YourPhotoIsTooLargeMaximumAllowedSizeIs {
+            get {
+                return ResourceManager.GetString("YourPhotoIsTooLargeMaximumAllowedSizeIs", resourceCulture);
             }
         }
     }

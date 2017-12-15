@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using PhotoAlbum.Common.Enums;
 using PhotoAlbum.Common.ErrorCodes;
 using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Server.Attributes;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Model.Interfaces;
 using PhotoAlbum.Server.Model.Managers;
@@ -25,20 +26,7 @@ namespace PhotoAlbum.Server.Controllers
         {
             _photoAlbumService = photoAlbumService;
         }
-
-
-
-        [HttpGet]
-        [Route("api/test")]
-        public HttpResponseMessage Test()
-        {
-            //throw new Exception("TestEx");
-            throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
-            return Success(_photoAlbumService.GetPhotosCount());
-        }
-
-
-
+        
         [HttpGet]
         [Route("api/allphotos")]
         public HttpResponseMessage GetAllPhotos()
@@ -68,6 +56,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         [HttpGet]
+        [EntityTagContentHashAttribute]
         [Route("api/photo/image/{id}")]
         public HttpResponseMessage GetImageById([FromUri] int id)
         {
@@ -91,7 +80,6 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage DeletePhotoById([FromUri] int id)
         {
-            //var user = User.Identity.Name;
             if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), id))
             {
                 throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);
@@ -108,7 +96,6 @@ namespace PhotoAlbum.Server.Controllers
         [Authorize]
         public HttpResponseMessage EditPhoto([FromBody] EditPhotoDto editPhotoDto)
         {
-            //var user = User.Identity.Name;
             if (!_photoAlbumService.IsPhotoOwner(User.Identity.GetUserId(), editPhotoDto.Id))
             {
                 throw new NotEnoughRightsException(ErrorCodes.NotEnoughRights);

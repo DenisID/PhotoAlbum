@@ -31,11 +31,11 @@ namespace PhotoAlbum.Server.Handlers
                 if (error != null)
                 {
                     content = null;
+                    while(error.InnerException != null)
+                    {
+                        error = error.InnerException;
+                    }
                     errorMessage = error.ExceptionMessage;
-
-#if DEBUG
-                    //errorMessage = string.Concat(errorMessage, error.ExceptionMessage, error.StackTrace);
-#endif
                 }
             }
 

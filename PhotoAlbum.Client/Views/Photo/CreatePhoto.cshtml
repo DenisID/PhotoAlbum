@@ -12,19 +12,25 @@
         <div class="editor-field">
             <input type="file" name="Image" />
         </div>
+        @Html.ValidationMessageFor(m => m.Image)
+        <br/>
 
         <div class="editor-label">@Resources.ResourceEN.Title</div>
         <div class="editor-field">
             <input type="text" name="Title" />
         </div>
+        @Html.ValidationMessageFor(m => m.Title)
+        <br />
 
         <div class="editor-label">@Resources.ResourceEN.Description</div>
         <div class="editor-field">
-            <input type="text" name="Description" />
+            <textarea name="Description"></textarea>
         </div>
+        @Html.ValidationMessageFor(m => m.Description)
+        <br />
 
         <p>
-            <input type="submit" value="@Resources.ResourceEN.Save" />
+            <input type="submit" class="dialog-window btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
         </p>
     </fieldset>
 }

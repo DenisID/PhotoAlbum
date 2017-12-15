@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Server.App_Start;
+﻿using CacheCow.Server;
+using PhotoAlbum.Server.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,6 @@ namespace PhotoAlbum.Server
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Bootstrapper.Run();
 

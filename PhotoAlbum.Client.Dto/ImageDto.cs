@@ -10,5 +10,6 @@ namespace PhotoAlbum.Client.Dto
     {
         public byte[] Image { get; set; }
         public string ImageMimeType { get; set; }
+        public bool IsNotModified { get; set; } = false;
     }
 }

@@ -2,11 +2,7 @@
 using Autofac.Integration.WebApi;
 using PhotoAlbum.Server.Model.Interfaces;
 using PhotoAlbum.Server.Model.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.Http;
 
 namespace PhotoAlbum.Server.App_Start
@@ -34,19 +30,6 @@ namespace PhotoAlbum.Server.App_Start
                    .As<IPhotoAlbumService>()
                    .InstancePerRequest();
 
-            //builder.RegisterType<DBCustomerEntities>()
-            //       .As<DbContext>()
-            //       .InstancePerRequest();
-
-            //builder.RegisterType<DbFactory>()
-            //       .As<IDbFactory>()
-            //       .InstancePerRequest();
-
-            //builder.RegisterGeneric(typeof(GenericRepository<>))
-            //       .As(typeof(IGenericRepository<>))
-            //       .InstancePerRequest();
-
-            //Set the dependency resolver to be Autofac.  
             Container = builder.Build();
 
             return Container;

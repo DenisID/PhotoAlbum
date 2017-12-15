@@ -27,28 +27,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
-
-
-
-        public async Task Test()
-        {
-            HttpResponseMessage apiResponse = await _httpClient.GetAsync("api/test");
-
-            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
-
-            // Exceptions check
-            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-            apiResponse.EnsureSuccessStatusCode();
-
-            //if (!apiResponse.IsSuccessStatusCode)
-            //{
-            //    responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-            //    apiResponse.EnsureSuccessStatusCode();
-            //}
-        }
-
-
-
+        
         public async Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -67,12 +46,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         {
             List<PhotoDto> photos = null;
             HttpResponseMessage apiResponse = await _httpClient.GetAsync("api/photo");
-
-            //if (apiResponse.IsSuccessStatusCode)
-            //{
-            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
-            //    photos = responseContent.Result;
-            //}
+            
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<PhotoDto>>>();
 
             // Exceptions check
@@ -135,16 +109,20 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             return photos;
         }
 
-        public async Task<ImageDto> GetImageByIdAsync(int imageId)
+        public async Task<ImageDto> GetImageByIdAsync(int imageId, string eTag)
         {
             ImageDto image = null;
 
+            _httpClient.DefaultRequestHeaders.IfNoneMatch.Add(new EntityTagHeaderValue("\"" + eTag + "\"", true));
+
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/image/{imageId}");
-            //if (apiResponse.IsSuccessStatusCode)
-            //{
-            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<ImageDto>>();
-            //    image = responseContent.Result;
-            //}
+            _httpClient.DefaultRequestHeaders.IfNoneMatch.Clear();
+
+            if(apiResponse.StatusCode == HttpStatusCode.NotModified)
+            {
+                return new ImageDto() { IsNotModified = true };
+            }
+            
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<ImageDto>>();
 
             // Exceptions check
@@ -194,13 +172,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
             HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/photo/editphoto/{editPhotoId}");
             _httpClient.DefaultRequestHeaders.Authorization = null;
-
-            //if (apiResponse.IsSuccessStatusCode)
-            //{
-            //    var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditPhotoDto>>();
-            //    editoPhotoDto = responseContent.Result;
-            //}
-
+            
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditPhotoDto>>();
 
             // Exceptions check
