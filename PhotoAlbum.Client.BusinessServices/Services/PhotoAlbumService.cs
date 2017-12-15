@@ -6,6 +6,7 @@ using PhotoAlbum.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,10 +23,10 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
         static PhotoAlbumService()
         {
-            _httpClient.BaseAddress = new Uri("http://localhost:52670/");
+            string webApiUri = ConfigurationManager.AppSettings["WebApiUri"];
+            _httpClient.BaseAddress = new Uri(webApiUri);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
         }
         
         public async Task CreatePhotoAsync(CreatePhotoDto createPhotoDto, string token)
