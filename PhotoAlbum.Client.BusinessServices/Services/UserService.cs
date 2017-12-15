@@ -5,6 +5,7 @@ using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.Dto;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,7 +21,8 @@ namespace PhotoAlbum.Client.BusinessServices.Services
 
         static UserService()
         {
-            _httpClient.BaseAddress = new Uri("http://localhost:52670/");
+            string webApiUri = ConfigurationManager.AppSettings["WebApiUri"];
+            _httpClient.BaseAddress = new Uri(webApiUri);
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
