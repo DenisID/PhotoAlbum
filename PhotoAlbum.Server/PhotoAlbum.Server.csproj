@@ -303,6 +303,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+    <None Include="Properties\PublishProfiles\PhotoAlbumServer.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoAlbum.Common\PhotoAlbum.Common.csproj">

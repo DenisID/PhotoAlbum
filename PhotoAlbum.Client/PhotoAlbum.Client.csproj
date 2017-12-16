@@ -377,6 +377,7 @@
     <Content Include="Content\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\rateyo\jquery.rateyo.less" />
     <Content Include="Content\rateyo\jquery.rateyo.min.css.map" />
+    <None Include="Properties\PublishProfiles\PhotoAlbumClient.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap\affix.js" />
     <Content Include="Scripts\bootstrap\alert.js" />
