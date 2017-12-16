@@ -258,6 +258,9 @@
   <data name="InvalidLoginOrPassword" xml:space="preserve">
     <value>Invalid login or password</value>
   </data>
+  <data name="NoPhotosYet" xml:space="preserve">
+    <value>No photos yet</value>
+  </data>
   <data name="PasswordChangedSuccessfully" xml:space="preserve">
     <value>Password changed successfully</value>
   </data>

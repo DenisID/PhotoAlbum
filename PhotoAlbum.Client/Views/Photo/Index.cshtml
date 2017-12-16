@@ -108,6 +108,12 @@
 
                     if (jsonData.length === 0) {
                         isPhotoAvaiable = false;
+
+                        if (lastRowId === 1) {
+                            var noPhotoYetPlaceholder = '<div class="noPhotoYetPlaceholder">' + '@Resources.ResourceEN.NoPhotosYet' + '</div>';
+                            $('#sectionPhotos').append(noPhotoYetPlaceholder);
+                        }
+
                         return;
                     }
 

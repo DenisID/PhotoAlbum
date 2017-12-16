@@ -277,6 +277,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No photos yet.
+        /// </summary>
+        public static string NoPhotosYet {
+            get {
+                return ResourceManager.GetString("NoPhotosYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
