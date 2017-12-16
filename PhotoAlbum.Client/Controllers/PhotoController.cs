@@ -156,6 +156,11 @@ namespace PhotoAlbum.Client.Controllers
         [HttpPost]
         public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(editPhotoViewModel);
+            }
+
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             EditPhotoDto editPhotoDto = new EditPhotoDto
