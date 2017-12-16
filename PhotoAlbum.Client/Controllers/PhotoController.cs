@@ -62,36 +62,39 @@ namespace PhotoAlbum.Client.Controllers
 
         public ActionResult CreatePhoto()
         {
-            return PartialView();
+            var model = new CreatePhotoViewModel();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel createPhotoViewModel)
+        public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel model)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
-            if (ModelState.IsValid && createPhotoViewModel.Image != null)
+            if (ModelState.IsValid && model.Image != null)
             {
                 byte[] imageData = null;
 
-                using (var binaryReader = new BinaryReader(createPhotoViewModel.Image.InputStream))
+                using (var binaryReader = new BinaryReader(model.Image.InputStream))
                 {
-                    imageData = binaryReader.ReadBytes(createPhotoViewModel.Image.ContentLength);
+                    imageData = binaryReader.ReadBytes(model.Image.ContentLength);
                 }
                 
                 var createPhotoDto = new CreatePhotoDto()
                 {
                     Image = imageData,
-                    ImageMimeType = createPhotoViewModel.Image.ContentType,
-                    Title = createPhotoViewModel.Title,
-                    Description = createPhotoViewModel.Description
+                    ImageMimeType = model.Image.ContentType,
+                    Title = model.Title,
+                    Description = model.Description
                 };
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
                 
                 return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
             }
-            return View();
+            
+            return View(model);
         }
         
         public async Task<ActionResult> GetImageById(int id)

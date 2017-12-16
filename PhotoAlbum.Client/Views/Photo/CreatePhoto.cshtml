@@ -12,21 +12,21 @@
         <div class="editor-field">
             <input type="file" name="Image" />
         </div>
-        @Html.ValidationMessageFor(m => m.Image)
+        @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
         <br/>
 
         <div class="editor-label">@Resources.ResourceEN.Title</div>
         <div class="editor-field">
-            <input type="text" name="Title" />
+            <input type="text" name="Title" value="@Model.Title" />
         </div>
-        @Html.ValidationMessageFor(m => m.Title)
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
         <br />
 
         <div class="editor-label">@Resources.ResourceEN.Description</div>
         <div class="editor-field">
-            <textarea name="Description"></textarea>
+            <textarea name="Description" value="@Model.Description"></textarea>
         </div>
-        @Html.ValidationMessageFor(m => m.Description)
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
         <br />
 
         <p>
