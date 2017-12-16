@@ -16,18 +16,21 @@
             <div class="editor-field">
                 <input type="text" name="Email" value="@Model.Email" />
             </div>
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
             <br />
 
             <div class="editor-label">@Resources.ResourceEN.FirstName</div>
             <div class="editor-field">
                 <input type="text" name="FirstName" value="@Model.FirstName" />
             </div>
+            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
             <br />
 
             <div class="editor-label">@Resources.ResourceEN.LastName</div>
             <div class="editor-field">
                 <input type="text" name="LastName" value="@Model.LastName" />
             </div>
+            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
             <br />
 
             <span>
@@ -51,18 +54,21 @@
             <div class="editor-field">
                 <input type="password" name="OldPassword" value="@Model.OldPassword" />
             </div>
+            @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
             <br />
 
             <div class="editor-label">@Resources.ResourceEN.NewPassword</div>
             <div class="editor-field">
                 <input type="password" name="NewPassword" value="@Model.NewPassword" />
             </div>
+            @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
             <br />
 
             <div class="editor-label">@Resources.ResourceEN.ConfirmPassword</div>
             <div class="editor-field">
                 <input type="password" name="ConfirmPassword" value="@Model.ConfirmPassword" />
             </div>
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
             <br />
 
             <span>

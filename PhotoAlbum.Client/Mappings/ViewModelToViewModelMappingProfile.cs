@@ -17,6 +17,7 @@ namespace PhotoAlbum.Client.Mappings
         public ViewModelToViewModelMappingProfile()
         {
             CreateMap<RegisterViewModel, LoginViewModel>().ReverseMap();
+            CreateMap<EditUserInfoViewModel, EditUserProfileViewModel>().ReverseMap();
         }
     }
 }

@@ -53,6 +53,7 @@ namespace PhotoAlbum.Client.Models
 
     public class EditUserProfileViewModel
     {
+        [Required]
         [EmailAddress(ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.UnacceptableEmail))]
         [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Email))]
         public string Email { get; set; }
@@ -64,19 +65,58 @@ namespace PhotoAlbum.Client.Models
         [StringLength(20)]
         [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.LastName))]
         public string LastName { get; set; }
-        
+
+        [Required]
         [DataType(DataType.Password)]
         [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.OldPassword))]
         public string OldPassword { get; set; }
-        
+
+        [Required]
         [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordToShortOrToLong))]
         [DataType(DataType.Password)]
         [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.NewPassword))]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.ConfirmPassword))]
-        [Compare("Password", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordsDoNotMatch))]
+        [Compare("NewPassword", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordsDoNotMatch))]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class EditUserInfoViewModel
+    {
+        [Required]
+        [EmailAddress(ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.UnacceptableEmail))]
+        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Email))]
+        public string Email { get; set; }
+
+        [StringLength(20)]
+        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.FirstName))]
+        public string FirstName { get; set; }
+
+        [StringLength(20)]
+        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.LastName))]
+        public string LastName { get; set; }
+    }
+
+    public class EditUserPasswordViewModel
+    {
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.OldPassword))]
+        public string OldPassword { get; set; }
+
+        [Required]
+        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordToShortOrToLong))]
+        [DataType(DataType.Password)]
+        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.NewPassword))]
+        public string NewPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.ConfirmPassword))]
+        [Compare("NewPassword", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordsDoNotMatch))]
         public string ConfirmPassword { get; set; }
     }
 }

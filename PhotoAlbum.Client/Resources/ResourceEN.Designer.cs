@@ -295,6 +295,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password changed successfully.
+        /// </summary>
+        public static string PasswordChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("PasswordChangedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password and confirmation password do not match.
         /// </summary>
         public static string PasswordsDoNotMatch {
@@ -336,6 +345,15 @@ namespace Resources {
         public static string PopularFirst {
             get {
                 return ResourceManager.GetString("PopularFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile information changed successfully.
+        /// </summary>
+        public static string ProfileInformationChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("ProfileInformationChangedSuccessfully", resourceCulture);
             }
         }
         

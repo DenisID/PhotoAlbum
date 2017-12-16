@@ -255,4 +255,10 @@
   <data name="YourPhotoIsTooLargeMaximumAllowedSizeIs" xml:space="preserve">
     <value>Your Photo is too large, maximum allowed size is</value>
   </data>
+  <data name="PasswordChangedSuccessfully" xml:space="preserve">
+    <value>Password changed successfully</value>
+  </data>
+  <data name="ProfileInformationChangedSuccessfully" xml:space="preserve">
+    <value>Profile information changed successfully</value>
+  </data>
 </root>

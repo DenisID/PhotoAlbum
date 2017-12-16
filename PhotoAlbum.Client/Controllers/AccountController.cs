@@ -132,12 +132,22 @@ namespace PhotoAlbum.Client.Controllers
 
             var dto = await _userService.GetUserProfileAsync(token);
 
-            return View(Mapper.Map<EditUserProfileViewModel>(dto));
+            var model = Mapper.Map<EditUserProfileViewModel>(dto);
+            
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditUserProfile(EditUserProfileViewModel model)
+        public async Task<ActionResult> EditUserProfile(EditUserInfoViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                var badModel = Mapper.Map<EditUserProfileViewModel>(model);
+                ViewBag.ProfileResult = Resources.ResourceEN.Error;
+
+                return View(badModel);
+            }
+
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             var dto = Mapper.Map<EditUserProfileDto>(model);
@@ -145,7 +155,7 @@ namespace PhotoAlbum.Client.Controllers
             var result = await _userService.EditUserProfileAsync(dto, token);
             if(result == HttpStatusCode.OK)
             {
-                ViewBag.ProfileResult = Resources.ResourceEN.Ok;
+                ViewBag.ProfileResult = Resources.ResourceEN.ProfileInformationChangedSuccessfully;
             }
             else
             {
@@ -154,20 +164,31 @@ namespace PhotoAlbum.Client.Controllers
 
             dto = await _userService.GetUserProfileAsync(token);
 
-            return View(Mapper.Map<EditUserProfileViewModel>(dto));
+            var newModel = Mapper.Map<EditUserProfileViewModel>(dto);
+
+            return View(newModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> ChangePassword(EditUserProfileViewModel model)
+        public async Task<ActionResult> ChangePassword(EditUserPasswordViewModel model)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
-            var dto = Mapper.Map<ChangePasswordDto>(model);
+            if (!ModelState.IsValid)
+            {
+                var editUserProfileDtoForBadModel = await _userService.GetUserProfileAsync(token);
+                var badModel = Mapper.Map<EditUserProfileViewModel>(editUserProfileDtoForBadModel);
+                ViewBag.PasswordResult = Resources.ResourceEN.Error;
 
-            var result = await _userService.ChangePasswordAsync(dto, token);
+                return View("EditUserProfile", badModel);
+            }
+
+            var changePasswordDto = Mapper.Map<ChangePasswordDto>(model);
+
+            var result = await _userService.ChangePasswordAsync(changePasswordDto, token);
             if (result == HttpStatusCode.OK)
             {
-                ViewBag.PasswordResult = Resources.ResourceEN.Ok;
+                ViewBag.PasswordResult = Resources.ResourceEN.PasswordChangedSuccessfully;
             }
             else
             {
@@ -176,9 +197,9 @@ namespace PhotoAlbum.Client.Controllers
 
             var editUserProfileDto = await _userService.GetUserProfileAsync(token);
 
-            return View("EditUserProfile", Mapper.Map<EditUserProfileViewModel>(editUserProfileDto));
+            var newModel = Mapper.Map<EditUserProfileViewModel>(editUserProfileDto);
 
-            //return RedirectToAction("EditUserProfile");
+            return View("EditUserProfile", newModel);
         }
 
         [HttpPost]
