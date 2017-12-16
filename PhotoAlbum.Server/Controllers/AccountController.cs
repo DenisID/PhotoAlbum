@@ -367,6 +367,7 @@ namespace PhotoAlbum.Server.Controllers
         }
 
         // POST api/Account/ChangeUserProfile
+        [HttpPost]
         [Route("ChangeUserProfile")]
         public async Task<IHttpActionResult> ChangeUserProfile([FromBody] ChangeUserProfileBindingModel model)
         {
