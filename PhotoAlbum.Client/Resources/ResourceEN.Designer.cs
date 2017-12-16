@@ -196,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid login or password.
+        /// </summary>
+        public static string InvalidLoginOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidLoginOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last name.
         /// </summary>
         public static string LastName {

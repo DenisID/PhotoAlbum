@@ -77,6 +77,12 @@ namespace PhotoAlbum.Client.Controllers
             var getTokenDto = Mapper.Map<GetTokenDto>(model);
 
             var token = await _userService.GetTokenAsync(getTokenDto);
+            if(token.AccessToken == null)
+            {
+                ModelState.AddModelError(String.Empty, Resources.ResourceEN.InvalidLoginOrPassword);
+
+                return View(model);
+            }
 
             AuthenticationProperties options = new AuthenticationProperties();
 
