@@ -68,6 +68,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel model)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
@@ -128,7 +129,7 @@ namespace PhotoAlbum.Client.Controllers
 
             return File(image.Image, image.ImageMimeType);
         }
-
+        
         public async Task<ActionResult> DeletePhotoById(int id)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
@@ -154,6 +155,7 @@ namespace PhotoAlbum.Client.Controllers
         }
         
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
         {
             if (!ModelState.IsValid)

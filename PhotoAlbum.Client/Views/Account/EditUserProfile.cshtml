@@ -9,6 +9,7 @@
 <hr />
     @using (Html.BeginForm("EditUserProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <fieldset>
 
@@ -47,6 +48,7 @@
 
     @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
         <fieldset>
 

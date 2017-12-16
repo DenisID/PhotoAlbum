@@ -53,7 +53,6 @@ namespace PhotoAlbum.Client.Controllers
             }
         }
 
-        //
         // GET: /Account/Login
         [AllowAnonymous]
         public async Task<ActionResult> Login(string returnUrl)
@@ -62,7 +61,6 @@ namespace PhotoAlbum.Client.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -108,7 +106,6 @@ namespace PhotoAlbum.Client.Controllers
         {
             return View();
         }
-        //
 
         // POST: /Account/Register
         [HttpPost]
@@ -154,6 +151,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditUserProfile(EditUserInfoViewModel model)
         {
             if (!ModelState.IsValid)
@@ -186,6 +184,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(EditUserPasswordViewModel model)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
