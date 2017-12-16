@@ -25,7 +25,7 @@ namespace PhotoAlbum.Server.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountController : BaseController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
@@ -337,25 +337,28 @@ namespace PhotoAlbum.Server.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public async Task<HttpResponseMessage> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             var user = new ApplicationUser()
             {
                 UserName = model.Login,
                 Email = model.Email
             };
-            
+
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
-                var errorResult = GetErrorResult(result);
-                return errorResult;
+                //var errorResult = GetErrorResult(result);
+                //return errorResult;
+                var dto = Mapper.Map<RegisterUserResultDto>(result);
+
+                return Success(dto);             
             }
             
             var createUserInfoDto = Mapper.Map<RegisterBindingModel, CreateUserInfoDto>(model);
@@ -363,7 +366,7 @@ namespace PhotoAlbum.Server.Controllers
 
             _photoAlbumService.CreateUserInfo(createUserInfoDto);            
 
-            return Ok();
+            return Success(new RegisterUserResultDto() { Successeded = true });
         }
 
         // POST api/Account/ChangeUserProfile

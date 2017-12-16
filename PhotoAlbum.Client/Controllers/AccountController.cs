@@ -124,6 +124,16 @@ namespace PhotoAlbum.Client.Controllers
             var registerUserDto = Mapper.Map<RegisterUserDto>(model);
             var result = await _userService.RegisterUser(registerUserDto);
 
+            if (!result.Successeded)
+            {
+                foreach(var errorMsg in result.Errors)
+                {
+                    ModelState.AddModelError(String.Empty, errorMsg);
+                }
+
+                return View(model);
+            }
+
             var loginModel = Mapper.Map<LoginViewModel>(model);
             await Login(loginModel, null);
              

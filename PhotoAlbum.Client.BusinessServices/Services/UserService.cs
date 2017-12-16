@@ -27,10 +27,21 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto)
+        public async Task<RegisterUserResultDto> RegisterUser(RegisterUserDto registerUserDto)
         {
-            HttpResponseMessage response = await _httpClient.PostAsJsonAsync("api/Account/Register", registerUserDto);
-            return response.StatusCode;
+            RegisterUserResultDto dto = null;
+
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync("api/Account/Register", registerUserDto);
+
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<RegisterUserResultDto>>();
+
+            // Exceptions check
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            apiResponse.EnsureSuccessStatusCode();
+
+            dto = responseContent.Result;
+
+            return dto;
         }
         
         public async Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto)

@@ -10,8 +10,12 @@ namespace PhotoAlbum.Server.App_Start
         {
             Mapper.Initialize(x =>
             {
+                // Server
                 x.AddProfile<DtoToEntitiesMappingProfile>();
                 x.AddProfile<EntitiesToDtoMappingProfile>();
+                x.AddProfile<ClassesToDtoMappingProfile>();
+
+                // Model
                 x.AddProfile<ModelsToDtoMappingProfile>();
             });
         }

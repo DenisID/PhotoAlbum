@@ -253,6 +253,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\ResponseHandler.cs" />
+    <Compile Include="Mappings\ClassesToDtoMappingProfile.cs" />
     <Compile Include="Mappings\DtoToModelsMappingProfile.cs" />
     <Compile Include="Mappings\ModelsToDtoMappingProfile.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
