@@ -1,83 +1,96 @@
 ﻿@model PhotoAlbum.Client.Models.EditUserProfileViewModel
 
-@{
-    ViewBag.Title = "EditUserProfile";
+@{ 
+    ViewBag.Title = @Resources.ResourceEN.UserProfile;
 }
 
-<h2>@Resources.ResourceEN.UserProfile</h2>
-<h4>@Resources.ResourceEN.EditUserProfileAndPassword</h4>
+<h2>@ViewBag.Title</h2>
+
 <hr />
-    @using (Html.BeginForm("EditUserProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <fieldset>
+<h4>@Resources.ResourceEN.EditUserProfile</h4>
+<hr />
 
-            <div class="editor-label">@Resources.ResourceEN.Email</div>
-            <div class="editor-field">
-                <input type="text" name="Email" value="@Model.Email" />
-            </div>
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-            <br />
+@using (Html.BeginForm("EditUserProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
 
-            <div class="editor-label">@Resources.ResourceEN.FirstName</div>
-            <div class="editor-field">
-                <input type="text" name="FirstName" value="@Model.FirstName" />
-            </div>
-            @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
-            <br />
+        <div class="editor-label">@Resources.ResourceEN.Email</div>
+        <div class="editor-field">
+            <input type="text" name="Email" value="@Model.Email" />
+        </div>
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        <br />
 
-            <div class="editor-label">@Resources.ResourceEN.LastName</div>
-            <div class="editor-field">
-                <input type="text" name="LastName" value="@Model.LastName" />
-            </div>
-            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
-            <br />
+        <div class="editor-label">@Resources.ResourceEN.FirstName</div>
+        <div class="editor-field">
+            <input type="text" name="FirstName" value="@Model.FirstName" />
+        </div>
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+        <br />
 
-            <span>
-                <input type="submit" class="btn btn-default" value="@Resources.ResourceEN.Save" />
-            </span>
-            <span>
-                @ViewBag.ProfileResult
-            </span>
-            <br />
-            <br />
+        <div class="editor-label">@Resources.ResourceEN.LastName</div>
+        <div class="editor-field">
+            <input type="text" name="LastName" value="@Model.LastName" />
+        </div>
+        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+        <br />
 
-        </fieldset>
-    }
+        <span>
+            <input type="submit" class="btn btn-default" value="@Resources.ResourceEN.Save" />
+        </span>
+        <span>
+            @Html.ActionLink(Resources.ResourceEN.Cancel, "EditUserProfile", "Account", new { @class = "btn btn-default" })
+        </span>
+        <span>
+            @ViewBag.ProfileResult
+        </span>
+        <br />
+        <br />
 
-    @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        <fieldset>
+    </fieldset>
+}
 
-            <div class="editor-label">@Resources.ResourceEN.OldPassword</div>
-            <div class="editor-field">
-                <input type="password" name="OldPassword" value="@Model.OldPassword" />
-            </div>
-            @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
-            <br />
+<hr />
+<h4>@Resources.ResourceEN.ChangePassword</h4>
+<hr />
 
-            <div class="editor-label">@Resources.ResourceEN.NewPassword</div>
-            <div class="editor-field">
-                <input type="password" name="NewPassword" value="@Model.NewPassword" />
-            </div>
-            @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
-            <br />
+@using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
 
-            <div class="editor-label">@Resources.ResourceEN.ConfirmPassword</div>
-            <div class="editor-field">
-                <input type="password" name="ConfirmPassword" value="@Model.ConfirmPassword" />
-            </div>
-            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-            <br />
+        <div class="editor-label">@Resources.ResourceEN.OldPassword</div>
+        <div class="editor-field">
+            <input type="password" name="OldPassword" value="@Model.OldPassword" />
+        </div>
+        @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
+        <br />
 
-            <span>
-                <input type="submit" class="btn btn-default" value="@Resources.ResourceEN.Save" />
-            </span>
-            <span>
-                @ViewBag.PasswordResult
-            </span>
-        </fieldset>
-    }
+        <div class="editor-label">@Resources.ResourceEN.NewPassword</div>
+        <div class="editor-field">
+            <input type="password" name="NewPassword" value="@Model.NewPassword" />
+        </div>
+        @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
+        <br />
+
+        <div class="editor-label">@Resources.ResourceEN.ConfirmPassword</div>
+        <div class="editor-field">
+            <input type="password" name="ConfirmPassword" value="@Model.ConfirmPassword" />
+        </div>
+        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+        <br />
+
+        <span>
+            <input type="submit" class="btn btn-default" value="@Resources.ResourceEN.Save" />
+        </span>
+        <span>
+            @Html.ActionLink(Resources.ResourceEN.Cancel, "EditUserProfile", "Account", new { @class = "btn btn-default" })
+        </span>
+        <span>
+            @ViewBag.PasswordResult
+        </span>
+    </fieldset>
+}

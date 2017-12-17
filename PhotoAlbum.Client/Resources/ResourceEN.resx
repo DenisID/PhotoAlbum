@@ -270,4 +270,10 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="EditUserProfile" xml:space="preserve">
+    <value>Edit user profile</value>
+  </data>
 </root>
