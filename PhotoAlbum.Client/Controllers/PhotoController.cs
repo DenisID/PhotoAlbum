@@ -12,6 +12,7 @@ using PhotoAlbum.Common.Exceptions;
 using PhotoAlbum.Common.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -186,10 +187,12 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> GetPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting)
         {
+            int pageSize = int.Parse( ConfigurationManager.AppSettings["PageSize"] );
+
             var photos = await _photoAlbumService.GetPhotosAsync(new PagingParametersDto
             {
                 PageNumber = lastRowId,
-                PageSize = 3,
+                PageSize = pageSize,
                 Sorting = sorting
             });
 
@@ -198,10 +201,12 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> GetUserPhotos(int lastRowId, bool isHistoryBack, SortOrder sorting, string userName)
         {
+            int pageSize = int.Parse( ConfigurationManager.AppSettings["PageSize"] );
+
             var photos = await _photoAlbumService.GetUserPhotosAsync(new PagingParametersDto
             {
                 PageNumber = lastRowId,
-                PageSize = 3,
+                PageSize = pageSize,
                 Sorting = sorting
             },
             userName);
