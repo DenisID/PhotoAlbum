@@ -267,4 +267,7 @@
   <data name="ProfileInformationChangedSuccessfully" xml:space="preserve">
     <value>Profile information changed successfully</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

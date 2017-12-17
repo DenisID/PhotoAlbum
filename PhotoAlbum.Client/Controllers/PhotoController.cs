@@ -61,8 +61,10 @@ namespace PhotoAlbum.Client.Controllers
             return View(model);
         }
 
-        public ActionResult CreatePhoto()
+        public ActionResult CreatePhoto(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             var model = new CreatePhotoViewModel();
 
             return PartialView(model);
@@ -70,8 +72,10 @@ namespace PhotoAlbum.Client.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel model)
+        public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel model, string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             if (ModelState.IsValid && model.Image != null)

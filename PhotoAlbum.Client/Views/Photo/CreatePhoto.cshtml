@@ -1,10 +1,6 @@
 ﻿@model PhotoAlbum.Client.Models.CreatePhotoViewModel
 
-@{
-    ViewBag.Title = "CreatePhoto";
-}
-
-@using (Html.BeginForm("CreatePhoto", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreatePhoto", "Photo", new { @returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -32,6 +28,8 @@
 
         <p>
             <input type="submit" class="dialog-window btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
+            <a href="@ViewBag.ReturnUrl" class="btn btn-primary btn-large">@Resources.ResourceEN.Cancel</a>
         </p>
+
     </fieldset>
 }
