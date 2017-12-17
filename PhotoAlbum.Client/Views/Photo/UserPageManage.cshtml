@@ -1,9 +1,5 @@
 ﻿@model PhotoAlbum.Client.Models.UserPageViewModel
 
-@{
-    ViewBag.Title = "UserPageManage";
-}
-
 @*Bundles for rating stars*@
 @Scripts.Render("~/bundles/rateyo")
 @Styles.Render("~/Content/rateyo")
@@ -173,7 +169,7 @@
                                                     item.Title +
                                                 '</span>' +
                                                 '<span class ="photoEditButton">' +
-                                                    '<a href="/Photo/EditPhoto/' + item.Id + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.ResourceEN.EditPhoto' + '</a>' +
+                                                    '<a href="/Photo/EditPhoto/' + item.Id + '?returnUrl=%2F' + '@ViewBag.UserName' + '%2F' + '@ViewBag.Manage' + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.ResourceEN.EditPhoto' + '</a>' +
                                                 '</span>' +
                                                 '<span class ="photoDeleteButton">' +
                                                     '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large">' + '@Resources.ResourceEN.DeletePhoto' + '</a>' +

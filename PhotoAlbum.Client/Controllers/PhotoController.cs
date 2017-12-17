@@ -51,7 +51,10 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> UserPageManage(string username)
         {
-            if(username != User.Identity.Name)
+            ViewBag.UserName = username;
+            ViewBag.Manage = "manage";
+
+            if (username != User.Identity.Name)
             {
                 throw new UserIsNotAuthorizedException(ErrorCodes.UserIsNotAuthorized);
             }
@@ -145,8 +148,10 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> EditPhoto(int id)
+        public async Task<ActionResult> EditPhoto(int id, string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
             EditPhotoViewModel editPhotoViewModel = null;
@@ -161,8 +166,10 @@ namespace PhotoAlbum.Client.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel)
+        public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel, string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             if (!ModelState.IsValid)
             {
                 return View(editPhotoViewModel);
