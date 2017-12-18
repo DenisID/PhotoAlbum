@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using PhotoAlbum.Client.AppParameters;
 using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.BusinessServices.Services;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -36,6 +38,9 @@ namespace PhotoAlbum.Client.App_Start
             builder.RegisterType<UserService>()
                    .As<IUserService>()
                    .InstancePerRequest();
+
+            builder.RegisterInstance( (UriConstantsService)ConfigurationManager.GetSection(nameof(UriConstantsService)) )
+                   .As<IUriConstantsService>();
 
             Container = builder.Build();
             
