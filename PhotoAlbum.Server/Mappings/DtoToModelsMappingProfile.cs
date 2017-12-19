@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using PhotoAlbum.Server.Dto;
 using PhotoAlbum.Server.Models;
 using System;

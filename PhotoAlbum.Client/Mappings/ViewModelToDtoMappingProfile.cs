@@ -23,6 +23,8 @@ namespace PhotoAlbum.Client.Mappings
             CreateMap<PhotoVoteViewModel, PhotoVoteDto>();
             CreateMap<EditUserProfileViewModel, EditUserProfileDto>();
             CreateMap<EditUserProfileViewModel, ChangePasswordDto>();
+            CreateMap<EditUserInfoViewModel, EditUserProfileDto>();
+            CreateMap<EditUserPasswordViewModel, ChangePasswordDto>();
         }
     }
 }

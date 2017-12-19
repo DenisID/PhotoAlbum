@@ -1,15 +1,8 @@
 ﻿@model PhotoAlbum.Client.Models.EditPhotoViewModel
 
-@{
-    Layout = null;
-}
-
-@{
-    ViewBag.Title = "EditPhoto";
-}
-
-@using (Html.BeginForm("EditPhoto", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditPhoto", "Photo", new { @returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <fieldset>
 
@@ -17,16 +10,19 @@
         <div class="editor-field">
             <input type="text" name="Title" value="@Model.Title" />
         </div>
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
         <br/>
 
         <div class="editor-label">@Resources.ResourceEN.Description</div>
         <div class="editor-field">
             <textarea name="Description">@Model.Description</textarea>
         </div>
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
         <br />
 
         <p>
             <input type="submit" class="dialog-window btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
+            <a href="@ViewBag.ReturnUrl" class="btn btn-primary btn-large">@Resources.ResourceEN.Cancel</a>
         </p>
     </fieldset>
 }

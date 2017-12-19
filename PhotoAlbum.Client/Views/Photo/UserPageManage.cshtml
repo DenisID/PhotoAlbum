@@ -1,9 +1,5 @@
 ﻿@model PhotoAlbum.Client.Models.UserPageViewModel
 
-@{
-    ViewBag.Title = "UserPageManage";
-}
-
 @*Bundles for rating stars*@
 @Scripts.Render("~/bundles/rateyo")
 @Styles.Render("~/Content/rateyo")
@@ -42,7 +38,8 @@
     <!-- /.modal-dialog -->
 </div>
 
-@Html.ActionLink(Resources.ResourceEN.AddNewPhoto, "CreatePhoto", "Photo", new { @class = "addNewPhotoButton dialog-window btn btn-primary btn-large"})
+@*"Add new pohoto" button*@
+@Html.ActionLink(Resources.ResourceEN.AddNewPhoto, "CreatePhoto", "Photo", new { @returnUrl = Request.Url.AbsolutePath }, new { @class = "addNewPhotoButton dialog-window btn btn-primary btn-large" })
 
 @*Main photo content section*@
 <div id="sectionPhotos"></div>
@@ -65,7 +62,7 @@
         }
     });
 
-    // On add new photo button click
+    // On "class = dialog-window" button click
     $(document).ready(function () {
         $("body").on("click", "a.dialog-window", null, function (e) {
 
@@ -153,6 +150,12 @@
 
                     if (jsonData.length === 0) {
                         isPhotoAvaiable = false;
+
+                        if (lastRowId === 1) {
+                            var noPhotoYetPlaceholder = '<div class="noPhotoYetPlaceholder">' + '@Resources.ResourceEN.NoPhotosYet' + '</div>';
+                            $('#sectionPhotos').append(noPhotoYetPlaceholder);
+                        }
+
                         return;
                     }
 
@@ -166,7 +169,7 @@
                                                     item.Title +
                                                 '</span>' +
                                                 '<span class ="photoEditButton">' +
-                                                    '<a href="/Photo/EditPhoto/' + item.Id + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.ResourceEN.EditPhoto' + '</a>' +
+                                                    '<a href="/Photo/EditPhoto/' + item.Id + '?returnUrl=%2F' + '@ViewBag.UserName' + '%2F' + '@ViewBag.Manage' + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.ResourceEN.EditPhoto' + '</a>' +
                                                 '</span>' +
                                                 '<span class ="photoDeleteButton">' +
                                                     '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large">' + '@Resources.ResourceEN.DeletePhoto' + '</a>' +

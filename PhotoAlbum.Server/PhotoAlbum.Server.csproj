@@ -253,6 +253,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Handlers\ResponseHandler.cs" />
+    <Compile Include="Mappings\ClassesToDtoMappingProfile.cs" />
     <Compile Include="Mappings\DtoToModelsMappingProfile.cs" />
     <Compile Include="Mappings\ModelsToDtoMappingProfile.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -302,6 +303,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+    <None Include="Properties\PublishProfiles\PhotoAlbumServer.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhotoAlbum.Common\PhotoAlbum.Common.csproj">

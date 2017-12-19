@@ -9,10 +9,8 @@ namespace PhotoAlbum.Server.Dto
 {
     public class CastPhotoVoteDto
     {
-        [Required]
         public int PhotoId { get; set; }
-
-        [Required]
+        
         [Range(0, 5)]
         public int Rating { get; set; }
     }

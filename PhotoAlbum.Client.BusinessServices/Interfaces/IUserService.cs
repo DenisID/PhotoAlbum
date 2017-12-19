@@ -10,7 +10,7 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
 {
     public interface IUserService
     {
-        Task<HttpStatusCode> RegisterUser(RegisterUserDto registerUserDto);
+        Task<RegisterUserResultDto> RegisterUser(RegisterUserDto registerUserDto);
         Task<TokenDto> GetTokenAsync(GetTokenDto getTokenDto);
         List<UserNameDto> GetAllUserNamesAsync();
         Task<EditUserProfileDto> GetUserProfileAsync(string token);

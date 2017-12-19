@@ -97,6 +97,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        public static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm password.
         /// </summary>
         public static string ConfirmPassword {
@@ -138,6 +156,15 @@ namespace Resources {
         public static string EditPhoto {
             get {
                 return ResourceManager.GetString("EditPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit user profile.
+        /// </summary>
+        public static string EditUserProfile {
+            get {
+                return ResourceManager.GetString("EditUserProfile", resourceCulture);
             }
         }
         
@@ -187,11 +214,20 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo.
+        ///   Looks up a localized string similar to Hello.
         /// </summary>
         public static string Hallo {
             get {
                 return ResourceManager.GetString("Hallo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid login or password.
+        /// </summary>
+        public static string InvalidLoginOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidLoginOrPassword", resourceCulture);
             }
         }
         
@@ -268,6 +304,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No photos yet.
+        /// </summary>
+        public static string NoPhotosYet {
+            get {
+                return ResourceManager.GetString("NoPhotosYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
@@ -291,6 +336,15 @@ namespace Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password changed successfully.
+        /// </summary>
+        public static string PasswordChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("PasswordChangedSuccessfully", resourceCulture);
             }
         }
         
@@ -336,6 +390,15 @@ namespace Resources {
         public static string PopularFirst {
             get {
                 return ResourceManager.GetString("PopularFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile information changed successfully.
+        /// </summary>
+        public static string ProfileInformationChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("ProfileInformationChangedSuccessfully", resourceCulture);
             }
         }
         

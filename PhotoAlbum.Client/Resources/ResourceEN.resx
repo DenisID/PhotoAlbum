@@ -160,7 +160,7 @@
     <value>First name</value>
   </data>
   <data name="Hallo" xml:space="preserve">
-    <value>Hallo</value>
+    <value>Hello</value>
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Last name</value>
@@ -254,5 +254,26 @@
   </data>
   <data name="YourPhotoIsTooLargeMaximumAllowedSizeIs" xml:space="preserve">
     <value>Your Photo is too large, maximum allowed size is</value>
+  </data>
+  <data name="InvalidLoginOrPassword" xml:space="preserve">
+    <value>Invalid login or password</value>
+  </data>
+  <data name="NoPhotosYet" xml:space="preserve">
+    <value>No photos yet</value>
+  </data>
+  <data name="PasswordChangedSuccessfully" xml:space="preserve">
+    <value>Password changed successfully</value>
+  </data>
+  <data name="ProfileInformationChangedSuccessfully" xml:space="preserve">
+    <value>Profile information changed successfully</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="EditUserProfile" xml:space="preserve">
+    <value>Edit user profile</value>
   </data>
 </root>
