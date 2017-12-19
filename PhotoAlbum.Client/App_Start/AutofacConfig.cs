@@ -3,6 +3,7 @@ using Autofac.Integration.Mvc;
 using PhotoAlbum.Client.AppParameters;
 using PhotoAlbum.Client.BusinessServices.Interfaces;
 using PhotoAlbum.Client.BusinessServices.Services;
+using PhotoAlbum.Client.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -41,6 +42,9 @@ namespace PhotoAlbum.Client.App_Start
 
             builder.RegisterInstance( (UriConstantsService)ConfigurationManager.GetSection(nameof(UriConstantsService)) )
                    .As<IUriConstantsService>();
+
+            builder.RegisterInstance((ValidateFileConstantsService)ConfigurationManager.GetSection(nameof(ValidateFileConstantsService)))
+                   .As<IValidateFileConstantsService>();
 
             Container = builder.Build();
             

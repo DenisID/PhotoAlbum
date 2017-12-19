@@ -70,6 +70,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         {
             List<UserNameDto> userNames = null;
 
+            // WARNING
             var urn = _uriConstantsService.GetAllUserNames;
             HttpResponseMessage apiResponse = _httpClient.GetAsync(urn).Result;
 
@@ -77,7 +78,7 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             
             // Exceptions check
             responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-            apiResponse.EnsureSuccessStatusCode();
+            apiResponse.EnsureSuccessStatusCode();// WARNING
 
             userNames = responseContent.Result;
 

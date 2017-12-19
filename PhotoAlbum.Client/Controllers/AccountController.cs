@@ -22,7 +22,7 @@ namespace PhotoAlbum.Client.Controllers
         private readonly IUserService _userService;
 
         private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        //private ApplicationUserManager _userManager;
 
         public AccountController(IUserService userService)
         {
@@ -41,17 +41,17 @@ namespace PhotoAlbum.Client.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+        //public ApplicationUserManager UserManager
+        //{
+        //    get
+        //    {
+        //        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        //    }
+        //    private set
+        //    {
+        //        _userManager = value;
+        //    }
+        //}
 
         // GET: /Account/Login
         [AllowAnonymous]
@@ -230,11 +230,11 @@ namespace PhotoAlbum.Client.Controllers
         {
             if (disposing)
             {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
+                //if (_userManager != null)
+                //{
+                //    _userManager.Dispose();
+                //    _userManager = null;
+                //}
 
                 if (_signInManager != null)
                 {
