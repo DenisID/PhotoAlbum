@@ -18,6 +18,12 @@ namespace PhotoAlbum.Client.BusinessServices.Services
     public class UserService : IUserService
     {
         private static HttpClient _httpClient = new HttpClient();
+        private IUriConstantsService _uriConstantsService;
+
+        public UserService(IUriConstantsService uriConstantsService)
+        {
+            _uriConstantsService = uriConstantsService;
+        }
 
         static UserService()
         {
@@ -30,8 +36,9 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public async Task<RegisterUserResultDto> RegisterUser(RegisterUserDto registerUserDto)
         {
             RegisterUserResultDto dto = null;
-
-            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync("api/Account/Register", registerUserDto);
+            
+            var urn = _uriConstantsService.RegisterUser;
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync(urn, registerUserDto);
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<RegisterUserResultDto>>();
 
@@ -50,7 +57,9 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             dict.Add("userName", getTokenDto.Login);
             dict.Add("password", getTokenDto.Password);
             dict.Add("grant_type", "password");
-            var req = new HttpRequestMessage(HttpMethod.Post, "Token") { Content = new FormUrlEncodedContent(dict) };
+
+            var urn = _uriConstantsService.GetToken;
+            var req = new HttpRequestMessage(HttpMethod.Post, urn) { Content = new FormUrlEncodedContent(dict) };
             var res = await _httpClient.SendAsync(req);
             var token = await res.Content.ReadAsAsync<TokenDto>();
 
@@ -60,8 +69,10 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public List<UserNameDto> GetAllUserNamesAsync()
         {
             List<UserNameDto> userNames = null;
-            HttpResponseMessage apiResponse = _httpClient.GetAsync("api/Account/GetAllUserNames").Result;
             
+            var urn = _uriConstantsService.GetAllUserNames;
+            HttpResponseMessage apiResponse = _httpClient.GetAsync(urn).Result;
+
             var responseContent = apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<UserNameDto>>>().Result;
             
             // Exceptions check
@@ -78,7 +89,9 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             EditUserProfileDto dto = null;
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage apiResponse = await _httpClient.GetAsync($"api/Account/GetUserProfile");
+
+            var urn = _uriConstantsService.GetUserProfile;
+            HttpResponseMessage apiResponse = await _httpClient.GetAsync(urn);
             _httpClient.DefaultRequestHeaders.Authorization = null;
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditUserProfileDto>>();
@@ -95,7 +108,9 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public async Task<HttpStatusCode> EditUserProfileAsync(EditUserProfileDto dto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync($"api/Account/ChangeUserProfile", dto);
+
+            var urn = _uriConstantsService.EditUserProfile;
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync(urn, dto);
             _httpClient.DefaultRequestHeaders.Authorization = null;
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
@@ -110,7 +125,9 @@ namespace PhotoAlbum.Client.BusinessServices.Services
         public async Task<HttpStatusCode> ChangePasswordAsync(ChangePasswordDto dto, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync($"api/Account/ChangePassword", dto);
+
+            var urn = _uriConstantsService.ChangePassword;
+            HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync(urn, dto);
             _httpClient.DefaultRequestHeaders.Authorization = null;
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();

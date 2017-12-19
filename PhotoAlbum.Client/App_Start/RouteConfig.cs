@@ -1,4 +1,5 @@
-﻿using PhotoAlbum.Client.BusinessServices.Services;
+﻿using PhotoAlbum.Client.AppParameters;
+using PhotoAlbum.Client.BusinessServices.Services;
 using PhotoAlbum.Client.Filters;
 using System;
 using System.Collections.Generic;
@@ -18,15 +19,22 @@ namespace PhotoAlbum.Client
             routes.MapRoute(
                 name: "UserManage",
                 url: "{username}/manage",
-                defaults: new { controller = "Photo", action = "UserPageManage" },
-                constraints: new { username = new UserNameConstraint(new UserService()) }
+                defaults: new { controller = "Photo", action = "UserPageManage" }/*,
+                constraints: new { username = new UserNameConstraint(new UserService(new UriConstantsService())) }*/
+            );
+
+            routes.MapRoute(
+                name: "UserProfile",
+                url: "{username}/profile",
+                defaults: new { controller = "Account", action = "EditUserProfile" }/*,
+                constraints: new { username = new UserNameConstraint(new UserService(new UriConstantsService())) }*/
             );
 
             routes.MapRoute(
                 name: "User",
                 url: "{username}",
-                defaults: new { controller = "Photo", action = "UserPage" },
-                constraints: new { username = new UserNameConstraint(new UserService()) }
+                defaults: new { controller = "Photo", action = "UserPage" }/*,
+                constraints: new { username = new UserNameConstraint(new UserService(new UriConstantsService())) }*/
             );
 
             routes.MapRoute(
