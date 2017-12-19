@@ -26,7 +26,7 @@
                     <li>@Html.ActionLink(@Resources.ResourceEN.AllPhotos, "Index", "Photo")</li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink(@Resources.ResourceEN.MyPhotos, "Manage", User.Identity.Name)</li>
+                        <li>@Html.ActionLink(@Resources.ResourceEN.MyPhotos, "manage", User.Identity.Name)</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

@@ -13,6 +13,8 @@ using PhotoAlbum.Client.BusinessServices.Interfaces;
 using AutoMapper;
 using PhotoAlbum.Client.Dto;
 using System.Net;
+using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Common.ErrorCodes;
 
 namespace PhotoAlbum.Client.Controllers
 {
@@ -137,8 +139,13 @@ namespace PhotoAlbum.Client.Controllers
             return RedirectToAction("Index", "Photo");
         }
         
-        public async Task<ActionResult> EditUserProfile()
+        public async Task<ActionResult> EditUserProfile(string username)
         {
+            if(username != User.Identity.Name)
+            {
+                throw new UserIsNotAuthorizedException(ErrorCodes.UserIsNotAuthorized);
+            }
+
             ViewBag.Result = "";
 
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
@@ -213,8 +220,12 @@ namespace PhotoAlbum.Client.Controllers
             var editUserProfileDto = await _userService.GetUserProfileAsync(token);
 
             var newModel = Mapper.Map<EditUserProfileViewModel>(editUserProfileDto);
-
-            return View("EditUserProfile", newModel);
+            
+            return RedirectToRoute(new
+            {
+                controller = User.Identity.Name,
+                action = "profile"
+            });
         }
 
         [HttpPost]

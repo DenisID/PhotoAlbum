@@ -10,7 +10,7 @@
             @Html.ActionLink(Resources.ResourceEN.Hallo + " " + User.Identity.GetUserName() + "!", "Manage", User.Identity.Name, routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li>
-            @Html.ActionLink(Resources.ResourceEN.UserProfile, "EditUserProfile", "Account", routeValues: null, htmlAttributes: new { title = "User profile" })
+            @Html.ActionLink(Resources.ResourceEN.UserProfile, "profile", User.Identity.Name, routeValues: null, htmlAttributes: new { title = "User profile" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
