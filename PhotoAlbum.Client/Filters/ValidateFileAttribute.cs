@@ -10,22 +10,8 @@ namespace PhotoAlbum.Client.Filters
 {
     public class ValidateFileAttribute : ValidationAttribute
     {
-        //private IValidateFileConstantsService _validateFileConstantsService;
-
-        //public ValidateFileAttribute(IValidateFileConstantsService validateFileConstantsService)
-        //    : base()
-        //{
-        //    _validateFileConstantsService = validateFileConstantsService;
-        //}
-
         public override bool IsValid(object value)
         {
-            //int maxContentLength = 1024 * 1024 * 10; //10 MB
-            //string[] allowedFileExtensions = new string[] { ".jpg", ".gif", ".png", ".pdf" };
-
-            //int maxContentLength = _validateFileConstantsService.MaxContentLength;
-            //string[] allowedFileExtensions = _validateFileConstantsService.AllowedFileExtensions;
-
             int maxContentLength = DependencyResolver.Current.GetService<IValidateFileConstantsService>().MaxContentLength;
 
             var tempData = DependencyResolver.Current.GetService<IValidateFileConstantsService>().AllowedFileExtensions;

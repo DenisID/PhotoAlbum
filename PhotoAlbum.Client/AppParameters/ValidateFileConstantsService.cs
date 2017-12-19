@@ -21,9 +21,6 @@ namespace PhotoAlbum.Client.AppParameters
         {
             get
             {
-                //var data = (string)this[nameof(AllowedFileExtensions)];
-
-                //return data.Split(new char[] { ';', ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 return ((string)this[nameof(AllowedFileExtensions)]);
             }
             set { this[nameof(AllowedFileExtensions)] = value; }
