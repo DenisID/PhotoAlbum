@@ -39,13 +39,11 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             
             var urn = _uriConstantsService.RegisterUser;
             HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync(urn, registerUserDto);
-
-            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<RegisterUserResultDto>>();
-
-            // Exceptions check
-            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
             apiResponse.EnsureSuccessStatusCode();
 
+            var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<RegisterUserResultDto>>();
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+            
             dto = responseContent.Result;
 
             return dto;
@@ -59,9 +57,11 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             dict.Add("grant_type", "password");
 
             var urn = _uriConstantsService.GetToken;
-            var req = new HttpRequestMessage(HttpMethod.Post, urn) { Content = new FormUrlEncodedContent(dict) };
-            var res = await _httpClient.SendAsync(req);
-            var token = await res.Content.ReadAsAsync<TokenDto>();
+            var requerstToApi = new HttpRequestMessage(HttpMethod.Post, urn) { Content = new FormUrlEncodedContent(dict) };
+            var apiResponse = await _httpClient.SendAsync(requerstToApi);
+            apiResponse.EnsureSuccessStatusCode();
+
+            var token = await apiResponse.Content.ReadAsAsync<TokenDto>();
 
             return token;
         }
@@ -72,12 +72,10 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             
             var urn = _uriConstantsService.GetAllUserNames;
             HttpResponseMessage apiResponse = _httpClient.GetAsync(urn).Result;
+            apiResponse.EnsureSuccessStatusCode();
 
             var responseContent = apiResponse.Content.ReadAsAsync<WebApiResponseDto<List<UserNameDto>>>().Result;
-            
-            // Exceptions check
             responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-            apiResponse.EnsureSuccessStatusCode();
 
             userNames = responseContent.Result;
 
@@ -93,12 +91,10 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var urn = _uriConstantsService.GetUserProfile;
             HttpResponseMessage apiResponse = await _httpClient.GetAsync(urn);
             _httpClient.DefaultRequestHeaders.Authorization = null;
+            apiResponse.EnsureSuccessStatusCode();
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<EditUserProfileDto>>();
-
-            // Exceptions check
             responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-            apiResponse.EnsureSuccessStatusCode();
 
             dto = responseContent.Result;
 
@@ -112,12 +108,10 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var urn = _uriConstantsService.EditUserProfile;
             HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync(urn, dto);
             _httpClient.DefaultRequestHeaders.Authorization = null;
+            apiResponse.EnsureSuccessStatusCode();
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
-
-            // Exceptions check
             responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-            apiResponse.EnsureSuccessStatusCode();
 
             return apiResponse.StatusCode;
         }
@@ -129,12 +123,10 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var urn = _uriConstantsService.ChangePassword;
             HttpResponseMessage apiResponse = await _httpClient.PostAsJsonAsync(urn, dto);
             _httpClient.DefaultRequestHeaders.Authorization = null;
+            apiResponse.EnsureSuccessStatusCode();
 
             var responseContent = await apiResponse.Content.ReadAsAsync<WebApiResponseDto<int>>();
-
-            // Exceptions check
             responseContent.ErrorMessage.TryThrowPhotoAlbumException();
-            apiResponse.EnsureSuccessStatusCode();
             
             return apiResponse.StatusCode;
         }
