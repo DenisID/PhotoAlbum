@@ -103,7 +103,7 @@ namespace PhotoAlbum.Client.Controllers
                 return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
             }
             
-            return View(model);
+            return PartialView(model);
         }
         
         public async Task<ActionResult> GetImageById(int id)
@@ -172,7 +172,7 @@ namespace PhotoAlbum.Client.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(editPhotoViewModel);
+                return PartialView(editPhotoViewModel);
             }
 
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;

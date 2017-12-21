@@ -27,9 +27,8 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title"></h4>
-
             </div>
-            <div class="modal-body"><div class="te">Please wait...</div></div>
+            <div class="modal-body" id="form-container"><div class="te">Please wait...</div></div>
             <div class="modal-footer">
                 <button type="button" class="dialog-window btn btn-primary btn-large" data-dismiss="modal">Close</button>
             </div>
@@ -63,7 +62,7 @@
         }
     });
 
-    // On "class = dialog-window" button click
+    // On "class = dialog-window" button click (call modal window)
     $(document).ready(function () {
         $("body").on("click", "a.dialog-window", null, function (e) {
 
@@ -83,6 +82,22 @@
                     $('#myModal').modal();
                 }).then(function () { $('input:text:visible:first').focus(); });
             }
+
+        });
+
+        $("#myModal").on("submit", "#formForModal", function (e) {
+
+            e.preventDefault();
+
+            var form = $(this);
+            $.ajax({
+                url: form.attr("action"),
+                method: form.attr("method"),  // post
+                data: form.serialize(),
+                success: function (partialResult) {
+                    $('#myModal .te').html(partialResult);
+                }
+            });
         });
     });
 

@@ -1,6 +1,6 @@
 ﻿@model PhotoAlbum.Client.Models.EditPhotoViewModel
 
-@using (Html.BeginForm("EditPhoto", "Photo", new { @returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditPhoto", "Photo", new { @returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", id = "formForModal" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -22,7 +22,8 @@
 
         <p>
             <input type="submit" class="dialog-window btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
-            <a href="@ViewBag.ReturnUrl" class="btn btn-primary btn-large">@Resources.ResourceEN.Cancel</a>
+            @*<a href="@ViewBag.ReturnUrl" class="btn btn-primary btn-large">@Resources.ResourceEN.Cancel</a>*@
+            <button type="button" class="btn btn-primary btn-large" data-dismiss="modal">@Resources.ResourceEN.Cancel</button>
         </p>
     </fieldset>
 }
