@@ -3,7 +3,7 @@
 @*Bundles for rating stars*@
 @Scripts.Render("~/bundles/rateyo/myAlias")
 @Styles.Render("~/Content/rateyo/myAlias")
-@Scripts.Render("~/Scripts/myModal");
+@Scripts.Render("~/Scripts/myModal")
 
 @*Sort order*@
 <div class="sortOrder">
@@ -65,8 +65,8 @@
         }
     });
 
-    // On "class = dialog-window" button click (call modal window)
     $(document).ready(function () {
+        // Add "modal dialog open" button handler (open modal window)
         $("body").on("click", "a.dialog-window", null, function (e) {
 
             e.preventDefault();
@@ -88,6 +88,7 @@
 
         });
 
+        // Add modal form "submit" button handler
         $("#myModal").on("submit", "#formForModal", function (e) {
 
             e.preventDefault();
@@ -110,6 +111,15 @@
                 processData: false
             });
 
+        });
+        
+        // WARNING : didn't work
+        // Add modal form "clear" button handler
+        $("#myModal").on("click", "#formForModalClearButton", function (e) {
+
+            e.preventDefault();
+
+            $('#formForModal')[0].reset();
         });
 
     });
