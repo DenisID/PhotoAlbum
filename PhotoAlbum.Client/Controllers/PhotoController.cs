@@ -101,7 +101,8 @@ namespace PhotoAlbum.Client.Controllers
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
 
                 //return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
-                return null;
+                // Return EmptyResult() for modal window
+                return new EmptyResult();
             }
             
             return PartialView(model);
@@ -187,7 +188,9 @@ namespace PhotoAlbum.Client.Controllers
 
             await _photoAlbumService.EditPhotoAsync(editPhotoDto, token);
 
-            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+            //return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+            // Return EmptyResult() for modal window
+            return new EmptyResult();
         }
 
         public async Task<ActionResult> GetPhotoRating(int id)

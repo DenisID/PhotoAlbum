@@ -99,9 +99,10 @@
                 method: form.attr("method"),
                 data: new FormData(this),
                 success: function (partialResult) {
-                    //if (paritalResult == null) {
-                    //    location.reload();
-                    //}
+                    if (!partialResult) {
+                        location.reload();
+                        return;
+                    }
                     $('#myModal .te').html(partialResult);
                 },
                 cache: false,
