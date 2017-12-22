@@ -7,7 +7,7 @@
     <fieldset>
         <div class="editor-label">@Resources.ResourceEN.SelectFile</div>
         <div class="editor-field">
-            <input type="file" name="Image" />
+            <input type="file" name="Image" id="photo" />
         </div>
         @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
         <br/>

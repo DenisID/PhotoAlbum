@@ -38,6 +38,9 @@
     <!-- /.modal-dialog -->
 </div>
 
+@*IFrame*@
+@*<iframe name="iframe1" width="600" height="400" src="/photo/createphoto" frameborder="1" scrolling="no"></iframe>*@
+
 @*"Add new pohoto" button*@
 @Html.ActionLink(Resources.ResourceEN.AddNewPhoto, "CreatePhoto", "Photo", new { @returnUrl = Request.Url.AbsolutePath }, new { @class = "addNewPhotoButton dialog-window btn btn-primary btn-large" })
 
@@ -68,6 +71,21 @@
 
             e.preventDefault();
 
+            //var $link = $(this);
+            //var title = $link.text();
+            //$('#myModal .modal-title').html(title);
+
+            //var url = $(this).attr('href');
+            //if (url.indexOf('#') == 0) {
+            //    $('#myModal').modal('show');
+            //}
+            //else {
+            //    $.get(url, function (data) {
+            //        $('#myModal .te').html(data);
+            //        $('#myModal').modal();
+            //    }).then(function () { $('input:text:visible:first').focus(); });
+            //}
+
             var $link = $(this);
             var title = $link.text();
             $('#myModal .modal-title').html(title);
@@ -78,27 +96,34 @@
             }
             else {
                 $.get(url, function (data) {
-                    $('#myModal .te').html(data);
+                    $('#myModal .te').html('<iframe name="iframe1" width="400" height="400" src="' + url + '" frameborder="0" allowtransparency="true" scrolling="no"></iframe>');
                     $('#myModal').modal();
                 }).then(function () { $('input:text:visible:first').focus(); });
             }
 
         });
 
-        $("#myModal").on("submit", "#formForModal", function (e) {
+        //$("#myModal").on("submit", "#formForModal", function (e) {
 
-            e.preventDefault();
+        //    e.preventDefault();
 
-            var form = $(this);
-            $.ajax({
-                url: form.attr("action"),
-                method: form.attr("method"),  // post
-                data: form.serialize(),
-                success: function (partialResult) {
-                    $('#myModal .te').html(partialResult);
-                }
-            });
-        });
+        //    //var frmData = new FormData();
+        //    //var filebase = $("#photo").get(0);
+        //    //var files = filebase.files;
+        //    //frmData.append(files[0].name, files[0]);
+
+        //    var form = $(this);
+        //    $.ajax({
+        //        url: form.attr("action"),
+        //        method: form.attr("method"),  // post
+        //        data: form.serialize(),
+        //        success: function (partialResult) {
+        //            $('#myModal .te').html(partialResult);
+        //        }
+        //    });
+
+        //});
+
     });
 
     // Global variables
