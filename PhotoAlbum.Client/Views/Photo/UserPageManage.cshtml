@@ -71,21 +71,6 @@
 
             e.preventDefault();
 
-            //var $link = $(this);
-            //var title = $link.text();
-            //$('#myModal .modal-title').html(title);
-
-            //var url = $(this).attr('href');
-            //if (url.indexOf('#') == 0) {
-            //    $('#myModal').modal('show');
-            //}
-            //else {
-            //    $.get(url, function (data) {
-            //        $('#myModal .te').html(data);
-            //        $('#myModal').modal();
-            //    }).then(function () { $('input:text:visible:first').focus(); });
-            //}
-
             var $link = $(this);
             var title = $link.text();
             $('#myModal .modal-title').html(title);
@@ -96,33 +81,65 @@
             }
             else {
                 $.get(url, function (data) {
-                    $('#myModal .te').html('<iframe name="iframe1" width="400" height="400" src="' + url + '" frameborder="0" allowtransparency="true" scrolling="no"></iframe>');
+                    $('#myModal .te').html(data);
                     $('#myModal').modal();
+
+                    //var inputElement = document.getElementById("photoInput");
+                    //inputElement.addEventListener("change", handleFiles, false);
+                    //function handleFiles() {
+                    //    var fileList = this.files; /* now you can work with the file list */
+                    //}
+
                 }).then(function () { $('input:text:visible:first').focus(); });
             }
 
         });
 
-        //$("#myModal").on("submit", "#formForModal", function (e) {
+        $("#myModal").on("submit", "#formForModal", function (e) {
 
-        //    e.preventDefault();
+            e.preventDefault();
 
-        //    //var frmData = new FormData();
-        //    //var filebase = $("#photo").get(0);
-        //    //var files = filebase.files;
-        //    //frmData.append(files[0].name, files[0]);
+            //var frmData = new FormData();
+            //var filebase = $("#photoInput").get(0);
+            //var files = filebase.files;
+            //frmData.append(files[0].name, files[0]);
 
-        //    var form = $(this);
-        //    $.ajax({
-        //        url: form.attr("action"),
-        //        method: form.attr("method"),  // post
-        //        data: form.serialize(),
-        //        success: function (partialResult) {
-        //            $('#myModal .te').html(partialResult);
-        //        }
-        //    });
+            //var selectedFile = document.getElementById('photoInput').files[0];
 
-        //});
+            if (window.FormData !== undefined) {
+                var fileUpload = $("#photoInput").get(0);
+                var files = fileUpload.files;
+
+                // Create FormData object  
+                var fileData = new FormData();
+
+                // Looping over all files and add it to FormData object  
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                // Adding additional parameters to FormData object  
+
+                fileData.append('name', $('#nameinput').val());
+                fileData.append('uniqueID', $('#hiddenFieldUniqueID').val());
+            };
+
+            var form = $(this);
+
+            $.ajax({
+                url: form.attr("action"),
+                method: form.attr("method"),  // post
+                //data: form.serialize(),
+                data: new FormData(this),
+                success: function (partialResult) {
+                    $('#myModal .te').html(partialResult);
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+        });
 
     });
 
