@@ -99,8 +99,9 @@ namespace PhotoAlbum.Client.Controllers
                 };
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
-                
-                return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+
+                //return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+                return null;
             }
             
             return PartialView(model);

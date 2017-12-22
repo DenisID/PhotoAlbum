@@ -83,13 +83,6 @@
                 $.get(url, function (data) {
                     $('#myModal .te').html(data);
                     $('#myModal').modal();
-
-                    //var inputElement = document.getElementById("photoInput");
-                    //inputElement.addEventListener("change", handleFiles, false);
-                    //function handleFiles() {
-                    //    var fileList = this.files; /* now you can work with the file list */
-                    //}
-
                 }).then(function () { $('input:text:visible:first').focus(); });
             }
 
@@ -99,39 +92,16 @@
 
             e.preventDefault();
 
-            //var frmData = new FormData();
-            //var filebase = $("#photoInput").get(0);
-            //var files = filebase.files;
-            //frmData.append(files[0].name, files[0]);
-
-            //var selectedFile = document.getElementById('photoInput').files[0];
-
-            if (window.FormData !== undefined) {
-                var fileUpload = $("#photoInput").get(0);
-                var files = fileUpload.files;
-
-                // Create FormData object  
-                var fileData = new FormData();
-
-                // Looping over all files and add it to FormData object  
-                for (var i = 0; i < files.length; i++) {
-                    fileData.append(files[i].name, files[i]);
-                }
-
-                // Adding additional parameters to FormData object  
-
-                fileData.append('name', $('#nameinput').val());
-                fileData.append('uniqueID', $('#hiddenFieldUniqueID').val());
-            };
-
             var form = $(this);
 
             $.ajax({
                 url: form.attr("action"),
-                method: form.attr("method"),  // post
-                //data: form.serialize(),
+                method: form.attr("method"),
                 data: new FormData(this),
                 success: function (partialResult) {
+                    //if (paritalResult == null) {
+                    //    location.reload();
+                    //}
                     $('#myModal .te').html(partialResult);
                 },
                 cache: false,
