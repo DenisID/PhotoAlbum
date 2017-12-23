@@ -25,7 +25,7 @@ namespace PhotoAlbum.Server.Handlers
         private static HttpResponseMessage BuildApiResponse(HttpRequestMessage request, HttpResponseMessage response)
         {
             object content;
-            string errorMessage = null;
+            string errorMessage = String.Empty;
 
             if (response.TryGetContentValue(out content) && !response.IsSuccessStatusCode)
             {

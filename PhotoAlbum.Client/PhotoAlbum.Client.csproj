@@ -253,6 +253,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PhotoAlbumExMessageHelper.cs" />
     <Compile Include="Interfaces\IValidateFileConstantsService.cs" />
     <Compile Include="Mappings\DtoToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDtoMappingProfile.cs" />
@@ -261,6 +262,11 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PhotoViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ErrorMsg.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorMsg.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Localization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -483,6 +489,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ErrorMsg.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMsg.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Localization.Designer.cs</LastGenOutput>

@@ -1,5 +1,7 @@
 ﻿using log4net;
+using PhotoAlbum.Client.Helpers;
 using PhotoAlbum.Common.Exceptions;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,20 +19,38 @@ namespace PhotoAlbum.Client.Filters
             log.Error("Error", filterContext.Exception);
             // -----------
             
-            ActionResult errorResult = null;
+            // Get inner exception and error message
+            string errorMessage = null;
+            var error = filterContext.Exception;
+            while (error.InnerException != null)
+            {
+                error = error.InnerException;
+            }
+            errorMessage = error.Message;
+            
+            var resultException = new Exception(ErrorMsg.AnErrorHasOccurred, filterContext.Exception);
 
-            ///////////////////
-            var photoAlbumException = filterContext.Exception as PhotoAlbumException;
+            // Photo album exceptions
+            var photoAlbumException = error as PhotoAlbumException;
             if (photoAlbumException != null)
             {
+                resultException = new Exception(photoAlbumException.Message.GetLocalExString(), filterContext.Exception);
+            }
 
+            // Server exceptions
+            var serverException = error as System.Net.Sockets.SocketException;
+            if (serverException != null)
+            {
+                resultException = new Exception(ErrorMsg.ServerIsNotAvailable, filterContext.Exception);
             }
 
             var controllerName = filterContext.RouteData.Values["controller"].ToString();
             var actionName = filterContext.RouteData.Values["action"].ToString();
 
+            ActionResult errorResult = null;
+
             // GetPhotos action from Photo controller must return json (not view)
-            if(controllerName == "Photo" && actionName == "GetPhotos")
+            if (controllerName == "Photo" && actionName == "GetPhotos")
             {
                 filterContext.HttpContext.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 errorResult = new JsonResult()
@@ -38,13 +58,13 @@ namespace PhotoAlbum.Client.Filters
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                     Data = new
                     {
-                        ErrorMessage = filterContext.Exception.Message
+                        ErrorMessage = resultException.Message
                     }
                 };
             }
             else
             {
-                var model = new HandleErrorInfo(filterContext.Exception,
+                var model = new HandleErrorInfo(resultException,
                                                 filterContext.RouteData.Values["controller"].ToString(),
                                                 filterContext.RouteData.Values["action"].ToString());
                 errorResult = new ViewResult()
