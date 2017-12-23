@@ -7,14 +7,14 @@ namespace PhotoAlbum.Client.Models
     {
         [Required]
         [StringLength(20)]
-        [RegularExpression(@"[A-Za-z0-9_-]*", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.ValErrLoginRegExp))]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Login))]
+        [RegularExpression(@"[A-Za-z0-9_-]*", ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.ValErrLoginRegExp))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Login))]
         public string Login { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordToShortOrToLong))]
+        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordToShortOrToLong))]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Password))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Password))]
         public string Password { get; set; }
     }
 
@@ -22,81 +22,81 @@ namespace PhotoAlbum.Client.Models
     {
         [Required]
         [StringLength(20)]
-        [RegularExpression(@"[A-Za-z0-9_-]*", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.UnacceptableLogin))]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Login))]
+        [RegularExpression(@"[A-Za-z0-9_-]*", ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.UnacceptableLogin))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Login))]
         public string Login { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.UnacceptableEmail))]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Email))]
+        [EmailAddress(ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.UnacceptableEmail))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Email))]
         public string Email { get; set; }
 
         [StringLength(20)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.FirstName))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.FirstName))]
         public string FirstName { get; set; }
 
         [StringLength(20)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.LastName))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.LastName))]
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordToShortOrToLong))]
+        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordToShortOrToLong))]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Password))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Password))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.ConfirmPassword))]
-        [Compare("Password", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordsDoNotMatch))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.ConfirmPassword))]
+        [Compare("Password", ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordsDoNotMatch))]
         public string ConfirmPassword { get; set; }
     }
 
     public class EditUserProfileViewModel
     {
         [Required]
-        [EmailAddress(ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.UnacceptableEmail))]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Email))]
+        [EmailAddress(ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.UnacceptableEmail))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Email))]
         public string Email { get; set; }
 
         [StringLength(20)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.FirstName))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.FirstName))]
         public string FirstName { get; set; }
 
         [StringLength(20)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.LastName))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.LastName))]
         public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.OldPassword))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.OldPassword))]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordToShortOrToLong))]
+        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordToShortOrToLong))]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.NewPassword))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.NewPassword))]
         public string NewPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.ConfirmPassword))]
-        [Compare("NewPassword", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordsDoNotMatch))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.ConfirmPassword))]
+        [Compare("NewPassword", ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordsDoNotMatch))]
         public string ConfirmPassword { get; set; }
     }
 
     public class EditUserInfoViewModel
     {
         [Required]
-        [EmailAddress(ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.UnacceptableEmail))]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.Email))]
+        [EmailAddress(ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.UnacceptableEmail))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Email))]
         public string Email { get; set; }
 
         [StringLength(20)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.FirstName))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.FirstName))]
         public string FirstName { get; set; }
 
         [StringLength(20)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.LastName))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.LastName))]
         public string LastName { get; set; }
     }
 
@@ -104,19 +104,19 @@ namespace PhotoAlbum.Client.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.OldPassword))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.OldPassword))]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordToShortOrToLong))]
+        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordToShortOrToLong))]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.NewPassword))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.NewPassword))]
         public string NewPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(ResourceType = typeof(Resources.ResourceEN), Name = nameof(Resources.ResourceEN.ConfirmPassword))]
-        [Compare("NewPassword", ErrorMessageResourceType = typeof(Resources.ResourceEN), ErrorMessageResourceName = nameof(Resources.ResourceEN.PasswordsDoNotMatch))]
+        [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.ConfirmPassword))]
+        [Compare("NewPassword", ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordsDoNotMatch))]
         public string ConfirmPassword { get; set; }
     }
 }

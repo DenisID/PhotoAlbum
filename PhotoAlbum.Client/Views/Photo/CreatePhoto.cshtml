@@ -11,21 +11,21 @@
 
     <fieldset>
 
-        <div class="editor-label">@Resources.ResourceEN.SelectFile</div>
+        <div class="editor-label">@Resources.Localization.SelectFile</div>
         <div class="editor-field">
             <input type="file" name="Image" id="photoInput" />
         </div>
         @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
         <br/>
 
-        <div class="editor-label">@Resources.ResourceEN.Title</div>
+        <div class="editor-label">@Resources.Localization.Title</div>
         <div class="editor-field">
             <input type="text" name="Title" value="@Model.Title" />
         </div>
         @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
         <br />
 
-        <div class="editor-label">@Resources.ResourceEN.Description</div>
+        <div class="editor-label">@Resources.Localization.Description</div>
         <div class="editor-field">
             <textarea name="Description">@Model.Description</textarea>
         </div>
@@ -33,7 +33,7 @@
         <br />
 
         <p>
-            <input type="submit" name="submit" class="btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
+            <input type="submit" name="submit" class="btn btn-primary btn-large" value="@Resources.Localization.Save" />
         </p>
 
     </fieldset>

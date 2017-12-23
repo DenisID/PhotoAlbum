@@ -8,10 +8,10 @@
 @*Sort order*@
 <div class="sortOrder">
     <span class="sortNewFirst">
-        @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByCreationDate, new { Checked = "checked" }) @Resources.ResourceEN.NewFirst
+        @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByCreationDate, new { Checked = "checked" }) @Resources.Localization.NewFirst
     </span>
     <span class="sortPopularFirst">
-        @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByRating) @Resources.ResourceEN.PopularFirst
+        @Html.RadioButtonFor(m => m.SortPhoto.Sorting, Model.SortPhoto.ByRating) @Resources.Localization.PopularFirst
     </span>
 </div>
 
@@ -42,7 +42,7 @@
 @*<iframe name="iframe1" width="600" height="400" src="/photo/createphoto" frameborder="1" scrolling="no"></iframe>*@
 
 @*"Add new pohoto" button*@
-@Html.ActionLink(Resources.ResourceEN.AddNewPhoto, "CreatePhoto", "Photo", new { @returnUrl = Request.Url.AbsolutePath }, new { @class = "addNewPhotoButton dialog-window btn btn-primary btn-large" })
+@Html.ActionLink(Resources.Localization.AddNewPhoto, "CreatePhoto", "Photo", new { @returnUrl = Request.Url.AbsolutePath }, new { @class = "addNewPhotoButton dialog-window btn btn-primary btn-large" })
 
 @*Main photo content section*@
 <div id="sectionPhotos"></div>
@@ -123,6 +123,7 @@
     $('input[name="SortPhoto.Sorting"]:radio').change(function () {
         $('#sectionPhotos').empty();
         $("#lastRowId").val(1);
+        isPhotoAvaiable = true;
         GetAllCurrentUserVotes();
         sorting = $('input[name="SortPhoto.Sorting"]:checked').val();
         GetPhotosFromNextSection(false, sorting);
@@ -182,7 +183,7 @@
                         isPhotoAvaiable = false;
 
                         if (lastRowId === 1) {
-                            var noPhotoYetPlaceholder = '<div class="noPhotoYetPlaceholder">' + '@Resources.ResourceEN.NoPhotosYet' + '</div>';
+                            var noPhotoYetPlaceholder = '<div class="noPhotoYetPlaceholder">' + '@Resources.Localization.NoPhotosYet' + '</div>';
                             $('#sectionPhotos').append(noPhotoYetPlaceholder);
                         }
 
@@ -199,10 +200,10 @@
                                                     item.Title +
                                                 '</span>' +
                                                 '<span class ="photoEditButton">' +
-                                                    '<a href="/Photo/EditPhoto/' + item.Id + '?returnUrl=%2F' + '@ViewBag.UserName' + '%2F' + '@ViewBag.Manage' + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.ResourceEN.EditPhoto' + '</a>' +
+                                                    '<a href="/Photo/EditPhoto/' + item.Id + '?returnUrl=%2F' + '@ViewBag.UserName' + '%2F' + '@ViewBag.Manage' + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.Localization.EditPhoto' + '</a>' +
                                                 '</span>' +
                                                 '<span class ="photoDeleteButton">' +
-                                                    '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large">' + '@Resources.ResourceEN.DeletePhoto' + '</a>' +
+                                                    '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large">' + '@Resources.Localization.DeletePhoto' + '</a>' +
                                                 '</span>' +
                                             '</div>' +
                                             '<div class="photoDescription">' + item.Description + '</div>' +
@@ -214,13 +215,13 @@
                                             '</div>' +
                                             '<div class="photoRatings">' +
                                                 '<div class="photoRating">' +
-                                                    '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                    '<div class="ratingText">' + '@Resources.Localization.Rating: ' + '</div>' +
                                                     '<div class="starRating">' +
                                                         '<div id="photoRatingId_' + item.Id + '"></div>' +
                                                     '</div>' +
                                                 '</div>' +
                                                 '<div class="photoUserRating">' +
-                                                    '<div class="myRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
+                                                    '<div class="myRatingText">' + '@Resources.Localization.MyRating: ' + '</div>' +
                                                     '<div class="starRating">' +
                                                         '<div id="photoMyRatingId_' + item.Id + '"></div>' +
                                                     '</div>' +
@@ -294,7 +295,7 @@
                         window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
                     }
                     else {
-                        window.location.href = '/Home/Error?message=' + '@Resources.ResourceEN.ErrorOops';
+                        window.location.href = '/Home/Error?message=' + '@Resources.Localization.ErrorOops';
                     }
                 }
             });
