@@ -25,7 +25,8 @@ namespace PhotoAlbum.Server.Handlers
         private static HttpResponseMessage BuildApiResponse(HttpRequestMessage request, HttpResponseMessage response)
         {
             object content;
-            string errorMessage = String.Empty;
+            string errorMessage = null;
+            HttpStatusCode responseStatusCode = response.StatusCode;
 
             if (response.TryGetContentValue(out content) && !response.IsSuccessStatusCode)
             {
@@ -39,10 +40,13 @@ namespace PhotoAlbum.Server.Handlers
                         error = error.InnerException;
                     }
                     errorMessage = error.ExceptionMessage;
+
+                    if (errorMessage.Contains(ErrorCodes.ErrorsMark))
+                    {
+                        responseStatusCode = HttpStatusCode.OK;
+                    }
                 }
             }
-            
-            HttpStatusCode responseStatusCode = errorMessage.Contains(ErrorCodes.ErrorsMark) ? HttpStatusCode.OK : response.StatusCode;
 
             var newResponse = request.CreateResponse(responseStatusCode, new ApiResponse(responseStatusCode, content, errorMessage));
 
