@@ -268,7 +268,7 @@ namespace PhotoAlbum.Server.Model.Services
             }
 
             var photo = _photoAlbumContext.Photos.Find(photoId);
-            if (user == null)
+            if (photo == null)
             {
                 throw new PhotoNotFoundException(ErrorCodes.PhotoNotFound);
             }
