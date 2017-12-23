@@ -54,6 +54,7 @@
     $('input[name="SortPhoto.Sorting"]:radio').change(function () {
         $('#sectionPhotos').empty();
         $("#lastRowId").val(1);
+        isPhotoAvaiable = true;
         GetAllCurrentUserVotes();
         sorting = $('input[name="SortPhoto.Sorting"]:checked').val();
         GetPhotosFromNextSection(false, sorting);
