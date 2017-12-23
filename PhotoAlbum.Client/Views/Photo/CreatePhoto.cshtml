@@ -1,13 +1,19 @@
 ﻿@model PhotoAlbum.Client.Models.CreatePhotoViewModel
 
-@using (Html.BeginForm("CreatePhoto", "Photo", new { @returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreatePhoto", 
+                       "Photo", 
+                       new { @returnUrl = ViewBag.ReturnUrl }, 
+                       FormMethod.Post, 
+                       new { enctype = "multipart/form-data", id = "formForModal" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+
     <fieldset>
+
         <div class="editor-label">@Resources.ResourceEN.SelectFile</div>
         <div class="editor-field">
-            <input type="file" name="Image" />
+            <input type="file" name="Image" id="photoInput" />
         </div>
         @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
         <br/>
@@ -21,14 +27,13 @@
 
         <div class="editor-label">@Resources.ResourceEN.Description</div>
         <div class="editor-field">
-            <textarea name="Description" value="@Model.Description"></textarea>
+            <textarea name="Description">@Model.Description</textarea>
         </div>
         @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
         <br />
 
         <p>
-            <input type="submit" class="dialog-window btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
-            <a href="@ViewBag.ReturnUrl" class="btn btn-primary btn-large">@Resources.ResourceEN.Cancel</a>
+            <input type="submit" name="submit" class="btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
         </p>
 
     </fieldset>
