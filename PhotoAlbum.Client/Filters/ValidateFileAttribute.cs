@@ -23,12 +23,12 @@ namespace PhotoAlbum.Client.Filters
                 return false;
             else if (!allowedFileExtensions.Contains(file.FileName.Substring(file.FileName.LastIndexOf('.'))))
             {
-                ErrorMessage = Resources.ResourceEN.PleaseUploadYourPhotoOfType + " " + string.Join(", ", allowedFileExtensions);
+                ErrorMessage = Resources.Localization.PleaseUploadYourPhotoOfType + " " + string.Join(", ", allowedFileExtensions);
                 return false;
             }
             else if (file.ContentLength > maxContentLength)
             {
-                ErrorMessage = Resources.ResourceEN.YourPhotoIsTooLargeMaximumAllowedSizeIs + " " + (maxContentLength / 1024).ToString() + Resources.ResourceEN.MB;
+                ErrorMessage = Resources.Localization.YourPhotoIsTooLargeMaximumAllowedSizeIs + " " + (maxContentLength / 1024).ToString() + Resources.Localization.MB;
                 return false;
             }
             else
