@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - @Resources.ResourceEN.PhotoAlbum</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/css/myAlias")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/bootstrap/myAlias")
     @RenderSection("scripts", required: false)
 
 </head>
@@ -26,7 +26,7 @@
                     <li>@Html.ActionLink(@Resources.ResourceEN.AllPhotos, "Index", "Photo")</li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink(@Resources.ResourceEN.MyPhotos, "Manage", User.Identity.Name)</li>
+                        <li>@Html.ActionLink(@Resources.ResourceEN.MyPhotos, "manage", User.Identity.Name)</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

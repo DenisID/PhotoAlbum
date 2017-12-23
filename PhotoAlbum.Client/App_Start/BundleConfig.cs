@@ -20,22 +20,25 @@ namespace PhotoAlbum.Client
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap/myAlias").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js")
                       .IncludeDirectory("~/Scripts/bootstrap", "*.js", true));
         
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/css/myAlias").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css")
                       .IncludeDirectory("~/Content/bootstrap", "*.css", true)
                       .IncludeDirectory("~/Content/jqueryui", "*.css", true));
 
-            bundles.Add(new ScriptBundle("~/bundles/rateyo")
+            bundles.Add(new ScriptBundle("~/bundles/rateyo/myAlias")
                             .IncludeDirectory("~/Scripts/rateyo", "*.js", true));
 
-            bundles.Add(new StyleBundle("~/Content/rateyo")
+            bundles.Add(new StyleBundle("~/Content/rateyo/myAlias")
                             .IncludeDirectory("~/Content/rateyo", "*.css", true));
+
+            bundles.Add(new ScriptBundle("~/Scripts/myModal")
+                            .Include("~/Scripts/bootstrap/modal.js"));
         }
     }
 }

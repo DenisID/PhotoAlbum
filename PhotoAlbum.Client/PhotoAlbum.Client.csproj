@@ -234,6 +234,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppParameters\UriConstantsService.cs" />
+    <Compile Include="AppParameters\ValidateFileConstantsService.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\Bootstrapper.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IValidateFileConstantsService.cs" />
     <Compile Include="Mappings\DtoToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDtoMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToViewModelMappingProfile.cs" />

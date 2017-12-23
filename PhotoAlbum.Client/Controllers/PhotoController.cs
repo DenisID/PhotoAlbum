@@ -100,10 +100,11 @@ namespace PhotoAlbum.Client.Controllers
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
                 
-                return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+                // Return EmptyResult() for modal window
+                return new EmptyResult();
             }
             
-            return View(model);
+            return PartialView(model);
         }
         
         public async Task<ActionResult> GetImageById(int id)
@@ -172,7 +173,7 @@ namespace PhotoAlbum.Client.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(editPhotoViewModel);
+                return PartialView(editPhotoViewModel);
             }
 
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
@@ -185,8 +186,9 @@ namespace PhotoAlbum.Client.Controllers
             };
 
             await _photoAlbumService.EditPhotoAsync(editPhotoDto, token);
-
-            return RedirectToAction("UserPageManage", new { username = User.Identity.Name });
+            
+            // Return EmptyResult() for modal window
+            return new EmptyResult();
         }
 
         public async Task<ActionResult> GetPhotoRating(int id)

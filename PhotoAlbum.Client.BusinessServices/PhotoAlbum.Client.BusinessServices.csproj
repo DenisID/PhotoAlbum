@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Helpers\PhotoAlbumExceptionHelper.cs" />
     <Compile Include="Interfaces\IPhotoAlbumService.cs" />
+    <Compile Include="Interfaces\IUriConstantsService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PhotoAlbumService.cs" />

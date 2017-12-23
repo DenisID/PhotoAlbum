@@ -13,6 +13,8 @@ using PhotoAlbum.Client.BusinessServices.Interfaces;
 using AutoMapper;
 using PhotoAlbum.Client.Dto;
 using System.Net;
+using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Common.ErrorCodes;
 
 namespace PhotoAlbum.Client.Controllers
 {
@@ -22,7 +24,7 @@ namespace PhotoAlbum.Client.Controllers
         private readonly IUserService _userService;
 
         private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        //private ApplicationUserManager _userManager;
 
         public AccountController(IUserService userService)
         {
@@ -41,17 +43,17 @@ namespace PhotoAlbum.Client.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+        //public ApplicationUserManager UserManager
+        //{
+        //    get
+        //    {
+        //        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        //    }
+        //    private set
+        //    {
+        //        _userManager = value;
+        //    }
+        //}
 
         // GET: /Account/Login
         [AllowAnonymous]
@@ -137,8 +139,13 @@ namespace PhotoAlbum.Client.Controllers
             return RedirectToAction("Index", "Photo");
         }
         
-        public async Task<ActionResult> EditUserProfile()
+        public async Task<ActionResult> EditUserProfile(string username)
         {
+            if(username != User.Identity.Name)
+            {
+                throw new UserIsNotAuthorizedException(ErrorCodes.UserIsNotAuthorized);
+            }
+
             ViewBag.Result = "";
 
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
@@ -213,8 +220,12 @@ namespace PhotoAlbum.Client.Controllers
             var editUserProfileDto = await _userService.GetUserProfileAsync(token);
 
             var newModel = Mapper.Map<EditUserProfileViewModel>(editUserProfileDto);
-
-            return View("EditUserProfile", newModel);
+            
+            return RedirectToRoute(new
+            {
+                controller = User.Identity.Name,
+                action = "profile"
+            });
         }
 
         [HttpPost]
@@ -230,11 +241,11 @@ namespace PhotoAlbum.Client.Controllers
         {
             if (disposing)
             {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
+                //if (_userManager != null)
+                //{
+                //    _userManager.Dispose();
+                //    _userManager = null;
+                //}
 
                 if (_signInManager != null)
                 {
