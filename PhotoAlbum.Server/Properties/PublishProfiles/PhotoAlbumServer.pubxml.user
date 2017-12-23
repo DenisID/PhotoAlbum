@@ -157,7 +157,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/23/2017 23:09:24</publishTime>
     </File>
     <File Include="bin/PhotoAlbum.Server.dll">
-      <publishTime>12/23/2017 23:09:34</publishTime>
+      <publishTime>12/23/2017 23:50:08</publishTime>
     </File>
     <File Include="bin/PhotoAlbum.Server.Dto.dll">
       <publishTime>12/23/2017 23:09:24</publishTime>
