@@ -79,7 +79,7 @@ namespace PhotoAlbum.Client.Controllers
             var token = await _userService.GetTokenAsync(getTokenDto);
             if(token.AccessToken == null)
             {
-                ModelState.AddModelError(String.Empty, Resources.ResourceEN.InvalidLoginOrPassword);
+                ModelState.AddModelError(String.Empty, Resources.Localization.InvalidLoginOrPassword);
 
                 return View(model);
             }
@@ -164,7 +164,7 @@ namespace PhotoAlbum.Client.Controllers
             if (!ModelState.IsValid)
             {
                 var badModel = Mapper.Map<EditUserProfileViewModel>(model);
-                ViewBag.ProfileResult = Resources.ResourceEN.Error;
+                ViewBag.ProfileResult = Resources.Localization.Error;
 
                 return View(badModel);
             }
@@ -176,11 +176,11 @@ namespace PhotoAlbum.Client.Controllers
             var result = await _userService.EditUserProfileAsync(dto, token);
             if(result == HttpStatusCode.OK)
             {
-                ViewBag.ProfileResult = Resources.ResourceEN.ProfileInformationChangedSuccessfully;
+                ViewBag.ProfileResult = Resources.Localization.ProfileInformationChangedSuccessfully;
             }
             else
             {
-                ViewBag.ProfileResult = Resources.ResourceEN.Error;
+                ViewBag.ProfileResult = Resources.Localization.Error;
             }
 
             dto = await _userService.GetUserProfileAsync(token);
@@ -200,7 +200,7 @@ namespace PhotoAlbum.Client.Controllers
             {
                 var editUserProfileDtoForBadModel = await _userService.GetUserProfileAsync(token);
                 var badModel = Mapper.Map<EditUserProfileViewModel>(editUserProfileDtoForBadModel);
-                ViewBag.PasswordResult = Resources.ResourceEN.Error;
+                ViewBag.PasswordResult = Resources.Localization.Error;
 
                 return View("EditUserProfile", badModel);
             }
@@ -210,11 +210,11 @@ namespace PhotoAlbum.Client.Controllers
             var result = await _userService.ChangePasswordAsync(changePasswordDto, token);
             if (result == HttpStatusCode.OK)
             {
-                ViewBag.PasswordResult = Resources.ResourceEN.PasswordChangedSuccessfully;
+                ViewBag.PasswordResult = Resources.Localization.PasswordChangedSuccessfully;
             }
             else
             {
-                ViewBag.PasswordResult = Resources.ResourceEN.Error;
+                ViewBag.PasswordResult = Resources.Localization.Error;
             }
 
             var editUserProfileDto = await _userService.GetUserProfileAsync(token);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - @Resources.ResourceEN.PhotoAlbum</title>
+    <title>@ViewBag.Title - @Resources.Localization.PhotoAlbum</title>
     @Styles.Render("~/Content/css/myAlias")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -23,10 +23,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink(@Resources.ResourceEN.AllPhotos, "Index", "Photo")</li>
+                    <li>@Html.ActionLink(@Resources.Localization.AllPhotos, "Index", "Photo")</li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink(@Resources.ResourceEN.MyPhotos, "manage", User.Identity.Name)</li>
+                        <li>@Html.ActionLink(@Resources.Localization.MyPhotos, "manage", User.Identity.Name)</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -37,7 +37,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - @Resources.ResourceEN.PhotoAlbum</p>
+            <p>&copy; @DateTime.Now.Year - @Resources.Localization.PhotoAlbum</p>
         </footer>
     </div>
 

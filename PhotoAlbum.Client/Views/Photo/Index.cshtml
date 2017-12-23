@@ -11,10 +11,10 @@
 @*Sort order*@
 <div class="sortOrder">
     <span class="sortNewFirst">
-        @Html.RadioButtonFor(m => m.Sorting, Model.ByCreationDate, new { Checked = "checked" }) @Resources.ResourceEN.NewFirst
+        @Html.RadioButtonFor(m => m.Sorting, Model.ByCreationDate, new { Checked = "checked" }) @Resources.Localization.NewFirst
     </span>
     <span class="sortPopularFirst">
-        @Html.RadioButtonFor(m => m.Sorting, Model.ByRating) @Resources.ResourceEN.PopularFirst 
+        @Html.RadioButtonFor(m => m.Sorting, Model.ByRating) @Resources.Localization.PopularFirst 
     </span>
 </div>
 
@@ -110,7 +110,7 @@
                         isPhotoAvaiable = false;
 
                         if (lastRowId === 1) {
-                            var noPhotoYetPlaceholder = '<div class="noPhotoYetPlaceholder">' + '@Resources.ResourceEN.NoPhotosYet' + '</div>';
+                            var noPhotoYetPlaceholder = '<div class="noPhotoYetPlaceholder">' + '@Resources.Localization.NoPhotosYet' + '</div>';
                             $('#sectionPhotos').append(noPhotoYetPlaceholder);
                         }
 
@@ -138,13 +138,13 @@
                                                 '</div>' +
                                                 '<div class="photoRatings">' +
                                                     '<div class="photoRating">' +
-                                                        '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                        '<div class="ratingText">' + '@Resources.Localization.Rating: ' + '</div>' +
                                                         '<div class="starRating">' +
                                                             '<div id="photoRatingId_' + item.Id + '"></div>' +
                                                         '</div>' +
                                                     '</div>' +
                                                     '<div class="photoUserRating">' +
-                                                        '<div class="myRatingText">' + '@Resources.ResourceEN.MyRating: ' + '</div>' +
+                                                        '<div class="myRatingText">' + '@Resources.Localization.MyRating: ' + '</div>' +
                                                         '<div class="starRating">' +
                                                             '<div id="photoMyRatingId_' + item.Id + '"></div>' +
                                                         '</div>' +
@@ -169,7 +169,7 @@
                                                 '</div>' +
                                                 '<div class="photoRatings">' +
                                                     '<div class="photoRating">' +
-                                                        '<div class="ratingText">' + '@Resources.ResourceEN.Rating: ' + '</div>' +
+                                                        '<div class="ratingText">' + '@Resources.Localization.Rating: ' + '</div>' +
                                                         '<div class="starRating">' +
                                                             '<div id="photoRatingId_' + item.Id + '"></div>' +
                                                         '</div>' +
@@ -246,7 +246,7 @@
                         window.location.href = '/Home/Error?message=' + jsonData.responseJSON.ErrorMessage;
                     }
                     else {
-                        window.location.href = '/Home/Error?message=' + '@Resources.ResourceEN.ErrorOops';
+                        window.location.href = '/Home/Error?message=' + '@Resources.Localization.ErrorOops';
                     }
                 }
             });

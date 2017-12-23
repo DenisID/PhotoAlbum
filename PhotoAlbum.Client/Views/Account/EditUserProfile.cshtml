@@ -1,13 +1,13 @@
 ﻿@model PhotoAlbum.Client.Models.EditUserProfileViewModel
 
 @{ 
-    ViewBag.Title = @Resources.ResourceEN.UserProfile;
+    ViewBag.Title = @Resources.Localization.UserProfile;
 }
 
 <h2>@ViewBag.Title</h2>
 
 <hr />
-<h4>@Resources.ResourceEN.EditUserProfile</h4>
+<h4>@Resources.Localization.EditUserProfile</h4>
 <hr />
 
 @using (Html.BeginForm("EditUserProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -16,21 +16,21 @@
     @Html.ValidationSummary(true)
     <fieldset>
 
-        <div class="editor-label">@Resources.ResourceEN.Email</div>
+        <div class="editor-label">@Resources.Localization.Email</div>
         <div class="editor-field">
             <input type="text" name="Email" value="@Model.Email" />
         </div>
         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         <br />
 
-        <div class="editor-label">@Resources.ResourceEN.FirstName</div>
+        <div class="editor-label">@Resources.Localization.FirstName</div>
         <div class="editor-field">
             <input type="text" name="FirstName" value="@Model.FirstName" />
         </div>
         @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
         <br />
 
-        <div class="editor-label">@Resources.ResourceEN.LastName</div>
+        <div class="editor-label">@Resources.Localization.LastName</div>
         <div class="editor-field">
             <input type="text" name="LastName" value="@Model.LastName" />
         </div>
@@ -38,11 +38,11 @@
         <br />
 
         <span>
-            <input type="submit" class="btn btn-default" value="@Resources.ResourceEN.Save" />
+            <input type="submit" class="btn btn-default" value="@Resources.Localization.Save" />
         </span>
         <span>
-            @*@Html.ActionLink(Resources.ResourceEN.Cancel, "profile", User.Identity.Name, new { @class = "btn btn-default" })*@
-            <a href="/@User.Identity.Name/profile" class = "btn btn-default">@Resources.ResourceEN.Cancel</a>
+            @*@Html.ActionLink(Resources.Localization.Cancel, "profile", User.Identity.Name, new { @class = "btn btn-default" })*@
+            <a href="/@User.Identity.Name/profile" class = "btn btn-default">@Resources.Localization.Cancel</a>
         </span>
         <span>
             @ViewBag.ProfileResult
@@ -54,7 +54,7 @@
 }
 
 <hr />
-<h4>@Resources.ResourceEN.ChangePassword</h4>
+<h4>@Resources.Localization.ChangePassword</h4>
 <hr />
 
 @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -63,21 +63,21 @@
     @Html.ValidationSummary(true)
     <fieldset>
 
-        <div class="editor-label">@Resources.ResourceEN.OldPassword</div>
+        <div class="editor-label">@Resources.Localization.OldPassword</div>
         <div class="editor-field">
             <input type="password" name="OldPassword" value="@Model.OldPassword" />
         </div>
         @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
         <br />
 
-        <div class="editor-label">@Resources.ResourceEN.NewPassword</div>
+        <div class="editor-label">@Resources.Localization.NewPassword</div>
         <div class="editor-field">
             <input type="password" name="NewPassword" value="@Model.NewPassword" />
         </div>
         @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
         <br />
 
-        <div class="editor-label">@Resources.ResourceEN.ConfirmPassword</div>
+        <div class="editor-label">@Resources.Localization.ConfirmPassword</div>
         <div class="editor-field">
             <input type="password" name="ConfirmPassword" value="@Model.ConfirmPassword" />
         </div>
@@ -85,11 +85,11 @@
         <br />
 
         <span>
-            <input type="submit" class="btn btn-default" value="@Resources.ResourceEN.Save" />
+            <input type="submit" class="btn btn-default" value="@Resources.Localization.Save" />
         </span>
         <span>
-            @*@Html.ActionLink(Resources.ResourceEN.Cancel, "profile", User.Identity.Name, new { @class = "btn btn-default" })*@
-            <a href="/@User.Identity.Name/profile" class="btn btn-default">@Resources.ResourceEN.Cancel</a>
+            @*@Html.ActionLink(Resources.Localization.Cancel, "profile", User.Identity.Name, new { @class = "btn btn-default" })*@
+            <a href="/@User.Identity.Name/profile" class="btn btn-default">@Resources.Localization.Cancel</a>
         </span>
         <span>
             @ViewBag.PasswordResult
