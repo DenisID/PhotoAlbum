@@ -27,14 +27,13 @@
 
         <div class="editor-label">@Resources.ResourceEN.Description</div>
         <div class="editor-field">
-            <textarea name="Description" value="@Model.Description"></textarea>
+            <textarea name="Description">@Model.Description</textarea>
         </div>
         @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
         <br />
 
         <p>
             <input type="submit" name="submit" class="btn btn-primary btn-large" value="@Resources.ResourceEN.Save" />
-            <button type="button" id="formForModalClearButton" class="btn btn-primary btn-large" data-dismiss="modal">@Resources.ResourceEN.Clear</button>
         </p>
 
     </fieldset>
