@@ -14,16 +14,22 @@ namespace PhotoAlbum.Client.BusinessServices.Helpers
         {
             switch (exMessage)
             {
-                case ErrorCodes.NoPhotosInDatabase:
-                    throw new PhotoNotFoundException(exMessage);
-
-                case ErrorCodes.NotEnoughRights:
-                    throw new NotEnoughRightsException(exMessage);
-
                 case ErrorCodes.PhotoNotFound:
                     throw new PhotoNotFoundException(exMessage);
 
+                case ErrorCodes.NoPhotosInDatabase:
+                    throw new PhotoNotFoundException(exMessage);
+
                 case ErrorCodes.UserNotFound:
+                    throw new UserNotFoundException(exMessage);
+
+                case ErrorCodes.NotEnoughRights:
+                    throw new NotEnoughRightsException(exMessage);
+                    
+                case ErrorCodes.UserInfoNotFound:
+                    throw new UserNotFoundException(exMessage);
+
+                case ErrorCodes.UserIsNotAuthorized:
                     throw new UserNotFoundException(exMessage);
             }
         }

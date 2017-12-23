@@ -2,11 +2,13 @@
 {
     public class ErrorCodes
     {
-        public const string PhotoNotFound = "Photo Not Found";
-        public const string NoPhotosInDatabase = "No Photos In Database";
-        public const string UserNotFound = "User Not Found";
-        public const string NotEnoughRights = "Not Enough Rights";
-        public const string UserInfoNotFound = "User Info Not Found";
-        public const string UserIsNotAuthorized = "User Is Not Authorized";
+        public const string ErrorsMark = "#PAE:";
+
+        public const string PhotoNotFound = ErrorsMark + "Photo Not Found";
+        public const string NoPhotosInDatabase = ErrorsMark + "No Photos In Database";
+        public const string UserNotFound = ErrorsMark + "User Not Found";
+        public const string NotEnoughRights = ErrorsMark + "Not Enough Rights";
+        public const string UserInfoNotFound = ErrorsMark + "User Info Not Found";
+        public const string UserIsNotAuthorized = ErrorsMark + "User Is Not Authorized";
     }
 }
