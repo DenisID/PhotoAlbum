@@ -203,7 +203,7 @@
                                                     '<a href="/Photo/EditPhoto/' + item.Id + '?returnUrl=%2F' + '@ViewBag.UserName' + '%2F' + '@ViewBag.Manage' + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.Localization.EditPhoto' + '</a>' +
                                                 '</span>' +
                                                 '<span class ="photoDeleteButton">' +
-                                                    '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large">' + '@Resources.Localization.DeletePhoto' + '</a>' +
+                                                    '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large" onclick = "return confirm(\'' + '@Resources.Localization.AreYouSureYouWantToDeleteThisPhoto' + '\')">' + '@Resources.Localization.DeletePhoto' + '</a>' +
                                                 '</span>' +
                                             '</div>' +
                                             '<div class="photoDescription">' + item.Description + '</div>' +

@@ -282,4 +282,7 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="AreYouSureYouWantToDeleteThisPhoto" xml:space="preserve">
+    <value>Are you sure, you want to delete this photo?</value>
+  </data>
 </root>
