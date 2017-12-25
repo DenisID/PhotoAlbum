@@ -59,7 +59,6 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             var urn = _uriConstantsService.GetToken;
             var requerstToApi = new HttpRequestMessage(HttpMethod.Post, urn) { Content = new FormUrlEncodedContent(dict) };
             var apiResponse = await _httpClient.SendAsync(requerstToApi);
-            apiResponse.EnsureSuccessStatusCode();
 
             var token = await apiResponse.Content.ReadAsAsync<TokenDto>();
 
