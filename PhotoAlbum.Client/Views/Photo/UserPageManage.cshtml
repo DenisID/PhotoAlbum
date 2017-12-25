@@ -210,7 +210,7 @@
                                             '<div class="photoOwnerAndDate">' +
                                                 '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
                                                 '<span class="photoDate">' +
-                                                    Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
+                                                    new Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
                                                 '</span>' +
                                             '</div>' +
                                             '<div class="photoRatings">' +
