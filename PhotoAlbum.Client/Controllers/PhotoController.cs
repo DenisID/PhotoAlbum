@@ -64,6 +64,7 @@ namespace PhotoAlbum.Client.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult CreatePhoto(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -74,6 +75,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel model, string returnUrl)
         {
@@ -138,7 +140,8 @@ namespace PhotoAlbum.Client.Controllers
 
             return File(image.Image, image.ImageMimeType);
         }
-        
+
+        [Authorize]
         public async Task<ActionResult> DeletePhotoById(int id)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
@@ -149,6 +152,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> EditPhoto(int id, string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -166,6 +170,7 @@ namespace PhotoAlbum.Client.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel, string returnUrl)
         {
@@ -246,6 +251,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> CastPhotoVote(PhotoVoteViewModel model)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
