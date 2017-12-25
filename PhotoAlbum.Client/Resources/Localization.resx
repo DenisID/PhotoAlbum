@@ -282,4 +282,7 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="LogOff" xml:space="preserve">
+    <value>Log off</value>
+  </data>
 </root>
