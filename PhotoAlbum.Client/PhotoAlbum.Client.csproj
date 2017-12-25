@@ -396,6 +396,7 @@
     <Content Include="Scripts\bootstrap\dropdown.js" />
     <Content Include="Scripts\bootstrap\modal.js" />
     <Content Include="Scripts\bootstrap\popover.js" />
+    <Content Include="Scripts\bootstrap\popper.js" />
     <Content Include="Scripts\bootstrap\scrollspy.js" />
     <Content Include="Scripts\bootstrap\tab.js" />
     <Content Include="Scripts\bootstrap\tooltip.js" />
