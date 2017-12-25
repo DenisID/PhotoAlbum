@@ -118,7 +118,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/23/2017 23:09:55</publishTime>
     </File>
     <File Include="bin/PhotoAlbum.Client.dll">
-      <publishTime>12/23/2017 23:19:25</publishTime>
+      <publishTime>12/25/2017 15:03:30</publishTime>
     </File>
     <File Include="bin/PhotoAlbum.Client.Dto.dll">
       <publishTime>12/23/2017 23:09:55</publishTime>
@@ -616,7 +616,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2017 12:43:12</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>12/15/2017 13:44:41</publishTime>
+      <publishTime>12/25/2017 14:37:07</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>10/20/2017 12:43:12</publishTime>
@@ -706,10 +706,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2017 12:43:12</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>12/23/2017 23:06:52</publishTime>
+      <publishTime>12/25/2017 14:37:07</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
-      <publishTime>12/23/2017 23:06:52</publishTime>
+      <publishTime>12/25/2017 14:37:07</publishTime>
     </File>
     <File Include="Views/Test/Create.cshtml">
       <publishTime>10/25/2017 13:00:42</publishTime>
