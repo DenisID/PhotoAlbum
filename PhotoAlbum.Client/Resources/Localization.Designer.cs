@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure, you want to delete this photo?.
+        /// </summary>
+        public static string AreYouSureYouWantToDeleteThisPhoto {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToDeleteThisPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
