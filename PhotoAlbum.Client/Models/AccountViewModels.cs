@@ -6,14 +6,10 @@ namespace PhotoAlbum.Client.Models
     public class LoginViewModel
     {
         [Required]
-        [StringLength(20)]
-        [RegularExpression(@"[A-Za-z0-9_-]*", ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.ValErrLoginRegExp))]
         [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Login))]
         public string Login { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 6, ErrorMessageResourceType = typeof(Resources.Localization), ErrorMessageResourceName = nameof(Resources.Localization.PasswordToShortOrToLong))]
-        [DataType(DataType.Password)]
         [Display(ResourceType = typeof(Resources.Localization), Name = nameof(Resources.Localization.Password))]
         public string Password { get; set; }
     }
