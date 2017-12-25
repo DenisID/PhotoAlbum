@@ -118,3 +118,21 @@ textarea {
 .myPhotoRating{
     margin-bottom: 5px;
 }
+
+.photoRating{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.photoUserRating{
+    display: inline-block;
+}
+
+.ratingText, .myRatingText{
+    display: inline-block;
+    transform: translate(0%,-50%);
+}
+
+.starRating{
+    display: inline-block;
+}
