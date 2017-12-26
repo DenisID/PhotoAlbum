@@ -13,6 +13,7 @@ using PhotoAlbum.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -83,25 +84,40 @@ namespace PhotoAlbum.Client.Controllers
 
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
-            if (ModelState.IsValid && model.Image != null)
+            if (model.Image != null)
             {
-                byte[] imageData = null;
-
                 using (var binaryReader = new BinaryReader(model.Image.InputStream))
                 {
-                    imageData = binaryReader.ReadBytes(model.Image.ContentLength);
+                    Session["PhotoFileImageData"] = binaryReader.ReadBytes(model.Image.ContentLength);
                 }
+                Session["PhotoFileMimeType"] = model.Image.ContentType;
+                Session["PhotoFileName"] = Path.GetFileName(model.Image.FileName);
+            }
+
+            if (model.Image == null && Session["PhotoFileImageData"] != null)
+            {
+                if (ModelState.ContainsKey("Image"))
+                    ModelState["Image"].Errors.Clear();
+            }
+            
+            if (ModelState.IsValid && Session["PhotoFileImageData"] != null )
+            {
+                byte[] imageData = (byte[])Session["PhotoFileImageData"];
                 
                 var createPhotoDto = new CreatePhotoDto()
                 {
                     Image = imageData,
-                    ImageMimeType = model.Image.ContentType,
+                    ImageMimeType = (string)Session["PhotoFileMimeType"],
                     Title = model.Title,
                     Description = model.Description
                 };
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
                 
+                Session["PhotoFileImageData"] = null;
+                Session["PhotoFileMimeType"] = null;
+                Session["PhotoFileName"] = null;
+
                 // Return EmptyResult() for modal window
                 return new EmptyResult();
             }
