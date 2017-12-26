@@ -288,4 +288,7 @@
   <data name="SelectPhoto" xml:space="preserve">
     <value>Select photo</value>
   </data>
+  <data name="LogOff" xml:space="preserve">
+    <value>Log off</value>
+  </data>
 </root>

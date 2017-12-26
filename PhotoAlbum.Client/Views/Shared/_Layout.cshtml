@@ -23,10 +23,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink(@Resources.Localization.AllPhotos, "Index", "Photo")</li>
+                    <li>@Html.ActionLink(@Resources.Localization.AllPhotos, "Index", "Photo", null, new { id = "allPhotosHeaderLink"})</li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink(@Resources.Localization.MyPhotos, "manage", User.Identity.Name)</li>
+                        <li>@Html.ActionLink(@Resources.Localization.MyPhotos, "manage", User.Identity.Name, null, new { id = "myPhotosHeaderLink" })</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -41,6 +41,10 @@
         </footer>
     </div>
 
-    
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
 </body>
 </html>
