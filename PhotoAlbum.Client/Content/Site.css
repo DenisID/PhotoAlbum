@@ -164,14 +164,37 @@ textarea {
     text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     margin-right: 15px;
-    text-align: left;
+    text-align: right;
 }
 
 #dropDownMenuHeader:hover{
     color: rgb(255, 255, 255);
 }
 
-.dropdown-menu{
-    /*background-color: rgb(0, 0, 0);
-    color: rgb(157, 157, 157);*/
+#userDropDownMenu{
+    width: 100%;
+    background-color: rgb(34, 34, 34);
+    margin-top: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-color: rgb(34, 34, 34);
+    border-top-width: 1px;
+
+}
+
+#allPhotosHeaderLink, #myPhotosHeaderLink{
+    text-align: right;
+}
+
+.userDropDownMenuItems{
+    text-align: right;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: rgb(157, 157, 157) !important;
+    margin-right: 15px;
+}
+
+.userDropDownMenuItems:hover{
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(34, 34, 34) !important;
 }
