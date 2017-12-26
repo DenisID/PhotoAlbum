@@ -61,6 +61,7 @@
     <Compile Include="RegisterUserDto.cs" />
     <Compile Include="RegisterUserResultDto.cs" />
     <Compile Include="TokenDto.cs" />
+    <Compile Include="UserFullNameDto.cs" />
     <Compile Include="UserNameDto.cs" />
     <Compile Include="UserVoteDto.cs" />
     <Compile Include="WebApiResponseDto.cs" />

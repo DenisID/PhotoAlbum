@@ -67,5 +67,7 @@ namespace PhotoAlbum.Client.Models
     {
         public SortPhotoViewModel SortPhoto { get; set; } = new SortPhotoViewModel();
         public string UserName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
     }
 }

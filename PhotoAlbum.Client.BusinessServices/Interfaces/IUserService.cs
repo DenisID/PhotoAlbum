@@ -16,5 +16,6 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
         Task<EditUserProfileDto> GetUserProfileAsync(string token);
         Task<HttpStatusCode> EditUserProfileAsync(EditUserProfileDto dto, string token);
         Task<HttpStatusCode> ChangePasswordAsync(ChangePasswordDto dto, string token);
+        Task<UserFullNameDto> GetUserFullNameAsync(string userName);
     }
 }
