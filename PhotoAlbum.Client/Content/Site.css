@@ -28,7 +28,6 @@ textarea {
 }
 
 #loading{
-    
     display: none;
 }
 
@@ -146,4 +145,33 @@ textarea {
     max-width: 100%;
     min-width: 100%;
     min-height: 150px;
+}
+
+#dropDownMenuHeader{
+    background-color: transparent;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    color: rgb(157, 157, 157);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    text-decoration-color: rgb(157, 157, 157);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin-right: 15px;
+    text-align: left;
+}
+
+#dropDownMenuHeader:hover{
+    color: rgb(255, 255, 255);
+}
+
+.dropdown-menu{
+    /*background-color: rgb(0, 0, 0);
+    color: rgb(157, 157, 157);*/
 }
