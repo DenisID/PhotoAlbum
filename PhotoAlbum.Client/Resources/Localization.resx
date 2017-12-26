@@ -285,4 +285,7 @@
   <data name="AreYouSureYouWantToDeleteThisPhoto" xml:space="preserve">
     <value>Are you sure, you want to delete this photo?</value>
   </data>
+  <data name="SelectPhoto" xml:space="preserve">
+    <value>Select photo</value>
+  </data>
 </root>

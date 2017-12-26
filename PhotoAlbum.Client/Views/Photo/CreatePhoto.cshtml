@@ -13,7 +13,20 @@
 
         <div class="editor-label">@Resources.Localization.SelectFile</div>
         <div class="editor-field">
-            <input type="file" name="Image" id="photoInput" />
+            @if (Session["PhotoFileName"] != null)
+            {
+                <label for="photoInput" id="photoInputLabel" class="btn btn-primary">@Session["PhotoFileName"]</label>
+            }
+            else
+            {
+                <label for="photoInput" id="photoInputLabel" class="btn btn-primary">@Resources.Localization.SelectPhoto</label>
+            }
+            <input type="file" 
+                   name="Image" 
+                   id="photoInput" 
+                   accept="image/*" 
+                   style="display: none" 
+                   onchange="document.getElementById('photoInputLabel').innerText = this.value.replace(/^.*[\\\/]/, '');" >
         </div>
         @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
         <br/>
