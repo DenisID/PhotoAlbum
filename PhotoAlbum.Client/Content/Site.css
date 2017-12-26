@@ -136,3 +136,14 @@ textarea {
 .starRating{
     display: inline-block;
 }
+
+.photoTitleInput{
+    max-width: 100%;
+    min-width: 100%;
+}
+
+.photoDescriptionTextarea{
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 150px;
+}
