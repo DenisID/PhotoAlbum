@@ -11,23 +11,35 @@
 
     <fieldset>
 
-        <div class="editor-label">@Resources.Localization.SelectFile</div>
         <div class="editor-field">
-            <input type="file" name="Image" id="photoInput" />
+            @if (Session["PhotoFileName"] != null)
+            {
+                <label for="photoInput" id="photoInputLabel" class="btn btn-primary">@Session["PhotoFileName"]</label>
+            }
+            else
+            {
+                <label for="photoInput" id="photoInputLabel" class="btn btn-primary">@Resources.Localization.SelectPhoto</label>
+            }
+            <input type="file" 
+                   name="Image" 
+                   id="photoInput" 
+                   accept="image/*" 
+                   style="display: none" 
+                   onchange="document.getElementById('photoInputLabel').innerText = this.value.replace(/^.*[\\\/]/, '');" >
         </div>
         @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
         <br/>
 
         <div class="editor-label">@Resources.Localization.Title</div>
         <div class="editor-field">
-            <input type="text" name="Title" value="@Model.Title" />
+            <input type="text" name="Title" value="@Model.Title" class="photoTitleInput" />
         </div>
         @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
         <br />
 
         <div class="editor-label">@Resources.Localization.Description</div>
         <div class="editor-field">
-            <textarea name="Description">@Model.Description</textarea>
+            <textarea name="Description" class="photoDescriptionTextarea">@Model.Description</textarea>
         </div>
         @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
         <br />

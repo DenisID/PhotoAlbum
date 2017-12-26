@@ -13,6 +13,7 @@ using PhotoAlbum.Common.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -29,10 +30,12 @@ namespace PhotoAlbum.Client.Controllers
     public class PhotoController : Controller
     {
         private readonly IPhotoAlbumService _photoAlbumService;
+        private readonly IUserService _userService;
 
-        public PhotoController(IPhotoAlbumService photoAlbumService)
+        public PhotoController(IPhotoAlbumService photoAlbumService, IUserService userService)
         {
             _photoAlbumService = photoAlbumService;
+            _userService = userService;
         }
         
         public async Task<ActionResult> Index()
@@ -44,7 +47,9 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> UserPage(string username)
         {
-            var model = new UserPageViewModel(){ UserName = username};
+            var userFullNameDto = await _userService.GetUserFullNameAsync(username);
+            var model = Mapper.Map<UserPageViewModel>(userFullNameDto);
+            model.UserName = username;
 
             return View(model);
         }
@@ -64,6 +69,7 @@ namespace PhotoAlbum.Client.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult CreatePhoto(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -74,6 +80,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreatePhoto(CreatePhotoViewModel model, string returnUrl)
         {
@@ -81,25 +88,40 @@ namespace PhotoAlbum.Client.Controllers
 
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
 
-            if (ModelState.IsValid && model.Image != null)
+            if (model.Image != null)
             {
-                byte[] imageData = null;
-
                 using (var binaryReader = new BinaryReader(model.Image.InputStream))
                 {
-                    imageData = binaryReader.ReadBytes(model.Image.ContentLength);
+                    Session["PhotoFileImageData"] = binaryReader.ReadBytes(model.Image.ContentLength);
                 }
+                Session["PhotoFileMimeType"] = model.Image.ContentType;
+                Session["PhotoFileName"] = Path.GetFileName(model.Image.FileName);
+            }
+
+            if (model.Image == null && Session["PhotoFileImageData"] != null)
+            {
+                if (ModelState.ContainsKey("Image"))
+                    ModelState["Image"].Errors.Clear();
+            }
+            
+            if (ModelState.IsValid && Session["PhotoFileImageData"] != null )
+            {
+                byte[] imageData = (byte[])Session["PhotoFileImageData"];
                 
                 var createPhotoDto = new CreatePhotoDto()
                 {
                     Image = imageData,
-                    ImageMimeType = model.Image.ContentType,
+                    ImageMimeType = (string)Session["PhotoFileMimeType"],
                     Title = model.Title,
                     Description = model.Description
                 };
 
                 await _photoAlbumService.CreatePhotoAsync(createPhotoDto, token);
                 
+                Session["PhotoFileImageData"] = null;
+                Session["PhotoFileMimeType"] = null;
+                Session["PhotoFileName"] = null;
+
                 // Return EmptyResult() for modal window
                 return new EmptyResult();
             }
@@ -138,7 +160,8 @@ namespace PhotoAlbum.Client.Controllers
 
             return File(image.Image, image.ImageMimeType);
         }
-        
+
+        [Authorize]
         public async Task<ActionResult> DeletePhotoById(int id)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;
@@ -149,6 +172,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> EditPhoto(int id, string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -166,6 +190,7 @@ namespace PhotoAlbum.Client.Controllers
         }
         
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditPhoto(EditPhotoViewModel editPhotoViewModel, string returnUrl)
         {
@@ -246,6 +271,7 @@ namespace PhotoAlbum.Client.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> CastPhotoVote(PhotoVoteViewModel model)
         {
             var token = ((ClaimsPrincipal)HttpContext.User).FindFirst("AcessToken").Value;

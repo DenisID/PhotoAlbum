@@ -24,7 +24,6 @@ namespace PhotoAlbum.Client.Controllers
         private readonly IUserService _userService;
 
         private ApplicationSignInManager _signInManager;
-        //private ApplicationUserManager _userManager;
 
         public AccountController(IUserService userService)
         {
@@ -62,8 +61,7 @@ namespace PhotoAlbum.Client.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-        // POST: /Account/Login
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -108,8 +106,7 @@ namespace PhotoAlbum.Client.Controllers
         {
             return View();
         }
-
-        // POST: /Account/Register
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -236,7 +233,6 @@ namespace PhotoAlbum.Client.Controllers
             return RedirectToAction("Index", "Photo");
         }
         
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

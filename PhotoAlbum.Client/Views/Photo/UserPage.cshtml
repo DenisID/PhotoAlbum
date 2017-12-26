@@ -1,7 +1,7 @@
 ﻿@model PhotoAlbum.Client.Models.UserPageViewModel
 
 @{
-    ViewBag.Title = Model.UserName + " " + Resources.Localization.s_Photos + ":";
+    ViewBag.Title = Model.UserName + " (" + Model.UserFirstName + " " + Model.UserLastName + ") " + Resources.Localization.s_Photos + ":";
 }
 
 @*Bundles for rating stars*@
@@ -138,7 +138,7 @@
                                                 '<div class="photoOwnerAndDate">' +
                                                     '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
                                                     '<span class="photoDate">' +
-                                                        Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
+                                                        new Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
                                                     '</span>' +
                                                 '</div>' +
                                                 '<div class="photoRatings">' +
@@ -169,7 +169,7 @@
                                                 '<div class="photoOwnerAndDate">' +
                                                     '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
                                                     '<span class="photoDate">' +
-                                                        Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
+                                                        new Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
                                                     '</span>' +
                                                 '</div>' +
                                                 '<div class="photoRatings">' +

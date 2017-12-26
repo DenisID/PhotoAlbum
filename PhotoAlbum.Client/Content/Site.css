@@ -28,7 +28,6 @@ textarea {
 }
 
 #loading{
-    
     display: none;
 }
 
@@ -63,11 +62,11 @@ textarea {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    min-height: 500px;
     height:auto;
     max-height: 1000px;
     width:auto;
     max-width: 100%;
+    min-height: 60px;
 }
 
 .photoHeader{
@@ -117,4 +116,85 @@ textarea {
 
 .myPhotoRating{
     margin-bottom: 5px;
+}
+
+.photoRating{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.photoUserRating{
+    display: inline-block;
+}
+
+.ratingText, .myRatingText{
+    display: inline-block;
+    transform: translate(0%,-50%);
+}
+
+.starRating{
+    display: inline-block;
+}
+
+.photoTitleInput{
+    max-width: 100%;
+    min-width: 100%;
+}
+
+.photoDescriptionTextarea{
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 150px;
+}
+
+#dropDownMenuHeader{
+    background-color: transparent;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    color: rgb(157, 157, 157);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    text-decoration-color: rgb(157, 157, 157);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    margin-right: 15px;
+    text-align: right;
+}
+
+#dropDownMenuHeader:hover{
+    color: rgb(255, 255, 255);
+}
+
+#userDropDownMenu{
+    width: 100%;
+    background-color: rgb(34, 34, 34);
+    margin-top: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-color: rgb(34, 34, 34);
+    border-top-width: 1px;
+
+}
+
+#allPhotosHeaderLink, #myPhotosHeaderLink{
+    text-align: right;
+}
+
+.userDropDownMenuItems{
+    text-align: right;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: rgb(157, 157, 157) !important;
+    margin-right: 15px;
+}
+
+.userDropDownMenuItems:hover{
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(34, 34, 34) !important;
 }

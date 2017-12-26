@@ -26,5 +26,6 @@ namespace PhotoAlbum.Client.BusinessServices.Interfaces
         string GetUserProfile { get; }
         string EditUserProfile { get; }
         string ChangePassword { get; }
+        string GetUserFullName { get; }
     }
 }

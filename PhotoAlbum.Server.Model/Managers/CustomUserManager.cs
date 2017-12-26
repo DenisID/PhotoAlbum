@@ -42,6 +42,21 @@ namespace PhotoAlbum.Server.Model.Managers
             return userNamesDto;
         }
 
+        public UserFullNameDto GetUserFullName(string userName)
+        {
+            var userFromDb = _photoAlbumContext.UserInfoes.FirstOrDefault(x => x.User.UserName == userName);
+
+            if (userFromDb == null)
+            {
+                throw new UserNotFoundException(ErrorCodes.UserNotFound);
+            }
+            
+            var userFullNameDto = Mapper.Map<UserFullNameDto>(userFromDb);
+            
+            return userFullNameDto;
+        }
+
+
         public void ChangeUserProfile(ChangeUserProfileDto dto, string userId)
         {
             var user = _photoAlbumContext.Users.Find(userId);

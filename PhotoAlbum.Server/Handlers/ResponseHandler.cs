@@ -1,7 +1,10 @@
-﻿using PhotoAlbum.Server.ResponseModels;
+﻿using PhotoAlbum.Common.ErrorCodes;
+using PhotoAlbum.Common.Exceptions;
+using PhotoAlbum.Server.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +26,7 @@ namespace PhotoAlbum.Server.Handlers
         {
             object content;
             string errorMessage = null;
+            HttpStatusCode responseStatusCode = response.StatusCode;
 
             if (response.TryGetContentValue(out content) && !response.IsSuccessStatusCode)
             {
@@ -36,10 +40,15 @@ namespace PhotoAlbum.Server.Handlers
                         error = error.InnerException;
                     }
                     errorMessage = error.ExceptionMessage;
+
+                    if (errorMessage.Contains(ErrorCodes.ErrorsMark))
+                    {
+                        responseStatusCode = HttpStatusCode.OK;
+                    }
                 }
             }
 
-            var newResponse = request.CreateResponse(response.StatusCode, new ApiResponse(response.StatusCode, content, errorMessage));
+            var newResponse = request.CreateResponse(responseStatusCode, new ApiResponse(responseStatusCode, content, errorMessage));
 
             foreach (var header in response.Headers)
             {

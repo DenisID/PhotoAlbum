@@ -82,7 +82,10 @@
             else {
                 $.get(url, function (data) {
                     $('#myModal .te').html(data);
-                    $('#myModal').modal();
+                    $('#myModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
                 }).then(function () { $('input:text:visible:first').focus(); });
             }
 
@@ -203,14 +206,14 @@
                                                     '<a href="/Photo/EditPhoto/' + item.Id + '?returnUrl=%2F' + '@ViewBag.UserName' + '%2F' + '@ViewBag.Manage' + '" class="dialog-window btn btn-primary btn-large">' + '@Resources.Localization.EditPhoto' + '</a>' +
                                                 '</span>' +
                                                 '<span class ="photoDeleteButton">' +
-                                                    '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large">' + '@Resources.Localization.DeletePhoto' + '</a>' +
+                                                    '<a href="/Photo/DeletePhotoById/' + item.Id + '" class="btn btn-primary btn-large" onclick = "return confirm(\'' + '@Resources.Localization.AreYouSureYouWantToDeleteThisPhoto' + '\')">' + '@Resources.Localization.DeletePhoto' + '</a>' +
                                                 '</span>' +
                                             '</div>' +
                                             '<div class="photoDescription">' + item.Description + '</div>' +
                                             '<div class="photoOwnerAndDate">' +
                                                 '<span class="photoOwner">' + 'Added by ' + '<a href="/' + item.OwnerName + '">' + item.OwnerName + '</a>' + '</span>' +
                                                 '<span class="photoDate">' +
-                                                    Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
+                                                    new Date(parseInt(item.CreationDate.replace(/\/Date\((-?\d+)\)\//gi, "$1"))).toString().slice(0, 24) +
                                                 '</span>' +
                                             '</div>' +
                                             '<div class="photoRatings">' +

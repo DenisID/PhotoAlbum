@@ -72,7 +72,7 @@ namespace PhotoAlbum.Server.Controllers
             };
         }
 
-        // POST api/Account/GetAllUserNames
+        // GET api/Account/GetAllUserNames
         [AllowAnonymous]
         [Route("GetAllUserNames")]
         public async Task<List<UserNameDto>> GetAllUserNames()
@@ -81,7 +81,17 @@ namespace PhotoAlbum.Server.Controllers
 
             return userNamesDto;
         }
-        
+
+        // GET api/Account/GetUserFullName?userName={UserName}
+        [AllowAnonymous]
+        [Route("GetUserFullName")]
+        public async Task<UserFullNameDto> GetUserFullName([FromUri] string userName)
+        {
+            UserFullNameDto userFullNameDto = UserManager.GetUserFullName(userName);
+
+            return userFullNameDto;
+        }
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
