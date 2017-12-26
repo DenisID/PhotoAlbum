@@ -30,10 +30,12 @@ namespace PhotoAlbum.Client.Controllers
     public class PhotoController : Controller
     {
         private readonly IPhotoAlbumService _photoAlbumService;
+        private readonly IUserService _userService;
 
-        public PhotoController(IPhotoAlbumService photoAlbumService)
+        public PhotoController(IPhotoAlbumService photoAlbumService, IUserService userService)
         {
             _photoAlbumService = photoAlbumService;
+            _userService = userService;
         }
         
         public async Task<ActionResult> Index()
@@ -45,7 +47,9 @@ namespace PhotoAlbum.Client.Controllers
 
         public async Task<ActionResult> UserPage(string username)
         {
-            var model = new UserPageViewModel(){ UserName = username};
+            var userFullNameDto = await _userService.GetUserFullNameAsync(username);
+            var model = Mapper.Map<UserPageViewModel>(userFullNameDto);
+            model.UserName = username;
 
             return View(model);
         }

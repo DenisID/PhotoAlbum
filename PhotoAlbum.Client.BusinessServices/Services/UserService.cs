@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PhotoAlbum.Client.BusinessServices.Services
 {
@@ -128,6 +129,26 @@ namespace PhotoAlbum.Client.BusinessServices.Services
             responseContent.ErrorMessage.TryThrowPhotoAlbumException();
             
             return apiResponse.StatusCode;
+        }
+
+        public async Task<UserFullNameDto> GetUserFullNameAsync(string userName)
+        {
+            var query = HttpUtility.ParseQueryString(string.Empty);
+
+            query["userName"] = userName;
+
+            var queryString = query.ToString();
+
+            var urn = _uriConstantsService.GetUserFullName + queryString;
+            HttpResponseMessage apiResponse = _httpClient.GetAsync(urn).Result;
+            apiResponse.EnsureSuccessStatusCode();
+
+            var responseContent = apiResponse.Content.ReadAsAsync<WebApiResponseDto<UserFullNameDto>>().Result;
+            responseContent.ErrorMessage.TryThrowPhotoAlbumException();
+
+            var userFullName = responseContent.Result;
+
+            return userFullName;
         }
     }
 }

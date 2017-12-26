@@ -129,5 +129,12 @@ namespace PhotoAlbum.Client.AppParameters
             get { return (string)this[nameof(ChangePassword)]; }
             set { this[nameof(ChangePassword)] = value; }
         }
+
+        [ConfigurationProperty(nameof(GetUserFullName), IsRequired = true)]
+        public string GetUserFullName
+        {
+            get { return (string)this[nameof(GetUserFullName)]; }
+            set { this[nameof(GetUserFullName)] = value; }
+        }
     }
 }
