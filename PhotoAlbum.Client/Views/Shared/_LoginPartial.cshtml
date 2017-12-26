@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    @*using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
 
@@ -14,7 +14,58 @@
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
+    }*@
+
+
+    using (Html.BeginForm("LogOff", 
+                          "Account", 
+                          FormMethod.Post, 
+                          new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @*<li class="btn-group nav">*@
+        <li class="nav navbar-nav">
+            @*<button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">@User.Identity.Name</button>*@
+            <a href="#" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">@User.Identity.Name</a>
+            @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">@User.Identity.Name</a>*@
+            @*<button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>*@
+            <ul class="dropdown-menu" role="menu">
+                @*<li><a href="#">My Account</a></li>
+                    <li><a href="#">View Profile</a></li>
+                    <li><a href="#">Edit Profile</a></li>
+                    <li><a href="#">Change Password</a></li>
+                    <li><a href="#">Setting</a></li>
+                    <li><a href="#">Logout</a></li>*@
+                <li>
+                    @Html.ActionLink(Resources.Localization.UserProfile,
+                                     "profile",
+                                     User.Identity.Name,
+                                     routeValues: null,
+                                     htmlAttributes: new { title = "User profile" })
+                </li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                        Log off
+                        <span class="glyphicon glyphicon-log-out"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+            @*<ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()">
+                        Log off
+                        <span class="glyphicon glyphicon-log-out"></span>
+                    </a>
+                </li>
+            </ul>*@
     }
+
+
 }
 else
 {
