@@ -556,7 +556,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your Photo is too large, maximum allowed size is.
+        ///   Looks up a localized string similar to Your photo is too large, maximum allowed size is.
         /// </summary>
         public static string YourPhotoIsTooLargeMaximumAllowedSizeIs {
             get {

@@ -28,7 +28,7 @@ namespace PhotoAlbum.Client.Filters
             }
             else if (file.ContentLength > maxContentLength)
             {
-                ErrorMessage = Resources.Localization.YourPhotoIsTooLargeMaximumAllowedSizeIs + " " + (maxContentLength / 1024).ToString() + Resources.Localization.MB;
+                ErrorMessage = Resources.Localization.YourPhotoIsTooLargeMaximumAllowedSizeIs + " " + ( maxContentLength / (1024 * 1024) ).ToString() + Resources.Localization.MB;
                 return false;
             }
             else

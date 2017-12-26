@@ -253,7 +253,7 @@
     <value>Only (A-Z a-z _-) characters can be used</value>
   </data>
   <data name="YourPhotoIsTooLargeMaximumAllowedSizeIs" xml:space="preserve">
-    <value>Your Photo is too large, maximum allowed size is</value>
+    <value>Your photo is too large, maximum allowed size is</value>
   </data>
   <data name="InvalidLoginOrPassword" xml:space="preserve">
     <value>Invalid login or password</value>
