@@ -82,7 +82,10 @@
             else {
                 $.get(url, function (data) {
                     $('#myModal .te').html(data);
-                    $('#myModal').modal();
+                    $('#myModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
                 }).then(function () { $('input:text:visible:first').focus(); });
             }
 
