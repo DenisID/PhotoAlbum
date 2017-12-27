@@ -349,11 +349,6 @@ namespace PhotoAlbum.Server.Controllers
         [Route("Register")]
         public async Task<HttpResponseMessage> Register(RegisterBindingModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
             var user = new ApplicationUser()
             {
                 UserName = model.Login,
@@ -364,8 +359,6 @@ namespace PhotoAlbum.Server.Controllers
 
             if (!result.Succeeded)
             {
-                //var errorResult = GetErrorResult(result);
-                //return errorResult;
                 var dto = Mapper.Map<RegisterUserResultDto>(result);
 
                 return Success(dto);             
