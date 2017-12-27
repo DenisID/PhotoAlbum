@@ -19,22 +19,19 @@ namespace PhotoAlbum.Client
             routes.MapRoute(
                 name: "UserManage",
                 url: "{username}/manage",
-                defaults: new { controller = "Photo", action = "UserPageManage" }/*,
-                constraints: new { username = new UserNameConstraint(new UserService(new UriConstantsService())) }*/
+                defaults: new { controller = "Photo", action = "UserPageManage" }
             );
 
             routes.MapRoute(
                 name: "UserProfile",
                 url: "{username}/profile",
-                defaults: new { controller = "Account", action = "EditUserProfile" }/*,
-                constraints: new { username = new UserNameConstraint(new UserService(new UriConstantsService())) }*/
+                defaults: new { controller = "Account", action = "EditUserProfile" }
             );
 
             routes.MapRoute(
                 name: "User",
                 url: "{username}",
-                defaults: new { controller = "Photo", action = "UserPage" }/*,
-                constraints: new { username = new UserNameConstraint(new UserService(new UriConstantsService())) }*/
+                defaults: new { controller = "Photo", action = "UserPage" }
             );
 
             routes.MapRoute(

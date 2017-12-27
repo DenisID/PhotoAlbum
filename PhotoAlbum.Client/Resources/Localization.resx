@@ -199,7 +199,7 @@
     <value>The password and confirmation password do not match</value>
   </data>
   <data name="PasswordToShortOrToLong" xml:space="preserve">
-    <value>Password to short or to long</value>
+    <value>Password must contain min 6, max 100 symbols</value>
   </data>
   <data name="PhotoAlbum" xml:space="preserve">
     <value>Photo album</value>

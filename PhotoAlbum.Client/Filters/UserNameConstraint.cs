@@ -20,11 +20,9 @@ namespace PhotoAlbum.Client.Filters
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
             List<UserNameDto> users = _userService.GetAllUserNamesAsync();
-
-            //List<string> users = new List<string>() { "Bryan", "Stephen" };
-            // Get the username from the url
+            
             var username = values["username"].ToString().ToLower();
-            // Check for a match (assumes case insensitive)
+
             return users.Any(x => x.UserName.ToLower() == username);
         }
     }
