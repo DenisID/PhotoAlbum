@@ -8,24 +8,20 @@
                           new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-    
-        <li class="nav navbar-nav">
-            <a href="#" id="dropDownMenuHeader" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">@User.Identity.Name <span class="glyphicon glyphicon-triangle-bottom"></span></a>
-            <ul id="userDropDownMenu" class="dropdown-menu" role="menu">
-                <li>
-                    @Html.ActionLink(Resources.Localization.UserProfile,
+
+        <div class="dropdown">
+            <div class="dropbtn">@User.Identity.Name <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+            <div class="dropdown-content">
+                @Html.ActionLink(Resources.Localization.UserProfile,
                                      "profile",
                                      User.Identity.Name,
                                      routeValues: null,
-                                     htmlAttributes: new { title = "User profile", @class = "userDropDownMenuItems" })
-                </li>
-                <li>
-                    <a href="javascript:document.getElementById('logoutForm').submit()" class="userDropDownMenuItems">
-                        @Localization.LogOff
-                    </a>
-                </li>
-            </ul>
-        </li>
+                                     htmlAttributes: new { title = "User profile" })
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                    @Localization.LogOff
+                </a>
+            </div>
+        </div>
     }
 }
 else
