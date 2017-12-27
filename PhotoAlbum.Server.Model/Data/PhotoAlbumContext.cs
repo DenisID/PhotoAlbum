@@ -14,7 +14,6 @@ namespace PhotoAlbum.Server.Model.Data
         public PhotoAlbumContext()
             : base("name=DefaultConnection")
         {
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<PhotoAlbumContext>());
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<PhotoAlbumContext, Migrations.Configuration>("DefaultConnection"));
         }
 

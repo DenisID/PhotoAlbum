@@ -385,7 +385,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password to short or to long.
+        ///   Looks up a localized string similar to Password must contain min 6, max 100 symbols.
         /// </summary>
         public static string PasswordToShortOrToLong {
             get {

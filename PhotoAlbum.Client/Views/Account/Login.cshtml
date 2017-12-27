@@ -1,13 +1,16 @@
-﻿@using PhotoAlbum.Client.Models
-@model LoginViewModel
+﻿@model LoginViewModel
+
+@using PhotoAlbum.Client.Models
+@using Resources
+
 @{
-    ViewBag.Title = Resources.Localization.Login;
+    ViewBag.Title = Localization.Login;
 }
 
 <h2>@ViewBag.Title</h2>
 
 <hr />
-<h4>@Resources.Localization.UseALocalAccountToLogIn</h4>
+<h4>@Localization.UseALocalAccountToLogIn</h4>
 <hr />
 
 <div class="row">
@@ -37,7 +40,7 @@
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink(Resources.Localization.RegisterAsANewUser, "Register")
+                    @Html.ActionLink(Localization.RegisterAsANewUser, "Register")
                 </p>
             }
         </section>

@@ -10,9 +10,7 @@ namespace PhotoAlbum.Server.Dto
     public class PhotoVoteDto
     {
         public string UserId { get; set; }
-        
         public int PhotoId { get; set; }
-        
         public int Rating { get; set; }
     }
 }
