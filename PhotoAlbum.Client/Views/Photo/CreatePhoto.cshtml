@@ -1,5 +1,7 @@
 ﻿@model PhotoAlbum.Client.Models.CreatePhotoViewModel
 
+@using Resources
+
 @using (Html.BeginForm("CreatePhoto", 
                        "Photo", 
                        new { @returnUrl = ViewBag.ReturnUrl }, 
@@ -18,7 +20,7 @@
             }
             else
             {
-                <label for="photoInput" id="photoInputLabel" class="btn btn-primary">@Resources.Localization.SelectPhoto</label>
+                <label for="photoInput" id="photoInputLabel" class="btn btn-primary">@Localization.SelectPhoto</label>
             }
             <input type="file" 
                    name="Image" 
@@ -30,14 +32,14 @@
         @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
         <br/>
 
-        <div class="editor-label">@Resources.Localization.Title</div>
+        <div class="editor-label">@Localization.Title</div>
         <div class="editor-field">
             <input type="text" name="Title" value="@Model.Title" class="photoTitleInput" />
         </div>
         @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
         <br />
 
-        <div class="editor-label">@Resources.Localization.Description</div>
+        <div class="editor-label">@Localization.Description</div>
         <div class="editor-field">
             <textarea name="Description" class="photoDescriptionTextarea">@Model.Description</textarea>
         </div>
@@ -45,7 +47,7 @@
         <br />
 
         <p>
-            <input type="submit" name="submit" class="btn btn-primary btn-large" value="@Resources.Localization.Save" />
+            <input type="submit" name="submit" class="btn btn-primary btn-large" value="@Localization.Save" />
         </p>
 
     </fieldset>

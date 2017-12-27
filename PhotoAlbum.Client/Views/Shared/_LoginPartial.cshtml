@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Resources;
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", 
@@ -12,7 +13,7 @@
         <div class="dropdown">
             <div class="dropbtn">@User.Identity.Name <span class="glyphicon glyphicon-triangle-bottom"></span></div>
             <div class="dropdown-content">
-                @Html.ActionLink(Resources.Localization.UserProfile,
+                @Html.ActionLink(Localization.UserProfile,
                                      "profile",
                                      User.Identity.Name,
                                      routeValues: null,
@@ -27,7 +28,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink(Resources.Localization.Register, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink(Resources.Localization.Log_In, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink(Localization.Register, "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink(Localization.Log_In, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

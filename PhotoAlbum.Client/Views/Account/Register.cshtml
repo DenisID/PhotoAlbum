@@ -1,12 +1,15 @@
 ﻿@model PhotoAlbum.Client.Models.RegisterViewModel
+
+@using Resources
+
 @{
-    ViewBag.Title = Resources.Localization.Register;
+    ViewBag.Title = Localization.Register;
 }
 
 <h2>@ViewBag.Title</h2>
 
 <hr />
-<h4>@Resources.Localization.CreateANewAccount</h4>
+<h4>@Localization.CreateANewAccount</h4>
 <hr />
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
